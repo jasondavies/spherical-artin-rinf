@@ -1,0 +1,18 @@
+===== H4
+  constituent dim 9: commutant acts by scalars=True, rational eigenvalues=False, trivial=False, support size 60
+  constituent dim 16: commutant acts by scalars=True, rational eigenvalues=True, trivial=False, support size 60
+  constituent dim 25: commutant acts by scalars=True, rational eigenvalues=True, trivial=False, support size 60
+  constituent dim 9: commutant acts by scalars=True, rational eigenvalues=False, trivial=False, support size 60
+  constituent dim 1: commutant acts by scalars=True, rational eigenvalues=True, trivial=True, support size 60
+ multiplicity-one rational nontrivial constituents: dims [16, 25]
+   U dim 16 : simple generators acting nontrivially on U: [0, 1, 2, 3]
+   U dim 25 : simple generators acting nontrivially on U: [0, 1, 2, 3]
+H4 |rho(W)|= 7200 |Z(rho(W))|= 1
+  h1 class rep 1 class size 60 #autos with s1->rep: 240
+  |Aut(rho(W))| = 14400  |Inn| = 7200  |Out| = 2 time 60.8
+ outer automorphism images of simple gens (indices): [1, np.int64(2), np.int64(3), np.int64(3037)]
+ permutation pi of R realizing outer theta found, check: True
+   pi maps constituent 0 (dim 16) onto constituent 0
+   pi maps constituent 1 (dim 25) onto constituent 1
+   stable constituent 0 dim 16: exists w with eig +1: True, with eig -1: True
+   stable constituent 1 dim 25: exists w with eig +1: True, with eig -1: True

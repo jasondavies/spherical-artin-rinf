@@ -1,0 +1,15 @@
+===== E8 (commutant method, exact roots): |R| = 120, number of orbitals = 3
+  T-eigenspace lam=60: dim 84, all orbital matrices scalar on it: True, simple reflections acting nontrivially: [0, 1, 2, 3, 4, 5, 6, 7]
+  T-eigenspace lam=72: dim 35, all orbital matrices scalar on it: True, simple reflections acting nontrivially: [0, 1, 2, 3, 4, 5, 6, 7]
+  T-eigenspace lam=120: dim 1, all orbital matrices scalar on it: True, simple reflections acting nontrivially: []
+  [E8 commutant check done in 1.6s]
+===== H3 (commutant method, exact roots): |R| = 15, number of orbitals = 6
+  T-eigenspace lam=0: dim 4, all orbital matrices scalar on it: True, simple reflections acting nontrivially: [0, 1, 2]
+  T-eigenspace lam=3: dim 10, all orbital matrices scalar on it: False, simple reflections acting nontrivially: [0, 1, 2]
+  T-eigenspace lam=15: dim 1, all orbital matrices scalar on it: True, simple reflections acting nontrivially: []
+  [H3 commutant check done in 0.0s]
+===== F4 (commutant method, exact roots): |R| = 24, number of orbitals = 10
+  T-eigenspace lam=8: dim 18, all orbital matrices scalar on it: False, simple reflections acting nontrivially: [0, 1, 2, 3]
+  T-eigenspace lam=12: dim 4, all orbital matrices scalar on it: False, simple reflections acting nontrivially: [0, 1, 2, 3]
+  T-eigenspace lam=24: dim 2, all orbital matrices scalar on it: False, simple reflections acting nontrivially: []
+  [F4 commutant check done in 0.0s]

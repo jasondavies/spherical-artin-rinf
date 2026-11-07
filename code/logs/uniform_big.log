@@ -1,0 +1,12 @@
+===== D7: |rho(W)| = 322560, |R| = 42, r->rho(r) injective: True
+  involution classes with size/chi_R of a reflection class but not reflections: [] -> every Aut(A)-induced automorphism preserves rho(R)
+  reflection-preserving automorphisms modulo Inn: 1
+  good constituents (dim) moved by a simple reflection: [6, 21, 14];  other eigenspaces (dim,<chi,chi>,<chi,perm>): [(1, Fraction(1, 1), Fraction(1, 1))]
+  class 0: identity; pi realises theta: True; criterion: ('(i)', 6)
+  [D7 2.1s]
+===== B7: |rho(W)| = 322560, |R| = 49, r->rho(r) injective: True
+  involution classes with size/chi_R of a reflection class but not reflections: [] -> every Aut(A)-induced automorphism preserves rho(R)
+  reflection-preserving automorphisms modulo Inn: 1
+  good constituents (dim) moved by a simple reflection: [21, 14];  other eigenspaces (dim,<chi,chi>,<chi,perm>): []
+  class 0: identity; pi realises theta: True; criterion: ('(i)', 21)
+  [B7 1.8s]

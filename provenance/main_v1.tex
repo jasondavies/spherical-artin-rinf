@@ -1,0 +1,686 @@
+\documentclass[11pt]{amsart}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem*{mainthm}{Main Theorem}
+\newtheorem*{maincor}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\Out}{\operatorname{Out}}
+\newcommand{\Inn}{\operatorname{Inn}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\coker}{\operatorname{coker}}
+\newcommand{\Rinf}{R_\infty}
+\newcommand{\GAP}[1]{\textbf{[GAP: #1]}}
+
+\title{Property $R_\infty$ for the Artin groups of types $E_6,E_7,E_8,F_4,H_3,H_4$}
+\author{[Author names]}
+\date{Draft, November 2026}
+
+\begin{document}
+
+\begin{abstract}
+A group has property $\Rinf$ if every automorphism has infinitely many twisted conjugacy classes.
+We prove that the Artin groups of spherical types $E_6$, $E_7$, $E_8$, $F_4$, $H_3$ and $H_4$ have
+property $\Rinf$. Combined with results of Fel'shtyn--Gon\c{c}alves, Calvez--Soroko and Soroko--Vaskou,
+this shows that every irreducible Artin group of spherical type and rank at least two has property $\Rinf$.
+The proof does not use a description of the automorphism group of the Artin group, which is unknown for
+these types. It uses three facts: the pure Artin group $P$ is characteristic (Cohen--Paris);
+$H_1(P;\Z)$ is the permutation module $\Z[\R]$ on the reflections; and the induced automorphism of $W/Z(W)$ is
+realised by a permutation of $\R$. Schur's lemma, applied to a rational, absolutely irreducible constituent
+of multiplicity one of $\Q[\R]$, then gives eigenvalue $1$ on $H_1(P;\Q)$ after twisting by a suitable
+inner automorphism. The representation-theoretic input is certified by exact computer calculations, checked
+with two independent programs. As by-products we give an independent proof for type $D_5$ and a uniform
+proof that the inversion automorphism of any Artin group that is not free abelian has infinite Reidemeister number.
+\end{abstract}
+
+\maketitle
+
+\noindent\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{\small
+\textbf{AI-assistance statement (placeholder; to be completed by the human authors).}
+The mathematical argument, the computer programs and this manuscript were produced with substantial
+assistance from an AI system (Anthropic's Claude). They were checked by AI-based review only, and have
+\emph{not yet} been checked by a human expert. The authors must replace this paragraph with an accurate
+statement of contributions and verification before any submission or posting.}}
+
+\section{Introduction}
+
+\subsection{Twisted conjugacy and property $\Rinf$}
+Let $G$ be a group and $\varphi\in\Aut(G)$. Two elements $x,y\in G$ are \emph{$\varphi$-twisted conjugate} if
+$y=zx\varphi(z)^{-1}$ for some $z\in G$. The number $R(\varphi)\in\{1,2,\dots\}\cup\{\infty\}$ of
+equivalence classes is the \emph{Reidemeister number} of $\varphi$. The group $G$ has \emph{property $\Rinf$}
+if $R(\varphi)=\infty$ for every $\varphi\in\Aut(G)$. See \cite{FT15,FN16} for surveys.
+
+For Artin groups the question goes back to Fel'shtyn and Gon\c{c}alves, who proved $\Rinf$ for the braid
+groups \cite{FG10}. Juh\'asz treated certain large-type Artin groups \cite{Juh11}. Dekimpe, Gon\c{c}alves and
+Ocampo treated the pure braid groups \cite{DGO21}. Calvez and Soroko gave a uniform proof for the spherical
+types $A_n,B_n,D_4,I_2(m)$, their pure subgroups, and the affine types $\tilde A_n,\tilde C_n$ \cite{CS22}.
+Soroko and Vaskou proved it for spherical type $D_n$, $n\ge 6$ (and for large hyperbolic-type groups)
+\cite{SV24}. Soroko proved $\Rinf$ for many non-spherical Artin and Coxeter groups whose outer
+automorphisms are length-preserving \cite{Sor26}. The question ``Which Artin groups have property $\Rinf$?''
+is Problem~8.6 of the AIM problem list on the geometry and topology of Artin groups \cite{AIMPL}. In each of
+the spherical cases above, the proof uses an explicit description of $\Aut(A)$ or $\Aut(A/Z(A))$. For example,
+\cite{CS22} embeds $\Aut(A/Z(A))$ in a mapping class group.
+
+\subsection{Main result}
+For a Coxeter graph $\Gamma$ let $A=A(\Gamma)$ be the Artin group and $W=W(\Gamma)$ the Coxeter group.
+
+\begin{mainthm}
+The Artin groups of types $E_6$, $E_7$, $E_8$, $F_4$, $H_3$ and $H_4$ have property $\Rinf$.
+\end{mainthm}
+
+To our knowledge $\Aut(A)$ has not been determined for any of these six types (cf.~the list in
+\cite[\S1]{PS26}). Charney and Crisp \cite[Prop.~9]{CC05} obtained partial information for $F_4$; as recorded in
+\cite[\S4]{JMS25}, $\Aut(A(F_4))$ is virtually a direct product of infinite groups. Our proof avoids $\Aut(A)$
+altogether.
+
+\begin{maincor}
+Every irreducible Artin group of spherical type and rank $\ge 2$ has property $\Rinf$.
+\end{maincor}
+
+\begin{proof}[Proof (from the literature and the Main Theorem)]
+The irreducible spherical types of rank $\ge2$ are $A_n$ $(n\ge2)$, $B_n$ $(n\ge2)$, $D_n$ $(n\ge4)$,
+$E_{6,7,8}$, $F_4$, $H_3$, $H_4$ and $I_2(m)$ $(m\ge5)$. Types $A_n,B_n,D_4,I_2(m)$ are covered by \cite{CS22}
+(for $A_n$ also \cite{FG10}), and $D_n$ for $n\ge6$ by \cite[Thm.~1]{SV24}. Property $\Rinf$ for $D_5$ is credited
+to \cite{SV24} in \cite[\S1]{Sor26}, using the description of $\Aut(A(D_5))$ in \cite{PS26}. (The arXiv version
+v2 of \cite{SV24} that we consulted still states $D_5$ as a conjecture; \cite{PS26} itself does not discuss
+$\Rinf$.) An independent proof for $D_5$ is given in Proposition~\ref{prop:D5} below. The remaining types are
+covered by the Main Theorem.
+\end{proof}
+
+Rank one must be excluded: $A(A_1)\cong\Z$, and inversion on $\Z$ has Reidemeister number $2$.
+
+\subsection{What is new, and relation to general criteria}
+The new content is the Main Theorem for the six exceptional types and the method, which needs no knowledge of $\Aut(A)$.
+Section~\ref{sec:complements} contains an independent proof for $D_5$; this is not a new result. It also
+contains a uniform proof that the inversion automorphism has infinite Reidemeister number. That result is not
+new in general: for non-spherical types it follows from \cite[Thm.~1]{Sor26}, and see also \cite{Juh11}.
+
+\smallskip\noindent\emph{Conjectures (R) and (NA).} Fel'shtyn and Troitsky asked whether every finitely generated
+residually finite group either has $\Rinf$ or is solvable-by-finite \cite{FT15}. This is Conjecture~(R) in
+\cite[\S6]{SV24}; see \cite[Problem~19.28]{Kourovka}. A weaker variant is Conjecture~(NA): every finitely
+generated, residually finite, non-amenable group has $\Rinf$. The statement (NA) appears as a theorem in the
+preprint \cite{FT12}, which would imply our Main Theorem. However, Soroko and Vaskou report that Troitsky has
+informed them that the proof contains a mistake \cite[\S6]{SV24}, so (NA) is currently open. Spherical Artin
+groups of rank $\ge2$ are finitely generated, linear (hence residually finite) \cite{CW02,Dig03}, and contain
+non-abelian free subgroups. Our results therefore verify Conjectures (R) and (NA) for these groups.
+
+\smallskip\noindent\emph{Acylindrical and quasimorphism criteria.} Several recent criteria deduce $\Rinf$ from a
+suitable action of $\Aut(G)$, or of $\langle\Inn(G),\varphi\rangle$, on a hyperbolic space, or from
+$\Aut$-invariant quasimorphisms \cite{FFW23,FFIMSW25,SV26}. For an irreducible spherical Artin group $A$, the central quotient $A/Z(A)$
+is acylindrically hyperbolic \cite{CW17}. However, applying these criteria to $A$ requires control over
+$\Aut(A)$ (or $\Aut(A/Z(A))$), for instance an extension of the Calvez--Wiest action to the automorphism group.
+This control is not available for types $E,F,H$; see \cite[Remark~4.8 and footnote~3]{JMS25} for a suggestion in
+this direction. The $\Rinf$ result of \cite[Cor.~H]{JMS25} needs a separating vertex of the defining graph. In that graph two
+generators are joined whenever $m_{st}<\infty$, so for spherical types it is complete. The result also needs a
+trivial centre. Both conditions exclude spherical types.
+
+\smallskip\noindent\emph{Method and precedents.} The idea of forcing eigenvalue $1$ on a characteristic abelian
+section by means of the representation theory of a reflection group goes back to Dekimpe--Gon\c{c}alves--Ocampo
+\cite{DGO21}. They used $\Gamma_2(P_n)/\Gamma_3(P_n)$ and Stembridge's results on eigenvalues \cite{Ste89}. The
+group $A/[P,P]$ is the ``crystallographic quotient'' studied by Gon\c{c}alves--Guaschi--Ocampo \cite{GGO17} and by
+Marin \cite{Mar15}. The map $f$ of \S\ref{sec:f} embeds $A/[P,P]$ into $\Z^\R\rtimes W$
+(Remark~\ref{rem:cryst}). The action of $A$ on $\Z\times\R$ that underlies $f$ already appears in
+Cohen--Paris \cite[Lemma~3.7]{CP03}. We did not find these ingredients combined to prove $\Rinf$ for spherical
+Artin groups in the literature. Our literature search was limited (several bibliographic APIs were rate-limited),
+so we would welcome references.
+
+\subsection{Outline of the proof}
+Let $P=\ker(A\to W)$ be the pure Artin group. Let $\R\subset W$ be the set of reflections, and
+$\rho\colon W\to\Sym(\R)$ the conjugation action. Let $\varphi\in\Aut(A)$.
+\begin{enumerate}[label=(\arabic*)]
+\item $\varphi(P)=P$ (Cohen--Paris \cite{CP03}).
+\item $H_1(P;\Z)\cong\Z^\R$ as $A$-modules, where $A$ acts through $W$ by $\rho$ with no signs
+(Proposition~\ref{prop:H1}). Hence $\varphi_*\in GL(\Z^\R)$ satisfies
+$\varphi_*\rho(w)\varphi_*^{-1}=\rho(\varphi_W(w))$.
+\item If a permutation matrix $\pi$ realises the automorphism of $\rho(W)\cong W/Z(W)$ induced by $\varphi$,
+then $N=\pi^{-1}\varphi_*$ commutes with $\rho(W)$. By Schur's lemma, $N$ acts on a rational, absolutely
+irreducible, multiplicity-one constituent $U\subset\Q^\R$ as a rational scalar. Since $N$ preserves the lattice
+$U\cap\Z^\R$, the scalar is $\pm1$.
+\item After composing $\varphi$ with a suitable inner automorphism, $\varphi_*$ has eigenvalue $1$ on
+$H_1(P;\Q)$ (on $U$, or on $U_1\oplus U_2$ in a swap variant used for $F_4$), so
+$R(\varphi|_P)=\infty$. The finite-index inequality then gives $R(\varphi)=\infty$.
+\end{enumerate}
+The automorphisms of $W/Z(W)$ and the constituents $U$ are determined by finite computations. We certify these
+by exact arithmetic with two independent programs, except for one input for $E_8$ taken from the ATLAS
+(\S\ref{sec:verify}).
+
+\section{Preliminaries}
+
+\subsection{Reidemeister numbers}
+\begin{lemma}\label{lem:reid}
+Let $G$ be a group and $\psi\in\Aut(G)$.
+\begin{enumerate}[label=(\alph*)]
+\item If $K\trianglelefteq G$ and $\psi(K)=K$, let $\bar\psi$ be the induced automorphism of $G/K$. Then
+$R(\psi)\ge R(\bar\psi)$.
+\item If $G\cong\Z^m$ and $\psi$ is given by $B\in GL_m(\Z)$, then $R(\psi)=|\coker(I-B)|$. In particular
+$R(\psi)=\infty$ if $B$ has eigenvalue $1$.
+\item For $g\in G$ let $\iota_g(x)=gxg^{-1}$. Then $R(\iota_g\circ\psi)=R(\psi)$.
+\item If $H\le G$ has finite index and $\psi(H)=H$, then $R(\psi|_H)\le[G:H]\cdot R(\psi)$. In particular, if
+$R(\psi|_H)=\infty$ then $R(\psi)=\infty$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) The projection $p\colon G\to G/K$ satisfies $p\circ\psi=\bar\psi\circ p$. It therefore maps the class of
+$x$ into the class of $p(x)$, and it is surjective.
+
+(b) Here $y$ is $\psi$-conjugate to $x$ iff $y-x\in(I-B)\Z^m$. If $\det(I-B)=0$, the cokernel has positive rank.
+
+(c) We have $y=z x(g\psi(z)^{-1}g^{-1})$ iff $yg=z(xg)\psi(z)^{-1}$. So right multiplication by $g$ is a
+bijection from the $\iota_g\psi$-classes to the $\psi$-classes.
+
+(d) Write $G=\bigsqcup_{i=1}^k Hg_i$ with $k=[G:H]$. Let $x\in H$, and suppose $y=zx\psi(z)^{-1}\in H$ for some
+$z\in G$. Write $z=hg_i$ with $h\in H$. Then $g_ix\psi(g_i)^{-1}=h^{-1}y\psi(h)\in H$, so $y$ is
+$\psi|_H$-conjugate to $x_i:=g_ix\psi(g_i)^{-1}$. Thus the $\psi$-class of $x$ meets $H$ in at most $k$
+$\psi|_H$-classes. Every $\psi|_H$-class lies in a $\psi$-class, so $R(\psi|_H)\le kR(\psi)$. Normality of
+$H$ is not needed. Moreover $\psi(H)\subseteq H$ already implies $\psi(H)=H$, since $\psi(H)$ has the same
+finite index as $H$.
+\end{proof}
+
+\subsection{Artin groups, Coxeter groups, reflections}
+Let $\Gamma$ be a Coxeter graph with vertex set $S$ and Coxeter matrix $(m_{st})$. The Artin group is
+$A=\langle S\mid \Pi(s,t;m_{st})=\Pi(t,s;m_{st})\ (s\neq t,\ m_{st}<\infty)\rangle$, where $\Pi(s,t;m)=sts\cdots$
+has $m$ letters. The Coxeter group $W$ is $A/\langle\!\langle s^2:s\in S\rangle\!\rangle$. Write
+$\mu\colon A\to W$, $a\mapsto\bar a$, and $P=\ker\mu$. Thus $P$ is the normal closure of $\{s^2:s\in S\}$. Let
+\[\R=\{wsw^{-1}:w\in W,\ s\in S\}\]
+be the set of reflections, and let $\rho\colon W\to\Sym(\R)$, $\rho(w)(r)=wrw^{-1}$. We use the same letter for
+the permutation matrices on $\Z^\R$, $\rho(w)e_r=e_{wrw^{-1}}$.
+
+\begin{lemma}\label{lem:rho}
+$\ker\rho=Z(W)$, so $\rho(W)\cong W/Z(W)$. Every automorphism $\alpha$ of $W$ preserves $Z(W)$ and induces an
+automorphism $\theta_\alpha$ of $\rho(W)$ with $\theta_\alpha(\rho(w))=\rho(\alpha(w))$.
+\end{lemma}
+\begin{proof}
+$\rho(w)=1$ iff $w$ commutes with every reflection. Since $\R$ generates $W$, this holds iff $w\in Z(W)$. The
+centre is characteristic, which gives the second statement.
+\end{proof}
+
+For the finite irreducible types considered here, $Z(W)=\{1,w_0\}$ has order $2$ when $w_0=-1$ (types
+$E_7,E_8,F_4,H_3,H_4$), and $Z(W)=1$ for $E_6$ and $D_5$ \cite[\S3.19]{Hum90}.
+
+\begin{theorem}[Cohen--Paris {\cite[Thm.~1.4]{CP03}}; Franco--Paris {\cite{FP06}}]\label{thm:char}
+If $A$ is an irreducible Artin group of spherical type, then $P=\ker(A\to W)$ is a characteristic subgroup of $A$.
+Franco and Paris \cite{FP06} extend this to all spherical types, not necessarily irreducible.
+\end{theorem}
+
+The statement of \cite[Thm.~1.4]{CP03} reads: ``Let $A$ be an irreducible Artin group of spherical type. Then
+$CA$ is a characteristic subgroup of $A$,'' where $CA=\ker(\mu)$ is the coloured Artin group. Thus every
+$\varphi\in\Aut(A)$ satisfies $\varphi(P)=P$. Consequently $\varphi$ induces an automorphism $\varphi_W$ of
+$W=A/P$, and by Lemma~\ref{lem:rho} an automorphism $\theta_\varphi:=\theta_{\varphi_W}$ of $\rho(W)$.
+
+\subsection{The homomorphism $f$ and the abelianisation of $P$}\label{sec:f}
+Let $W$ act on $\Z^\R=\bigoplus_{r\in\R}\Z e_r$ by $w\cdot e_r=e_{wrw^{-1}}$, and form $\Z^\R\rtimes W$ with
+multiplication $(v,w)(v',w')=(v+w\cdot v',ww')$.
+
+\begin{lemma}\label{lem:f}
+Let $W$ be any Coxeter group. There is a unique homomorphism $f\colon A\to\Z^\R\rtimes W$ with $f(s)=(e_s,s)$ for
+$s\in S$. Its second component is $\mu$. For $a\in A$ and a word $a=s_1^{\epsilon_1}\cdots s_\ell^{\epsilon_\ell}$,
+\begin{equation}\label{eq:f}
+f(a)=\Bigl(\textstyle\sum_{k=1}^{\ell}\epsilon_k\,e_{r_k},\ \bar a\Bigr),\qquad r_k=\bar s_1\cdots\bar s_{k-1}\,s_k\,(\bar s_1\cdots \bar s_{k-1})^{-1}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Note $(e_s,s)^{-1}=(-s\cdot e_s,s)=(-e_s,s)$, since $ss s^{-1}=s$. This gives \eqref{eq:f} by induction on
+$\ell$; the sign does not affect $r_k$ because $s^{-1}$ and $s$ have the same image in $W$. We must check the
+braid relations. Fix $s\ne t$ with $m=m_{st}<\infty$. Let $u=\Pi(s,t;m)$ and $u'=\Pi(t,s;m)$. The $W$-components agree because the braid relation holds in $W$. In $W$ the element $st$ has order exactly
+$m$, and the subgroup $\langle s,t\rangle$ is dihedral of order $2m$ \cite[\S5.3]{Hum90}. By \eqref{eq:f}, the
+$\Z^\R$-component of $f(u)$ is $\sum_{k=1}^me_{r_k}$, where $r_k$ is the prefix of length $k-1$ of $u$ conjugating
+the $k$-th letter. A direct computation, using $s(ts)^j=(st)^js$, gives $r_k=(st)^{k-1}s$ for both parities of
+$k$. Similarly, for $u'=tst\cdots$ the reflections are $r'_k=(ts)^{k-1}t=(ts)^ks=(st)^{m-k}s$. Since $st$ has order
+$m$, both $\{r_k\}$ and $\{r'_k\}$ equal $\{(st)^js:0\le j<m\}$, a set of $m$ distinct elements of $\R$. So the
+$\Z^\R$-components agree and $f(u)=f(u')$.
+\end{proof}
+
+\begin{remark}
+Lemma~\ref{lem:f} is equivalent to \cite[Lemma~3.7(1)]{CP03}. There $A$ acts on $\Z\times\R$ by
+$U_s(k,t)=(k+\delta_{t,s},sts)$, and this action commutes with the translations $L_k$. Such an action is the same
+as a homomorphism to $\Z^\R\rtimes\Sym(\R)$; we include the short proof for completeness. The computation is also
+checked by machine (Appendix~\ref{app:comp}).
+\end{remark}
+
+\begin{proposition}\label{prop:H1}
+Let $A$ be of spherical type. Then $f(P)=2\Z^\R$, and $f|_P$ induces an isomorphism $H_1(P;\Z)\to2\Z^\R$. Under
+this isomorphism the conjugation action of $A$ on $H_1(P;\Z)$ becomes $a\cdot x=\rho(\bar a)x$: $\bar a$ permutes
+the coordinates, with no signs.
+\end{proposition}
+
+\begin{proof}
+Since $\mu(P)=1$, $f$ maps $P$ into the abelian group $\Z^\R\times\{1\}$, so $f|_P$ factors through $H_1(P;\Z)$.
+We have $f(s^2)=(e_s+s\cdot e_s,1)=(2e_s,1)$. For $a\in A$,
+$f(as^2a^{-1})=f(a)(2e_s,1)f(a)^{-1}=(2\bar a\cdot e_s,1)=(2e_{\bar as\bar a^{-1}},1)$. Since $P$ is generated by
+the conjugates of the $s^2$, and every reflection is conjugate to a simple one, $f(P)=2\Z^\R$. The same
+computation, $f(apa^{-1})=\bar a\cdot f(p)$ for $p\in P$, gives the equivariance.
+
+It remains to show injectivity on $H_1(P;\Z)$. By Brieskorn \cite{Bri71}, $P\cong\pi_1(M)$, where $M=\C^n\setminus\bigcup_{H}H_\C$ is the complement of the
+complexified reflection arrangement; one hyperplane $H$ corresponds to each reflection. The first homology of the complement
+of a central arrangement of $N$ complex hyperplanes is free abelian of rank $N$, generated by meridians
+\cite{Bri73}, \cite[Ch.~5]{OT92}. (Equivalently, the Poincar\'e polynomial of $M$ is $\prod_j(1+m_jt)$, where the
+$m_j$ are the exponents, with $\sum_j m_j=|\R|$ \cite{Bri73}, and $H^*(M;\Z)$ is torsion-free \cite[Ch.~5]{OT92}.)
+Thus $H_1(P;\Z)\cong\Z^{|\R|}$, and the surjection $H_1(P;\Z)\to2\Z^\R\cong\Z^{|\R|}$ is an isomorphism, because
+free abelian groups of finite rank are Hopfian.
+\end{proof}
+
+\begin{remark}[Topological interpretation; signs]
+Under $P=\pi_1(M)$, the element $as^2a^{-1}$ is a meridian around the hyperplane of the reflection
+$\bar as\bar a^{-1}$. The deck group $W$ acts on $M$ by complex-linear maps, which preserve the complex orientation
+of normal discs. Hence $W$ permutes the meridian classes without signs, in agreement with
+Proposition~\ref{prop:H1}. As a further consistency check, the generator $\Delta^2$ of the pure centre (the full
+twist) maps to $2\sum_re_r$; this is verified by machine for all six types.
+\end{remark}
+
+\begin{remark}[Crystallographic quotient]\label{rem:cryst}
+Since $\ker f\subseteq P$ and $\ker(f|_P)=[P,P]$, $f$ induces an embedding of $A/[P,P]$ into $\Z^\R\rtimes W$ with
+image of index $2^{|\R|}$. It contains the lattice $2\Z^\R$ with quotient $W$. This is the crystallographic group of
+\cite{GGO17,Mar15}.
+\end{remark}
+
+\begin{corollary}\label{cor:twist}
+Let $\varphi\in\Aut(A)$ and let $M_\varphi\in GL(\Z^\R)$ be the matrix of the induced automorphism of
+$H_1(P;\Z)\cong\Z^\R$. Then
+\begin{equation}\label{eq:twist}
+M_\varphi\,\rho(w)\,M_\varphi^{-1}=\rho(\varphi_W(w))=\theta_\varphi(\rho(w))\qquad(w\in W),
+\end{equation}
+and $M_{\iota_a\circ\varphi}=\rho(\bar a)M_\varphi$ for $a\in A$.
+\end{corollary}
+
+\begin{proof}
+Let $p\in P$ and $a\in A$. Then $\varphi(apa^{-1})=\varphi(a)\varphi(p)\varphi(a)^{-1}$. Passing to $H_1(P)$ and
+using Proposition~\ref{prop:H1} gives $M_\varphi\rho(\bar a)x=\rho(\varphi_W(\bar a))M_\varphi x$. Conjugation by
+$a$ acts on $H_1(P)$ as $\rho(\bar a)$, which gives the second formula.
+\end{proof}
+
+\subsection{Rational, absolutely irreducible constituents of multiplicity one}
+\begin{definition}
+A $\rho(W)$-invariant subspace $U\subseteq\Q^\R$ is a \emph{good constituent} if $U\otimes\C$ is irreducible
+and occurs with multiplicity one in $\C^\R$. Then $U$ is absolutely irreducible, and it is the full isotypic
+component of its isomorphism type in $\Q^\R$.
+\end{definition}
+
+\begin{lemma}\label{lem:schur}
+Let $U$ be a good constituent and let $N\in GL(\Z^\R)$ commute with $\rho(W)$. Then $N(U)=U$ and $N|_U=\pm1$.
+\end{lemma}
+\begin{proof}
+The subspace $N(U)$ is $\rho(W)$-invariant and isomorphic to $U$. By multiplicity one, $N(U)\subseteq U$, hence
+$N(U)=U$. Now $N|_U\in\End_{\Q W}(U)=\Q$, since $U$ is absolutely irreducible. So $N|_U=c\in\Q^\times$. The lattice
+$\Lambda=U\cap\Z^\R$ has full rank in $U$ because $U$ is defined over $\Q$, and $N^{\pm1}(\Lambda)\subseteq\Lambda$.
+Take $v\in\Lambda$ primitive in $\Z^\R$, i.e.\ with coprime coordinates. Then $cv\in\Z^\R$ forces $c\in\Z$, and
+likewise $c^{-1}\in\Z$. Hence $c=\pm1$.
+\end{proof}
+
+\begin{lemma}[Certificates]\label{lem:cert}
+Let $U\subseteq\Q^\R$ be a nonzero $\rho(W)$-invariant subspace.
+\begin{enumerate}[label=(\roman*)]
+\item The commutant $\End_{\Q W}(\Q^\R)$ is spanned by the orbital matrices $O_\omega$ ($\omega$ a
+$\rho(W)$-orbit on $\R\times\R$; $(O_\omega)_{r,r'}=1$ iff $(r,r')\in\omega$). If every $O_\omega$ maps $U$ into
+itself and acts on it as a scalar, then $U$ is a good constituent.
+\item Let $\chi_U$ be the character of $U$ and $\chi_\R(g)=\#\{r:g(r)=r\}$ the permutation character. If
+$\langle\chi_U,\chi_U\rangle=1$ and $\langle\chi_U,\chi_\R\rangle=1$ (inner products over $\rho(W)$), then $U$ is a
+good constituent.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) A matrix commutes with all permutation matrices $\rho(w)$ iff its entries are constant on $\rho(W)$-orbits of
+$\R\times\R$, so the $O_\omega$ span the commutant. The same holds over $\C$. Write
+$\C^\R=\bigoplus_iV_i\otimes\C^{m_i}$ with $V_i$ irreducible and pairwise non-isomorphic. Then
+$\End_{\C W}(\C^\R)=\prod_iM_{m_i}(\C)$, acting on the second factors. By hypothesis this algebra acts on
+$U_\C=U\otimes\C$ by scalars. The central idempotents act on $U_\C$ by $0$ or $1$, and they sum to $1$. Hence
+$U_\C\subseteq V_i\otimes\C^{m_i}$ for a single $i$, and $U_\C=V_i\otimes L$ for a subspace $0\ne L\subseteq\C^{m_i}$.
+The algebra $M_{m_i}(\C)$ preserves $L$ and acts on it by scalars, which forces $m_i=1$ and $L=\C$. So $U_\C=V_i$ is
+irreducible of multiplicity one.
+
+(ii) The characters of $\rho(W)$ on rational representations are real. So $\langle\chi_U,\chi_U\rangle=1$ means
+that $U_\C$ is irreducible, and $\langle\chi_U,\chi_\R\rangle$ is the multiplicity of $U_\C$ in $\C^\R$.
+\end{proof}
+
+\section{The criterion}
+
+\begin{theorem}\label{thm:crit}
+Let $A$ be an irreducible Artin group of spherical type with Coxeter group $W$. Suppose that for every automorphism
+$\alpha$ of $W$ there exists a permutation $\pi$ of $\R$ such that
+\begin{equation}\label{eq:pi}
+\pi\,\rho(w)\,\pi^{-1}=\theta_\alpha(\rho(w))\quad\text{for all }w\in W,
+\end{equation}
+and at least one of the following holds.
+\begin{enumerate}[label=(\roman*)]
+\item\emph{(stable case)} There is a good constituent $U$ such that for each $\varepsilon\in\{1,-1\}$ there exist
+$h\in\rho(W)$ and $0\ne v\in U$ with $h\pi v=\varepsilon v$.
+\item\emph{(swap case)} There are good constituents $U_1\ne U_2$ with $\pi(U_1)=U_2$ such that for each
+$\varepsilon\in\{1,-1\}$ there exist $h\in\rho(W)$ and $0\ne v\in U_1$ with $(h\pi)^2v=\varepsilon v$.
+\end{enumerate}
+Then $A$ has property $\Rinf$.
+\end{theorem}
+
+\begin{proof}
+Let $\varphi\in\Aut(A)$. By Theorem~\ref{thm:char}, $\varphi(P)=P$. Apply the hypothesis to $\alpha=\varphi_W$ and
+let $\pi$ be the resulting permutation. By \eqref{eq:twist} and \eqref{eq:pi}, $N:=\pi^{-1}M_\varphi$ commutes
+with $\rho(W)$. It lies in $GL(\Z^\R)$, since $\pi$ is a permutation matrix.
+
+\emph{Case (i).} By Lemma~\ref{lem:schur}, $N|_U=c\in\{\pm1\}$. Choose $h\in\rho(W)$ and $0\ne v\in U$ with
+$h\pi v=cv$, and choose $a\in A$ with $\rho(\bar a)=h$. Put $\chi=\iota_a\circ\varphi$. By
+Corollary~\ref{cor:twist},
+\[M_\chi v=\rho(\bar a)M_\varphi v=h\pi Nv=c\,h\pi v=c^2v=v.\]
+Note that $h\pi$ need not preserve $U$; this is not needed.
+
+\emph{Case (ii).} By Lemma~\ref{lem:schur}, $N|_{U_i}=c_i\in\{\pm1\}$ for $i=1,2$. Choose $h,v$ with
+$(h\pi)^2v=c_1c_2v$, $0\neq v\in U_1$, and $a$ with $\rho(\bar a)=h$. Put $\chi=\iota_a\circ\varphi$ and $T=h\pi$,
+so $M_\chi=TN$. Since $h$ preserves each isotypic component and $\pi U_1=U_2$, we have $TU_1=U_2$. For $v\in U_1$,
+\[M_\chi^2v=TNTNv=c_1\,TNTv=c_1c_2\,T^2v=v .\]
+Here $Tv\in U_2$, so $N$ acts on it as $c_2$. Put $u=v+M_\chi v$. Then $M_\chi u=M_\chi v+v=u$. Moreover
+$u\ne0$: $v\in U_1\setminus\{0\}$, $M_\chi v=c_1Tv\in U_2$, and $U_1\cap U_2=0$, since distinct good constituents
+are distinct isotypic components.
+
+In both cases $M_\chi$ has eigenvalue $1$ on $\Q^\R$, hence a nonzero fixed vector in $\Z^\R$ after clearing
+denominators. By Lemma~\ref{lem:reid}(b) and Proposition~\ref{prop:H1}, the automorphism of
+$H_1(P;\Z)=P/[P,P]$ induced by $\chi|_P$ has infinite Reidemeister number. The subgroup $[P,P]$ is characteristic
+in $P$, so Lemma~\ref{lem:reid}(a) gives $R(\chi|_P)=\infty$. By Lemma~\ref{lem:reid}(d), with
+$[A:P]=|W|<\infty$, we get $R(\chi)=\infty$. By Lemma~\ref{lem:reid}(c), $R(\varphi)=R(\chi)=\infty$.
+\end{proof}
+
+\begin{remark}[Reduction to outer classes]\label{rem:reduce}
+The hypotheses depend only on the class of $\theta_\alpha$ in $\Out(\rho(W))$. If $\pi$ satisfies \eqref{eq:pi}
+for $\theta$ and $g\in\rho(W)$, then $g\pi$ satisfies it for $\iota_g\circ\theta$. Moreover
+$\{hg\pi:h\in\rho(W)\}=\{h\pi\}$, so (i) and (ii) for $g\pi$ are equivalent to (i) and (ii) for $\pi$. Hence it
+suffices to treat one representative of each class of $\Out(\rho(W))$ that is induced by $\Aut(W)$. For the trivial
+class take $\pi=1$. Then (i) holds as soon as $U$ is a good constituent on which some reflection acts
+nontrivially: $h=1$ gives eigenvalue $+1$, and an involution acting nontrivially has eigenvalue $-1$.
+\end{remark}
+
+\begin{corollary}\label{cor:inner}
+Suppose every automorphism of $\rho(W)$ is inner, and $\Q^\R$ has a good constituent on which some simple
+reflection acts nontrivially. Then $A$ has property $\Rinf$.
+\end{corollary}
+
+\begin{remark}[How permutations $\pi$ arise]\label{rem:pi-refl}
+Suppose an automorphism $\theta$ of $\rho(W)$ maps the set $\rho(\R)$ of reflections onto itself, and
+$r\mapsto\rho(r)$ is injective on $\R$ (true in rank $\ge3$, and checked by machine in all cases). Then
+$\pi(r):=\rho^{-1}\theta(\rho(r))$ satisfies \eqref{eq:pi}. Indeed,
+\[\pi\rho(w)\pi^{-1}(r)=\rho^{-1}\theta\bigl(\rho(w)\,\theta^{-1}(\rho(r))\,\rho(w)^{-1}\bigr)=\rho^{-1}\bigl(\theta(\rho(w))\,\rho(r)\,\theta(\rho(w))^{-1}\bigr)=\theta(\rho(w))(r).\]
+\end{remark}
+
+\section{Verification for $E_6,E_7,E_8,F_4,H_3,H_4$}\label{sec:verify}
+
+\subsection{Automorphisms of $W/Z(W)$}
+\begin{proposition}\label{prop:out}
+Let $G=\rho(W)\cong W/Z(W)$.
+\begin{enumerate}[label=(\alph*)]
+\item For $E_6$, $E_7$ and $D_5$, $\Out(G)=1$.
+\item For $H_3$, $H_4$ and $F_4$, $|\Out(G)|=2$, and the nontrivial class is represented by conjugation with the
+explicit permutation $\pi_0$ of $\R$ described below.
+\item For $E_8$, $\Out(G)=1$. This relies on the ATLAS (see the proof).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a), (b): by computer, in two independent ways (Appendix~\ref{app:comp}).
+\begin{enumerate}[label=(\arabic*)]
+\item \texttt{fastaut.py}/\texttt{pgrp.py} count all automorphisms by brute force over images of the Coxeter
+generators. The candidate images are involutions in conjugacy classes of the right size, subject to the Coxeter
+relations. The program checks that the map extends to a homomorphism, verifying the relations on a spanning tree
+of the Cayley graph, and that it is bijective. Results: $|\Aut G|=|G|$ for $E_6$ ($51840$) and $D_5$ ($1920$);
+$|\Aut G|=2|G|$ for $H_3$ ($120$), $F_4$ ($1152$) and $H_4$ ($14400$).
+\item \texttt{indep/out\_check.py} is fresh code using exact root systems. It enumerates $G$, its involutions and
+their conjugacy classes. It checks that no involution class other than a reflection class has the size of a
+reflection class, so every automorphism maps $\rho(\R)$ onto itself. Let $(t_1,\dots,t_n)$ be a generating tuple of reflections with
+$\mathrm{ord}(t_it_j)=\mathrm{ord}(\rho(s_i)\rho(s_j))$, which divides $m_{ij}$. Such a tuple defines a surjection
+$W\to G$, $s_i\mapsto t_i$. Its kernel has order $|Z(W)|\le 2$, so it is
+central and equals $Z(W)$. Such tuples therefore correspond bijectively to automorphisms. The program counts their
+$\Inn(G)$-orbits by a stabiliser-chain search. The results agree with (1), and also give $\Out(G)=1$ for $E_7$
+($|G|=1451520$; involution classes of sizes $63,315,945,3780$).
+\end{enumerate}
+
+\emph{The permutations $\pi_0$.} Roots are normalised as in \S\ref{app:roots}.
+\begin{itemize}
+\item $H_3$, $H_4$: roots have coordinates in $\Z[\phi]$, $\phi=(1+\sqrt5)/2$. Let $\sigma$ be the Galois
+automorphism $\sqrt5\mapsto-\sqrt5$, applied coordinatewise. Then $T=\tau\circ\sigma$ maps the root system $\Phi$
+onto itself, where $\tau$ swaps the last two coordinates. $T$ is $\sigma$-semilinear and satisfies
+$(Tx,Ty)=\sigma((x,y))$, hence $Ts_\alpha T^{-1}=s_{T\alpha}$. The induced permutation $\pi_0$ of $\R$ normalises
+$\rho(W)$. The induced automorphism is outer; this is checked directly by machine, by verifying that no element of
+$\rho(W)$ induces the same automorphism. Moreover $\pi_0^2=1$, since $\sigma$ and $\tau$ commute and are involutions.
+\item $F_4$: $L(x)=(x_1+x_2,x_1-x_2,x_3+x_4,x_3-x_4)$ is $\sqrt2$ times an orthogonal map. It sends short roots to
+long roots and long roots to twice short roots, so $Ls_\alpha L^{-1}=s_{L\alpha}$. The induced permutation $\pi_0$
+of $\R$ normalises $\rho(W)$ and exchanges the two reflection classes, so it is outer. Since $L^2=2I$, $\pi_0^2=1$.
+\end{itemize}
+
+(c) We have $Z(W(E_8))=\{\pm1\}$ and $W(E_8)/\{\pm1\}\cong O_8^+(2){:}2$, the full orthogonal group of the
+quadratic form $q(x)=\tfrac12(x,x)\bmod2$ on $L/2L$, $L$ the $E_8$ lattice \cite[p.~85]{ATLAS}; see also
+\cite[\S2.12]{Hum90}. The group $S=O_8^+(2)$ (simple, often written $\Omega_8^+(2)$ or $D_4(2)$) has
+$\Out(S)\cong S_3$ \cite[p.~85]{ATLAS}. Let $G=S.2\le\Aut(S)$ with $C_G(S)=1$. Then $S$ is the unique minimal
+normal subgroup of $G$, every automorphism of $G$ restricts to an automorphism of $S$, and restriction gives
+$\Aut(G)\cong N_{\Aut(S)}(G)$. (If $\alpha|_S=1$ then $\alpha(g)g^{-1}\in C_G(S)=1$.) Hence
+$\Out(G)\cong N_{S_3}(C_2)/C_2=1$. Independently, \texttt{indep/out\_check\_stab.py} verifies by Schreier--Sims
+stabiliser chains that $|G|=348364800$ and that every automorphism of $G$ preserving $\rho(\R)$ is inner. It does
+not verify that every automorphism preserves $\rho(\R)$; for $E_8$ this step rests on the ATLAS.
+\GAP{The ATLAS page references (p.~85 for $O_8^+(2)$; pp.~26, 46 for $U_4(2)$, $S_6(2)$) were given from memory
+and have not been checked against a copy of the ATLAS. For $E_6$ and $E_7$ the computation makes the citation
+unnecessary.}
+\end{proof}
+
+\begin{remark}
+For $E_6$ and $E_7$ the results agree with the classical identifications
+$W(E_6)\cong U_4(2){:}2\cong O_6^-(2)$ and $W(E_7)\cong 2\times S_6(2)$, with $\Out(U_4(2){:}2)=\Out(S_6(2))=1$
+\cite{ATLAS}. The involution class sizes of $W(E_7)/Z$ found by the program ($63,315,945,3780$) are those of
+$S_6(2)$.
+\end{remark}
+
+In each case $\Out(G)$ is computed for the whole group $\Aut(\rho(W))$, which contains all automorphisms
+$\theta_\alpha$ induced from $\Aut(W)$. By Remarks~\ref{rem:reduce} and~\ref{rem:pi-refl}, the
+existence of $\pi$ in \eqref{eq:pi} is settled for every $\alpha\in\Aut(W)$: take $\pi=g$ or $\pi=g\pi_0$ with
+$g\in\rho(W)$.
+
+\subsection{Good constituents and witnesses}
+\begin{proposition}\label{prop:data}
+Table~\ref{tab:data} lists, for each type, good constituents of $\Q^\R$ and the decomposition of $\C^\R$. On each
+listed constituent every simple reflection acts nontrivially (for $F_4$, $U_{\mathrm{long}}$ is moved by the long
+simple reflections and $U_{\mathrm{short}}$ by the short ones). Moreover:
+\begin{itemize}
+\item $H_3$, $H_4$: $\pi_0$ preserves each listed $U$, and $\pi_0|_U$ has both eigenvalues $+1$ and $-1$.
+So (i) of Theorem~\ref{thm:crit} holds for the outer class with $h=1$ for both signs.
+\item $F_4$: $\pi_0(U_{\mathrm{short}})=U_{\mathrm{long}}$ and vice versa. Also $(1\cdot\pi_0)^2=1$ has
+eigenvalue $+1$ on $U_{\mathrm{short}}$, and $(s_1\pi_0)^2$ has eigenvalue $-1$ on $U_{\mathrm{short}}$
+($s_1$ the long simple reflection $e_2-e_3$). So (ii) holds.
+\end{itemize}
+\end{proposition}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lrrrrll}
+\toprule
+type & $|W|$ & $|Z(W)|$ & $|\R|$ & $|\rho(W)|$ & $|\Out\rho(W)|$ & $\C^\R$ (good constituents in bold)\\
+\midrule
+$H_3$ & 120 & 2 & 15 & 60 & 2 & $1+\mathbf 4+2\cdot 5$\\
+$H_4$ & 14400 & 2 & 60 & 7200 & 2 & $1+9+9'+\mathbf{16}+\mathbf{25}$\\
+$F_4$ & 1152 & 2 & 24 & 576 & 2 & $2\cdot1+\mathbf{2}_{\rm short}+\mathbf 2_{\rm long}+2\cdot 9$\\
+$E_6$ & 51840 & 1 & 36 & 51840 & 1 & $1+\mathbf{15}+\mathbf{20}$\\
+$E_7$ & 2903040 & 2 & 63 & 1451520 & 1 & $1+\mathbf{27}+\mathbf{35}$\\
+$E_8$ & 696729600 & 2 & 120 & 348364800 & 1 (ATLAS) & $1+\mathbf{35}+\mathbf{84}$\\
+\midrule
+$D_5$ & 1920 & 1 & 20 & 1920 & 1 & $1+\mathbf4+\mathbf5+\mathbf{10}$\\
+\bottomrule
+\end{tabular}
+\caption{Data for the verification. Good constituents were certified exactly by \texttt{certify.py} (commutant
+criterion, Lemma~\ref{lem:cert}(i)) and, independently, by \texttt{indep/indep\_check.py} (character criterion,
+Lemma~\ref{lem:cert}(ii)) for all types except $E_8$. For $E_8$ the second check uses the commutant criterion with
+fresh code: the action of $\rho(W(E_8))$ on $\R$ has rank $3$. In the $F_4$ row, the $2\cdot 1$ and $2\cdot9$ are
+read off from character norms ($\langle\chi,\chi\rangle=4$).}
+\label{tab:data}
+\end{table}
+
+\begin{proof}[Proof of Proposition~\ref{prop:data}]
+Exact computer calculation (Appendix~\ref{app:comp}). Each $U$ is the kernel, over $\Q$, of an integer matrix
+lying in the commutant, so $U$ is defined over $\Q$. It is certified as a good constituent by
+Lemma~\ref{lem:cert}(i) (\texttt{certify.py}) and by Lemma~\ref{lem:cert}(ii) (\texttt{indep\_check.py}). The
+eigenvalue statements are certified by computing exact rational kernels: $\dim\ker((h\pi_0)^{(2)}-\varepsilon)\cap
+U>0$. This is done by \texttt{certify\_outer.py} for the abstractly computed outer automorphism, and by
+\texttt{indep\_check.py} for the explicit $\pi_0$. The two programs find, respectively, the dimensions
+$(3,1)$ for $H_3$ and $(10,6)$, $(15,10)$ for $H_4$ (for $\varepsilon=+1,-1$). For $F_4$ the witness eigenspaces
+have dimension $1$, or $2$ when $h=1$ and $\varepsilon=+1$, since $\pi_0^2=1$. For $H_3$ and $H_4$ the
+\texttt{certify\_outer.py} witnesses were found for some $h$. For the explicit $\pi_0$, $h=1$ already works.
+\end{proof}
+
+\begin{proof}[Proof of the Main Theorem]
+$E_6$, $E_7$, $E_8$: by Proposition~\ref{prop:out}, $\Out(\rho(W))=1$. Table~\ref{tab:data} gives a good
+constituent moved by a simple reflection. Apply Corollary~\ref{cor:inner}.
+
+$H_3$, $H_4$, $F_4$: $\Out(\rho(W))$ has order $2$. The trivial class is handled as in
+Remark~\ref{rem:reduce}, with any listed $U$. The nontrivial class is handled by $\pi_0$ and
+Proposition~\ref{prop:data}: case (i) for $H_3$, $H_4$ and case (ii) for $F_4$. By Remark~\ref{rem:reduce} this
+covers every $\alpha\in\Aut(W)$. Apply Theorem~\ref{thm:crit}.
+\end{proof}
+
+\section{Complements}\label{sec:complements}
+
+\begin{proposition}[Type $D_5$; independent proof of a known result]\label{prop:D5}
+$A(D_5)$ has property $\Rinf$.
+\end{proposition}
+\begin{proof}
+$\Out(\rho(W(D_5)))=1$ by computer (both programs). This is consistent with the fact that the diagram involution
+of $D_5$ is induced by the sign change of $e_5$, and conjugation by it agrees with conjugation by $-\mathrm{diag}(1,1,1,1,-1)=\mathrm{diag}(-1,-1,-1,-1,1)\in W(D_5)$. The constituents of dimensions $4,5,10$ are
+good and are moved by every simple reflection (Table~\ref{tab:data}). Apply Corollary~\ref{cor:inner}.
+\end{proof}
+
+\begin{remark}[Centre-fixing automorphisms are elementary]\label{rem:centre}
+Let $A$ be irreducible spherical. Then $Z(A)=\langle z\rangle\cong\Z$, with $z=\Delta$ or $\Delta^2$
+\cite{BS72,Del72}. Hence $\varphi(z)=z^{\pm1}$ for every $\varphi\in\Aut(A)$. The image of $\Delta$ in
+$H_1(A;\Z)$ is nonzero: its coordinate sum is $\ell(w_0)=|\R|$. So if $\varphi(z)=z$, the induced automorphism of
+$H_1(A;\Z)$ has eigenvalue $1$, and $R(\varphi)=\infty$ by Lemma~\ref{lem:reid}(a,b). Thus only centre-inverting
+automorphisms need Theorem~\ref{thm:crit}. For $E_{6,7,8}$ and $H_{3,4}$, where $H_1(A)=\Z$, these are exactly
+the automorphisms acting by $-1$ on $H_1(A)$. The same conclusion also follows from the theorem of
+Fel'shtyn--Luchnikov--Troitsky \cite{FLT15}, as quoted in \cite[\S1]{Tro22}: if $G$ is finitely generated and
+residually finite and $R(\varphi)<\infty$, then $\varphi$ has finitely many fixed points, building on Jabara
+\cite{Jab08}. \GAP{We have only seen this statement as quoted in \cite{Tro22}, not in \cite{FLT15} itself. The
+remark is not used in the proof.}
+\end{remark}
+
+\begin{proposition}[Inversion; not new in general]\label{prop:inv}
+Let $A$ be an Artin group that is not free abelian, and let $\iota\in\Aut(A)$ be given by $\iota(s)=s^{-1}$ for
+$s\in S$. Then $R(\iota)=\infty$.
+\end{proposition}
+\begin{proof}
+$\iota$ is an automorphism: it maps the relation $\Pi(s,t;m)=\Pi(t,s;m)$ to the inverse of the relation obtained by
+reversing both words, which is again a defining relation. Let $f$ be as in Lemma~\ref{lem:f}, valid for any
+Coxeter group, and let $\tau(v,w)=(-v,w)$. This is an automorphism of $\Z^\R\rtimes W$, and $f\circ\iota=\tau\circ f$
+on generators, since $f(s^{-1})=(-e_s,s)$. So $f$ maps $\iota$-classes into $\tau$-classes. For $g=(u,x)$ and
+$y=(v,w)$ one computes $gy\tau(g)^{-1}=(u+xv+xwx^{-1}u,\ xwx^{-1})$. Fix $s,t\in S$ with $m_{st}\ge3$; they exist
+because $A$ is not free abelian. Then $sts\ne t$. On elements with $W$-part $s$, twisted conjugation acts by
+$v\mapsto(1+s)u+xv$ with $x\in C_W(s)$. Define $D_v(r)=v_r-v_{srs}$. The term $(1+s)u$ does not change $D$, and
+$x\in C_W(s)$ transforms $D_v$ by the permutation $r\mapsto x^{-1}rx$. Hence
+$\max_r|D_v(r)|$ is an invariant of the $\tau$-class. For $a_k=t^{2k}s$ we have $f(a_k)=(2ke_t+e_s,s)$ and
+$\max_r|D(r)|=2k$. So the $a_k$ ($k\ge1$) lie in pairwise distinct $\iota$-classes.
+\end{proof}
+
+\begin{remark}[Scope]
+The method needs a characteristic finite-index subgroup with a computable abelianisation; the pure subgroup and
+$\Z^\R$ play this role. It applies verbatim to the other irreducible spherical types once $\Out(W/Z(W))$ and a good
+constituent are known. We have not attempted to extend it to the pure subgroups $P$ themselves, to the central
+quotients $A/Z(A)$, or to reducible types. For reducible types the statement can fail, since $A(A_1\times A_1)=\Z^2$.
+\end{remark}
+
+\appendix
+\section{Computational methods and certificates}\label{app:comp}
+
+All code is in the accompanying package (\texttt{code/}); exact commands and outputs are in
+\texttt{code/README.md}. Arithmetic is exact (Python \texttt{fractions}, SymPy \texttt{DomainMatrix} over $\Q$)
+wherever a certificate is claimed. Floating point is used only to \emph{locate} candidate eigenvalues or
+witnesses, which are then re-checked exactly.
+
+\subsection{Root systems}\label{app:roots}
+Original code (\texttt{roots.py}) builds roots in floating point and identifies them after rounding. The
+independent code (\texttt{indep/rootsys.py}) builds them exactly. Types $E_{6,7,8}$ use the Bourbaki simple roots
+$\alpha_1=\frac12(1,-1,\dots,-1,1)$, $\alpha_2=e_1+e_2$, $\alpha_k=e_{k-2}-e_{k-3}$; $F_4$ uses $e_2-e_3,e_3-e_4,e_4,
+\frac12(e_1-e_2-e_3-e_4)$; $D_5$ uses $e_i-e_{i+1}$ and $e_4+e_5$. For $H_3$ the roots are the $30$ vectors
+$\pm2e_i$ and the even coordinate permutations of $(\pm\phi,\pm1,\pm\phi^{-1})$; for $H_4$ the $120$ vectors
+$\pm2e_i$, $(\pm1,\pm1,\pm1,\pm1)$ and the even permutations of $(\pm\phi,\pm1,\pm\phi^{-1},0)$. These have
+coordinates in $\Q(\sqrt5)$, and the simple roots are found by search from the Coxeter Gram matrix. In each case the
+program checks the root count and recovers the Coxeter matrix.
+
+\subsection{Certificates}
+\begin{enumerate}[label=(\arabic*)]
+\item \texttt{certify.py} (original). It computes the orbital matrices $O_\omega$ and a symmetric integer
+combination $X=\sum c_\omega(O_\omega+O_\omega^{T})$, and for each candidate integer eigenvalue $\lambda$ the exact
+kernel $U=\ker_\Q(X-\lambda)$. It checks exactly that every $O_\omega$ acts on $U$ as a scalar
+(Lemma~\ref{lem:cert}(i)), and which simple reflections act nontrivially. Output: Table~\ref{tab:data}, good
+constituents of dimensions $4$ $(H_3)$; $2,2$ $(F_4)$; $16,25$ $(H_4)$; $15,20$ $(E_6)$; $27,35$ $(E_7)$; $35,84$
+$(E_8)$; $4,5,10$ $(D_5)$.
+\item \texttt{certify\_outer.py} (original). It computes an outer automorphism of $\rho(W)$ by brute force and the
+permutation $\pi$ of Remark~\ref{rem:pi-refl}, and checks \eqref{eq:pi} on generators. It then certifies the
+witnesses by the exact dimension of $\ker(X-\lambda)\cap\ker(Q-\varepsilon)$, with $Q=\rho(h)\pi$ or $(\rho(h)\pi)^2$.
+\item \texttt{indep/indep\_check.py} (fresh). It enumerates $\rho(W)$ and checks its order and trivial centre. It
+checks the braid-relation computation of Lemma~\ref{lem:f}. It computes joint eigenspaces of the reflection class
+sums $\sum_{r\in K}\rho(r)$, which are central elements of the group algebra, and certifies them by exact
+character inner products (Lemma~\ref{lem:cert}(ii)). The characters are computed from the exact rational
+orthogonal projection. It then checks the explicit $\pi_0$ (normalises, outer, image of constituents, exact
+witnesses). For $E_8$ it reruns the commutant criterion with fresh code.
+\item \texttt{indep/out\_check.py}, \texttt{indep/out\_check\_stab.py} (fresh): Proposition~\ref{prop:out}.
+\item \texttt{check.py} (original). Numerical sanity checks: braid relations for $f$, $f(\Delta^2)=2\sum e_r$, and
+random tests of the invariant in Proposition~\ref{prop:inv}.
+\end{enumerate}
+
+\subsection{Runtimes}
+On a shared, heavily loaded machine, single-threaded: \texttt{certify.py} (all seven types) $\approx 2$\,s;
+\texttt{certify\_outer.py H3 F4 H4} $\approx 9$\,s; \texttt{check.py} $\approx12$\,s; \texttt{fastaut.py E6}
+$\approx 2.4$\,min (an earlier run under heavier load took $24$\,min); \texttt{indep\_check.py} (H3, F4, H4, E6, E7)
+$\approx 9$\,s; \texttt{out\_check.py} (incl.\ $E_7$) $\approx 8$\,s; \texttt{out\_check\_stab.py E7 E8}
+$\approx 2$\,s.
+
+\noindent\GAP{Section and page numbers quoted for \cite{Hum90} (\S\S2.12, 3.19, 5.3), \cite{OT92} (Ch.~5) and \cite{ATLAS} (pp.~26, 46, 85) are given from memory and must be checked against the sources. All arXiv statements quoted in the text (\cite{CP03,FP06,SV24,Sor26,PS26,JMS25,Tro22,DGO21}) were checked against the arXiv versions.}
+
+\begin{thebibliography}{99}
+\bibitem{AIMPL} AIM Problem List, \emph{Geometry and topology of Artin groups}, Problem 8.6, aimpl.org/geomartingp/8.
+\bibitem{ATLAS} J.\,H. Conway, R.\,T. Curtis, S.\,P. Norton, R.\,A. Parker, R.\,A. Wilson, \emph{ATLAS of Finite Groups}, Oxford Univ.\ Press, 1985.
+\bibitem{Bri71} E. Brieskorn, Die Fundamentalgruppe des Raumes der regul\"aren Orbits einer endlichen komplexen Spiegelungsgruppe, \emph{Invent.\ Math.} 12 (1971), 57--61.
+\bibitem{Bri73} E. Brieskorn, Sur les groupes de tresses [d'apr\`es V.\,I. Arnol'd], S\'eminaire Bourbaki 1971/72, Exp.~401, Lecture Notes in Math.\ 317, Springer, 1973, 21--44.
+\bibitem{BS72} E. Brieskorn, K. Saito, Artin-Gruppen und Coxeter-Gruppen, \emph{Invent.\ Math.} 17 (1972), 245--271.
+\bibitem{CS22} M. Calvez, I. Soroko, Property $R_\infty$ for some spherical and affine Artin--Tits groups, \emph{J.\ Group Theory} 25 (2022), 1045--1054; arXiv:2106.13260.
+\bibitem{CW17} M. Calvez, B. Wiest, Acylindrical hyperbolicity and Artin--Tits groups of spherical type, \emph{Geom.\ Dedicata} 191 (2017), 199--215.
+\bibitem{CC05} R. Charney, J. Crisp, Automorphism groups of some affine and finite type Artin groups, \emph{Math.\ Res.\ Lett.} 12 (2005), 321--333.
+\bibitem{CP03} A.\,M. Cohen, L. Paris, On a theorem of Artin, \emph{J.\ Group Theory} 6 (2003), 421--441; arXiv:math/0204242.
+\bibitem{CW02} A.\,M. Cohen, D.\,B. Wales, Linearity of Artin groups of finite type, \emph{Israel J.\ Math.} 131 (2002), 101--123.
+\bibitem{DGO21} K. Dekimpe, D.\,L. Gon\c{c}alves, O. Ocampo, The $R_\infty$ property for pure Artin braid groups, \emph{Monatsh.\ Math.} 195 (2021), 15--33; arXiv:2006.08286.
+\bibitem{Del72} P. Deligne, Les immeubles des groupes de tresses g\'en\'eralis\'es, \emph{Invent.\ Math.} 17 (1972), 273--302.
+\bibitem{Dig03} F. Digne, On the linearity of Artin braid groups, \emph{J.\ Algebra} 268 (2003), 39--57.
+\bibitem{FG10} A. Fel'shtyn, D.\,L. Gon\c{c}alves, Twisted conjugacy classes in symplectic groups, mapping class groups and braid groups (with an appendix by F.~Dahmani), \emph{Geom.\ Dedicata} 146 (2010), 211--223.
+\bibitem{FLT15} A. Fel'shtyn, N. Luchnikov, E. Troitsky, Twisted inner representations, \emph{Russ.\ J.\ Math.\ Phys.} 22 (2015), 301--306.
+\bibitem{FN16} A. Fel'shtyn, T. Nasybullov, The $R_\infty$ and $S_\infty$ properties for linear algebraic groups, \emph{J.\ Group Theory} 19 (2016), 901--921.
+\bibitem{FT12} A. Fel'shtyn, E. Troitsky, Twisted conjugacy classes in residually finite groups, preprint, arXiv:1204.3175.
+\bibitem{FT15} A. Fel'shtyn, E. Troitsky, Aspects of the property $R_\infty$, \emph{J.\ Group Theory} 18 (2015), 1021--1034.
+\bibitem{FFW23} F. Fournier-Facio, R.\,D. Wade, Aut-invariant quasimorphisms on groups, arXiv:2211.00800.
+\bibitem{FFIMSW25} F. Fournier-Facio, H. Iveson, A. Martino, W. Sgobbi, P. Wong, Property $R_\infty$ for groups with infinitely many ends, arXiv:2504.12002.
+\bibitem{FP06} N. Franco, L. Paris, On a theorem of Artin, II, \emph{J.\ Group Theory} 9 (2006), 731--751; arXiv:math/0411193.
+\bibitem{GGO17} D.\,L. Gon\c{c}alves, J. Guaschi, O. Ocampo, Quotients of the Artin braid groups and crystallographic groups, arXiv:1503.04527 (journal version in J.\ Algebra).
+\bibitem{Hum90} J.\,E. Humphreys, \emph{Reflection Groups and Coxeter Groups}, Cambridge Univ.\ Press, 1990.
+\bibitem{Jab08} E. Jabara, Automorphisms with finite Reidemeister number in residually finite groups, \emph{J.\ Algebra} 320 (2008), 3671--3679.
+\bibitem{JMS25} O. Jones, G. Mangioni, G. Sartori, JSJ splittings for all Artin groups, arXiv:2506.17157.
+\bibitem{Juh11} A. Juh\'asz, Twisted conjugacy in certain Artin groups, in: \emph{Ischia Group Theory 2010}, World Sci., 2012, 175--195.
+\bibitem{Kourovka} E.\,I. Khukhro, V.\,D. Mazurov (eds.), \emph{The Kourovka Notebook: Unsolved Problems in Group Theory}, 21st ed., Novosibirsk, 2026.
+\bibitem{Mar15} I. Marin, Crystallographic groups and flat manifolds from complex reflection groups, arXiv:1509.06213.
+\bibitem{OT92} P. Orlik, H. Terao, \emph{Arrangements of Hyperplanes}, Grundlehren 300, Springer, 1992.
+\bibitem{PS26} L. Paris, I. Soroko, Automorphisms of the Artin group of type $D_5$, arXiv:2606.26082.
+\bibitem{Sor26} I. Soroko, Property $R_\infty$ for Artin and Coxeter groups whose outer automorphisms are length-preserving, arXiv:2610.13904.
+\bibitem{SV24} I. Soroko, N. Vaskou, Property $R_\infty$ for new classes of Artin groups, arXiv:2409.18123 (v2, 2026).
+\bibitem{SV26} I. Soroko, N. Vaskou, Acylindrical hyperbolicity of automorphism groups and property $R_\infty$ for generalized Higman groups, arXiv:2604.27526.
+\bibitem{Ste89} J.\,R. Stembridge, On the eigenvalues of representations of reflection groups and wreath products, \emph{Pacific J.\ Math.} 140 (1989), 353--396.
+\bibitem{Tro22} E. Troitsky, Twisted conjugacy in residually finite groups of finite Pr\"ufer rank, arXiv:2210.00591.
+\end{thebibliography}
+
+\end{document}

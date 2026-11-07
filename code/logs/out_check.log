@@ -1,0 +1,42 @@
+===== H3: |rho(W)| = 60, |R| = 15
+  centre of rho(W): order 1
+  r -> rho(r) injective on R: True
+  15 involutions in 1 classes, sizes [15]
+  reflection classes: 1 of sizes [15]; other involution classes of a reflection-class size: [] -> automorphisms preserve rho(R): True
+  search nodes 4; Inn-orbits of generating Coxeter tuples of reflections: 2  => |Out(rho(W))| = 2
+  [H3 done in 0.1s]
+===== F4: |rho(W)| = 576, |R| = 24
+  centre of rho(W): order 1
+  r -> rho(r) injective on R: True
+  75 involutions in 5 classes, sizes [6, 9, 12, 12, 36]
+  reflection classes: 2 of sizes [12, 12]; other involution classes of a reflection-class size: [] -> automorphisms preserve rho(R): True
+  search nodes 8; Inn-orbits of generating Coxeter tuples of reflections: 2  => |Out(rho(W))| = 2
+  [F4 done in 0.0s]
+===== H4: |rho(W)| = 7200, |R| = 60
+  centre of rho(W): order 1
+  r -> rho(r) injective on R: True
+  315 involutions in 3 classes, sizes [30, 60, 225]
+  reflection classes: 1 of sizes [60]; other involution classes of a reflection-class size: [] -> automorphisms preserve rho(R): True
+  search nodes 5; Inn-orbits of generating Coxeter tuples of reflections: 2  => |Out(rho(W))| = 2
+  [H4 done in 0.2s]
+===== D5: |rho(W)| = 1920, |R| = 20
+  centre of rho(W): order 1
+  r -> rho(r) injective on R: True
+  155 involutions in 5 classes, sizes [5, 10, 20, 60, 60]
+  reflection classes: 1 of sizes [20]; other involution classes of a reflection-class size: [] -> automorphisms preserve rho(R): True
+  search nodes 6; Inn-orbits of generating Coxeter tuples of reflections: 1  => |Out(rho(W))| = 1
+  [D5 done in 0.0s]
+===== E6: |rho(W)| = 51840, |R| = 36
+  centre of rho(W): order 1
+  r -> rho(r) injective on R: True
+  891 involutions in 4 classes, sizes [36, 45, 270, 540]
+  reflection classes: 1 of sizes [36]; other involution classes of a reflection-class size: [] -> automorphisms preserve rho(R): True
+  search nodes 6; Inn-orbits of generating Coxeter tuples of reflections: 1  => |Out(rho(W))| = 1
+  [E6 done in 0.2s]
+===== E7: |rho(W)| = 1451520, |R| = 63
+  centre of rho(W): order 1
+  r -> rho(r) injective on R: True
+  5103 involutions in 4 classes, sizes [63, 315, 945, 3780]
+  reflection classes: 1 of sizes [63]; other involution classes of a reflection-class size: [] -> automorphisms preserve rho(R): True
+  search nodes 7; Inn-orbits of generating Coxeter tuples of reflections: 1  => |Out(rho(W))| = 1
+  [E7 done in 6.8s]

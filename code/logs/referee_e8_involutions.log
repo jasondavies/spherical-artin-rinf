@@ -1,0 +1,8 @@
+orthogonal k-frames of root lines: {1: 120, 2: 3780, 3: 37800, 4: 122850}
+distinct involutions of G with lift w^2=1 (from k<=4 frames): 99975  by k: {1: 120, 2: 3780, 3: 37800, 4: 58275}
+classes of involutions with w^2=1: (size, k, #fixed lines): [(120, 1, 64), (1575, 4, 24), (3780, 2, 32), (37800, 3, 16), (56700, 4, 8)]
+class of the w^2=-1 involution: size 7560 , fixed lines 0 , disjoint from w^2=1 involutions: True
+sizes equal to 120: [(120, 1, 64)] 
+|G| / class size = centralizer orders: [(2903040, 1), (221184, 4), (92160, 2), (9216, 3), (6144, 4)] 46080
+|G| (sympy Schreier-Sims): 348364800
+1.27 s
