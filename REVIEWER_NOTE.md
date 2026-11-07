@@ -22,12 +22,15 @@ rank ≥ 2 then has R∞.
 
 Our method gives an independent proof (Prop 5.2). Please check the attribution.
 
-**Theorem B.** A/[P,P] has R∞ for the same seven types. The proof is now in §6.2 and uses the full
-Aut(W/Z) statements of Appendix B, not only Franzsen–Howlett.
+**Theorem B (now a full classification).** A(X)/[P,P] has R∞ for every irreducible spherical X of rank at least three. In rank two, X = I₂(m), it has R∞ exactly when 4 divides m, or m is odd and 3 divides m. The seven original positive cases remain in §6.2 with the full Aut(W/Z) inputs from Appendix B. Section 6.3 gives uniform classical arguments, and §6.6 proves the complete dihedral classification. These are proofs for all ranks/parameters, not extrapolations from the scratch computations.
 
-**Proposition C.** A(I₂(5))/[P,P] admits an automorphism with **R = 18**. This confirms failure of R∞ for the quotient while correcting the exploratory claim R = 14. The script behind that claim used the Bieberbach determinant average on a group with torsion. Section 6.5 gives the matrix, translation, extension check, ten nonzero determinants, and a direct class count. The independent exact checker `code/indep/dihedral_quotient.py` confirms the count by both centralizer orbits and enumeration of all 140 translation-twisted classes. The general-m exploratory script has not been certified.
+**Classical proof point.** Lemma 6.3 uses fixed-root-line counts for signed involutions. The equations leave the reflection classes, the (3,3,0) class in B6, and the two-negative-coordinate class in D_n; class sizes exclude the latter two. The root-isometry argument then handles B_n/D_n. D4 uses its unique rational two-dimensional frame constituent. Only character-preserving holonomy automorphisms need be controlled.
 
-**Alternative proof.** Section 6.3 verifies the odd-dimensional route for D5, E6, E7, E8 and H4, using unique good constituents of dimensions 5, 15, 27, 35 and 25. It proves the required normalisers are finite and uses the determinant criterion for crystallographic groups with torsion. This avoids applying a flat-manifold theorem outside its hypotheses. The explicit witnesses also cover F4 and H3, where this particular route does not apply. Dekimpe–Gonçalves–Ocampo (2024), Theorems 28 and 31, is now cited for the distinct virtual-braid quotients with three and four strings.
+**Proposition C.** A(I₂(5))/[P,P] admits an automorphism with **R = 18**. This confirms failure of R∞ for the quotient while correcting the exploratory claim R = 14. The script behind that claim used the Bieberbach determinant average on a group with torsion. Section 6.7 gives the matrix, translation, extension check, ten nonzero determinants, and a direct class count. The independent exact checker `code/indep/dihedral_quotient.py` confirms the count by both centralizer orbits and enumeration of all 140 translation-twisted classes. General-m existence is now proved uniformly; the scratch scripts' numerical `R` labels have not been certified.
+
+**Alternative proofs and attribution.** Section 6.4 verifies the odd-dimensional route for D5, E6, E7, E8 and H4, using unique good constituents of dimensions 5, 15, 27, 35 and 25. It proves the required normalisers are finite and uses the determinant criterion for crystallographic groups with torsion. The explicit witnesses also cover F4 and H3. The stable criterion is credited to DDP/DP; the swap case handles exchanged constituents excluded by the stable hypothesis. Theorem B also implies the Artin-group result outside the negative dihedral families, since [P,P] is characteristic; the remaining Artin cases are known. This route does not use the Franzsen–Howlett decomposition.
+
+**Related work.** The introduction cites DGO (2024) for the virtual-braid quotients with three and four strings, and the recent Ocampo and Leite–Ocampo–Santos Júnior–Teixeira papers for torus bundles and framed-braid quotients. The A2 quotient result is acknowledged as implicit in GGO's identification as IT 161 and the DKT classification. No blanket novelty claim for A2 is made.
 
 **Novelty and precedents.**
 - New:
@@ -58,9 +61,9 @@ Aut(W/Z) statements of Appendix B, not only Franzsen–Howlett.
    - End(V) in the icosian model for H4.
 
 **What to check (in order).**
-1. Proposition C (§6.5): the actual extension and the torsion-sensitive class count.
-2. Theorem B (§6.2), including the full holonomy-automorphism certificates in Appendix B.
-3. The odd-dimensional alternative (§6.3) and extension-compatibility criterion (§6.4).
+1. The uniform classical proof (§6.3), especially the class-size exclusions and root-isometry reduction.
+2. The dihedral classification (§6.6), including both positive cases and both explicit negative families.
+3. Proposition C (§6.7), the seven positive cases (§6.2), and the odd-dimensional comparison (§6.4).
 4. Thm 3.3, case (ii), and Prop 2.4.
 5. Lemma 4.1, the quotation of Franzsen–Howlett, and Props 4.2–4.6 with their finite certificates.
 6. Prop 5.2 and Remark 5.3 (D5).
@@ -86,6 +89,7 @@ if an expected value fails:
 ```
 cd code/indep
 python3 dihedral_quotient.py          # actual I2(5) extension, determinants, torsion, two exact R = 18 counts
+python3 quotient_families.py --max-m 46  # finite exact cross-checks of the uniform classical/dihedral proofs
 python3 explicit_constituents.py      # proof certificates for §4.2, Lemma 4.5, Prop 4.6, §5 (exact; asserts)
 python3 referee_v3_E.py               # E types (exact ranks; asserts)
 python3 indep_check.py H3 F4 H4 E6 E7 && python3 out_check.py H3 F4 H4 D5 E6 E7 && python3 out_check_stab.py E7 E8

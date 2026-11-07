@@ -1,6 +1,6 @@
 # Code for "Twisted conjugacy in irreducible spherical Artin groups"
 
-**Paper numbering.** The v4 revision preserves the numbering in §§2–5 and Appendices A–B, except that former Cor. B.3 is now Theorem 6.2 (Theorem B). Section 6 adds the quotient criteria and Proposition C. Version 3 of the paper (after the external review, updated after the v3 referee round) renumbered everything. The table below
+**Paper numbering.** The v5 revision preserves the numbering in §§2–5 and Appendices A–B, except that former Cor. B.3 is now Theorem 6.2 (the seven initial cases of Theorem B). Section 6 contains the full quotient classification and Proposition C (6.7). Version 3 of the paper (after the external review, updated after the v3 referee round) renumbered everything. The table below
 uses the old numbering (v2) where it says so. Correspondence:
 
 | old (v2) | new (v3) |
@@ -13,6 +13,18 @@ uses the old numbering (v2) where it says so. Correspondence:
 | §5 (A_n, B_n ≤ 7, D_n ≤ 7) | §5 (A_n, B_n, D_n by hand: Props. 5.1, 5.2, 5.4; D5 now claimed as new, Rem. 5.3; dihedral Rem. 5.5) |
 
 Requirements: Python 3 (tested with 3.12), numpy (2.5.1), sympy (1.14.0). No GAP or Sage needed.
+
+## Uniform quotient families (v5)
+
+Run `python3 code/indep/quotient_families.py --max-m 46` from the repository root (SymPy only).
+The default maximum m is 22; the recorded run uses 46. It checks:
+
+- fixed-root-line counts directly for signed involutions through rank 12, including lifts whose square is −I;
+- the reflection-character coincidences through rank 120 and the exceptional class-size exclusions;
+- the positive dihedral constituents and their multiplicities for every applicable m in the tested range;
+- both negative dihedral affine maps, their inverses, the precise lattices and generator corrections, and every holonomy-adjusted determinant.
+
+These are **finite corroboration** of the uniform algebraic proofs in Lemma 6.3 and Theorem 6.6, not proofs by bounded search. The checker imports none of the scratch research modules and computes no determinant average as a Reidemeister number. Log: `logs/quotient_families.log`.
 
 ## Dihedral quotient (v4)
 

@@ -1,6 +1,33 @@
 # AUDIT: Twisted conjugacy in irreducible spherical Artin groups (R∞ for D5, E6, E7, E8, F4, H3, H4)
 
-Auditors: AI (Claude; v4 revision checked by Codex). No human expert has checked this. Newest section first.
+Auditors: AI (Claude; v4/v5 revisions checked by Codex). No human expert has checked this. Newest section first.
+
+## v5: full quotient classification from THEOREM_B_NOTES.md, with uniform proof gaps filled
+
+Read the user-supplied `THEOREM_B_NOTES.md`, the focused quotient referee report, the prior-art notes, and the scripts/logs in `s6-crystquot/`. The candidate classification is now Theorem B: all irreducible spherical ranks ≥ 3 are positive; in rank two the positive parameters are exactly 4 | m or m odd with 3 | m.
+
+The notes' statement “all proved, exact checks passed” was not used as a proof. In particular, `lemmaC_check.py` only lists character coincidences for n ≤ 60. The revision supplies the missing unbounded arguments:
+
+| Claim | Verification and manuscript treatment |
+|---|---|
+| Character-preserving holonomy automorphisms preserve reflections in B_n/D_n | New Lemma 6.3 derives the character equations for signed involutions of type (a,b,c). In B_n the only extra long-reflection coincidence is (3,3,0) at n=6; its quotient class size is 10, versus 30. In D_n, n≥5, the only extra type negates two coordinates; its class size is n(n−1)/2, versus n(n−1). The equations exclude every other type for all n, using n≥2c. Lifts squaring to −I have character zero. |
+| Reflection-preserving automorphisms give usable witnesses | For D_n use the existing simply-laced root lemma. For B_n the character distinguishes root lengths; the tree sign-choice construction gives a root-system isometry, necessarily a signed permutation. Thus the existing U⁻ witnesses apply without requiring an arbitrary holonomy automorphism to lift to W. |
+| D4 quotient | The frame constituent is the unique rational degree-two constituent. The sign-fixed part has degrees 1,3,2; constituents in U⁻ have degree divisible by three by the sign-weight orbit. Its image is S3, whose normaliser on this lattice acts as ±S3. |
+| Odd m, 3 ∣ m | The unique rational degree-two constituent U3 has image S3. Every rational normaliser preserves it, giving the same argument as D4. |
+| 4 ∣ m | The two nontrivial rational character lines have multiplicity one. Their values on the rotation generator are both −1 and on S are +1/−1. A normaliser preserves or swaps them; the stable/swap argument works directly, including m=4. |
+| Odd m, 3 ∤ m | For D=I−C−C⁻¹, d=e0+e1, the generator corrections are −2e_(m−1) and −2e2. The identity (I+C)(I−C+C²)=I+C³ gives det D=−1 because C and C³ are odd m-cycles. The only eigenvalue of modulus one is −1 on the constant line, so every adjusted determinant is nonzero. This is a uniform existence proof, not a claim about the exact Reidemeister number. |
+| m ≡ 2 mod 4 | Pair even j with j+m/2 and use the block [[1,2],[2,5]], with translation zero. The pairing is holonomy-equivariant. The matrix and inverse are integral and congruent to I modulo two, preserving the full lattice and the extension. Its eigenvalues 3±2√2 have modulus different from one. |
+| Theorem B implies the Artin result | [P,P] is characteristic by Cohen–Paris; projection gives the Reidemeister inequality. Together with the known dihedral Artin cases this proves Theorem A, without the Franzsen–Howlett decomposition. The existing Lean theorem still uses its original four hypotheses; no new formalisation is claimed. |
+
+The new `code/indep/quotient_families.py` is a fresh exact checker, importing none of the scratch modules. Recorded validation: direct root-line counts through rank 12; character coincidences through rank 120; every dihedral m from 3 to 46, checking positive constituent multiplicities or the affine map, inverse, lattice, generator corrections and every adjusted determinant. Output: `code/logs/quotient_families.log`. These are explicitly labelled finite corroboration, not the proof of the uniform statements. The existing I₂(5) checker was rerun and still gives R = 18.
+
+Other changes: credited the stable criterion to DDP/DP and distinguished the swap extension; made the inclusion Θ_Γ ⊆ Θ_χ explicit; added the F4 non-innerness check after passage to W/Z; stated discreteness/cocompactness. The finite exceptional certificates remain proof inputs; the suggested ATLAS substitutions were not adopted without separate verification. The notes' blanket “Γ_X has torsion” was not adopted: the statements and criteria allow torsion without claiming it for every type.
+
+New primary-source checks: [Ocampo 2610.20478, §1](https://arxiv.org/html/2610.20478v1) explicitly discusses possible Nielsen/Reidemeister questions for fibre-preserving maps of its torus bundles; [Leite–Ocampo–Santos Júnior–Teixeira 2610.33308](https://arxiv.org/html/2610.33308v1) concerns framed-braid quotients and flat manifolds. The introduction now cites both. The A2 quotient result is acknowledged as implicit in [GGO, §5](https://arxiv.org/pdf/1503.04527), identifying IT 161, together with [DKT, Table 2](https://arxiv.org/pdf/1709.07649), the complete list of three-dimensional groups without R∞. No priority probability or “scoop risk” estimate was adopted.
+
+The former classification question is replaced by the Reidemeister-spectrum question for the negative dihedral families. Exact values printed in the old general-m scratch logs are not promoted to the paper.
+
+---
 
 ## v4: quotient results promoted; dihedral counterexample verified and exact count corrected
 
