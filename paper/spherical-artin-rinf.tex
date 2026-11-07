@@ -164,7 +164,9 @@ specifies the scope and dependencies of the formalisation.
 Exact computational certificates accompany the exceptional proofs. A conditional Lean~4/Mathlib
 formalisation proves seven direct Artin cases through Franzsen--Howlett, using the same fixed-vector mechanism
 and finite certificates; Appendix~\ref{app:artin} specifies its four external hypotheses.
-The full quotient classification and Proposition~C are not Lean-formalised.
+Lean also verifies the affine calculation $R(\varphi)=18$ in Proposition~C; the identification
+of that affine model with the presented Artin quotient and the full quotient classification
+remain outside the formalisation.
 
 \section{The characteristic reflection lattice}\label{sec:lattice}
 
@@ -1157,7 +1159,12 @@ These cited results are hypotheses, not formalised theorems of the development.
 For $H_3$ and $F_4$ there are also theorems replacing the last hypothesis by kernel-checked
 full-holonomy enumerations. The source contains no \texttt{sorry}, custom \texttt{axiom}
 or \texttt{native\_decide}; finite certificates are checked by the Lean kernel.
-The full quotient classification and Proposition~C are not formalised.
+The scalar and stable/swap arguments are separated into a general integral-lattice criterion.
+For Proposition~C, the kernel checks the parity extension, its generation by the two affine
+Artin images, the automorphism and its inverse, and the reduction of all twisted classes to
+$140$ finite states with exactly $18$ orbits. The isomorphism from the presented Artin quotient
+to this affine model is an explicit input to the transfer theorem, not a formalised result.
+The full quotient classification remains outside the formalisation.
 
 \section*{Declaration of AI-generated research and authorship}
 This paper was developed through an AI-driven research process directed by Jason Davies.
@@ -1165,9 +1172,10 @@ Anthropic's Claude and OpenAI's Codex contributed to the mathematical arguments,
 verification, Lean formalisation, and preparation and revision of the manuscript.
 
 The Lean kernel checks the seven direct Artin-group results under the external hypotheses stated in
-Appendix~\ref{app:artin}. The full crystallographic quotient classification and Proposition~C are not
-formalised; their written proofs are accompanied by the exact computational checks described in
-Appendix~\ref{app:comp}. These checks do not replace mathematical review of the written arguments.
+Appendix~\ref{app:artin}, as well as the concrete affine calculation in Proposition~C.
+The full quotient classification and the identification of the affine model with the presented
+Artin quotient remain outside the formalisation. Their written proofs are accompanied by
+the exact computational checks described in Appendix~\ref{app:comp}. These checks do not replace mathematical review of the written arguments.
 The author takes responsibility for the content of the paper and the accuracy of this disclosure.
 
 \begin{thebibliography}{99}

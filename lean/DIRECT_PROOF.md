@@ -45,7 +45,7 @@ For H3 and H4, the inner coset is handled by the same reflection argument. The f
 
 For F4, the long and short frame constituents are distinct good two-dimensional constituents. In the inner coset, the identity and a long reflection give both signs on the long constituent. In the outer coset, π_L exchanges the two constituents, π_L² = 1 supplies the positive square witness, and (sπ_L)² for a long simple reflection s supplies the negative square witness. The swap case applies.
 
-These are the seven conditional Artin-group theorems. Their hypotheses are finiteness of W, characteristicity of P [CP03], the abstract rank statement Pᵃᵇ ≅ ℤ^|T| [Bri71], and the Coxeter automorphism decomposition [FH03]. The equivariant lattice identification and finite witnesses are checked in Lean. The full quotient classification and the I₂(5) Reidemeister count are outside this development.
+These are the seven conditional Artin-group theorems. Their hypotheses are finiteness of W, characteristicity of P [CP03], the abstract rank statement Pᵃᵇ ≅ ℤ^|T| [Bri71], and the Coxeter automorphism decomposition [FH03]. The equivariant lattice identification and finite witnesses are checked in Lean. The full quotient classification is outside this development. A separate `Dihedral5` development proves the I₂(5) affine automorphism and Reidemeister count 18, with the identification of the affine model with the presented quotient left explicit; see [the Lean guide](README.md).
 
 ## The D5 attribution
 

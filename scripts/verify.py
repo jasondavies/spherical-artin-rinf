@@ -21,6 +21,7 @@ PYTHON_CHECKS = [
     ("holonomy", "code/indep", ["out_check.py", "H3", "F4", "H4", "E6", "E7"]),
     ("holonomy_stabilisers", "code/indep", ["out_check_stab.py", "E7", "E8"]),
     ("dihedral", "code/indep", ["dihedral_quotient.py"]),
+    ("dihedral_lean_export", "lean/scripts", ["export_dihedral5.py", "--check"]),
     ("quotient_families", "code/indep", ["quotient_families.py", "--max-m", "46"]),
     ("characters", "code/indep", ["indep_check.py", "H3", "F4", "H4", "D5", "E6", "E7"]),
     ("commutants", "code/indep", ["indep_check.py", "commutant:E8", "commutant:H3", "commutant:F4"]),

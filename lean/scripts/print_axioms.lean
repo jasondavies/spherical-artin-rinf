@@ -33,3 +33,12 @@ import ArtinRinf
 #print ArtinRinf.FranzsenHowlett
 #check @ArtinRinf.D5.artin_D5_R_infty_FH
 #print ArtinRinf.D₅
+
+#print axioms ArtinRinf.exists_fixed_of_lattice_sign_witness
+#print axioms ArtinRinf.reidemeister_eq_top_of_lattice_matrix
+#print axioms ArtinRinf.TwistedClassification.reidemeister_eq
+#print axioms ArtinRinf.Dihedral5.reidemeister_phi
+#print axioms ArtinRinf.Dihedral5.generated_eq_top
+#print axioms ArtinRinf.Dihedral5.braid_relation
+#print axioms ArtinRinf.Dihedral5.exists_reidemeister_eighteen
+#print axioms ArtinRinf.Dihedral5.affineMap_injective

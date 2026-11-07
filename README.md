@@ -38,6 +38,6 @@ After a successful full verification run, `python3 scripts/package_review.py` cr
 
 The exact Python calculations are proof inputs for the exceptional constituents and holonomy automorphisms. The unbounded classical and dihedral classification is proved in the text; finite checks corroborate it. The I₂(5) count is checked both by centraliser orbits and by enumeration of all 140 translation-twisted classes.
 
-Lean verifies the direct Artin-group argument for D5, E6, E7, E8, F4, H3 and H4, conditional on explicitly stated cited results. It does **not** formalise the full quotient classification or the Reidemeister number 18. See the Lean guide for the precise hypotheses.
+Lean verifies the direct Artin-group argument for D5, E6, E7, E8, F4, H3 and H4, conditional on explicitly stated cited results. It also proves the exact Reidemeister number 18 for the concrete I₂(5) affine extension, including its generation by the two affine Artin images. The identification of that model with the presented Artin quotient and the full quotient classification remain outside Lean. See the Lean guide for the precise hypotheses.
 
 Jason Davies is the author. The mathematical arguments, programs, Lean development and manuscript were developed by AI systems under his direction; the paper includes an AI transparency statement and a fuller disclosure. No independent human expert review has been recorded.
