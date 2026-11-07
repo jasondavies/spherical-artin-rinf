@@ -1,5 +1,5 @@
 import sys; sys.argv=['x']
-exec(open('referee_own_check.py').read().split("if __name__")[0])
+exec(open('small_holonomy.py').read().split("if __name__")[0])
 n,C,M,pos=roots('F4'); N=len(pos); idx={v:i for i,v in enumerate(pos)}
 line=lambda v: idx[v] if v in idx else idx[neg(v)]
 gens=[tuple(line(refl(i,v,C)) for v in pos) for i in range(n)]

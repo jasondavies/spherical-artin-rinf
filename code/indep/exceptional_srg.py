@@ -1,10 +1,10 @@
-# Referee's independent check for E6, E7, E8 (Prop 4.2). Imports nothing from the package.
+# Independent check for E6, E7, E8 (exceptional graph constituents). Imports nothing from the package.
 # Integer coordinates: all vectors are doubled (so E8 roots have integer entries, norm 8).
 import itertools, sys
 import numpy as np
 from fractions import Fraction
 
-# [package revision] exact rational rank instead of numpy.linalg.matrix_rank (external review, point G)
+# Exact rational rank over Q.
 def exact_rank(rows):
     from sympy import QQ
     from sympy.polys.matrices import DomainMatrix

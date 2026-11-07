@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Export reflection-permutation tables and search-tree certificates (ArtinRinf/Data/<X>Tree.lean)
-for the Franzsen–Howlett route (paper v3, Lemma 4.1): every tuple of reflections with the Coxeter
+for the Franzsen–Howlett route (alternative Artin-group proof): every tuple of reflections with the Coxeter
 orders of the simple reflections is conjugate to the simple tuple by an element of rho(W) or
 rho(W)pi_0.
 

@@ -1,5 +1,5 @@
 /-
-# The abstract criterion (paper, Theorem 3.3, Lemma 3.1, Corollary 2.5, Remark 3.4)
+# The abstract Artin-group criterion (see lean/DIRECT_PROOF.md)
 
 Setting.
 * `A` a group, `P ≤ A` a characteristic subgroup of finite index.
@@ -287,13 +287,13 @@ def CommScalar (ρ : A →* Equiv.Perm T) (U : Submodule ℚ (T → ℚ)) : Prop
   ∀ N : Matrix T T ℚ, (∀ a, N * pmat ℚ (ρ a) = pmat ℚ (ρ a) * N) →
     ∃ c : ℚ, ∀ u ∈ U, N *ᵥ u = c • u
 
-/-- Stable case (i) of Theorem 3.3 for the permutation `π`: for each `ε = ±1` there are `h ∈ ρ(A)`
+/-- Stable case (i) of the Artin-group criterion (see lean/DIRECT_PROOF.md) for the permutation `π`: for each `ε = ±1` there are `h ∈ ρ(A)`
 and `0 ≠ v ∈ U` with `h π v = ε v`. -/
 def StableWitness (ρ : A →* Equiv.Perm T) (U : Submodule ℚ (T → ℚ)) (π : Equiv.Perm T) : Prop :=
   ∀ ε : ℚ, (ε = 1 ∨ ε = -1) →
     ∃ a : A, ∃ v ∈ U, v ≠ 0 ∧ pmat ℚ (ρ a * π) *ᵥ v = ε • v
 
-/-- Swap case (ii) of Theorem 3.3 for the permutation `π`, in the form used by the proof: for each
+/-- Swap case (ii) of the Artin-group criterion (see lean/DIRECT_PROOF.md) for the permutation `π`, in the form used by the proof: for each
 `ε = ±1` there are `h ∈ ρ(A)` and `0 ≠ v ∈ U₁` with `hπ v ∈ U₂`, `(hπ)² v = ε v`, and
 `hπ v ≠ ±v`.  (The last condition replaces the use of `U₁ ∩ U₂ = 0` in the paper.) -/
 def SwapWitness (ρ : A →* Equiv.Perm T) (U₁ U₂ : Submodule ℚ (T → ℚ)) (π : Equiv.Perm T) :
@@ -309,7 +309,7 @@ def Witness (ρ : A →* Equiv.Perm T) (π : Equiv.Perm T) : Prop :=
   (∃ U, CommScalar ρ U ∧ StableWitness ρ U π) ∨
     (∃ U₁ U₂, CommScalar ρ U₁ ∧ CommScalar ρ U₂ ∧ SwapWitness ρ U₁ U₂ π)
 
-/-- Remark 3.4: the witness condition for `π` implies it for `ρ(g) π`. -/
+/-- the inner-coset reduction: the witness condition for `π` implies it for `ρ(g) π`. -/
 lemma Witness.mul_left {ρ : A →* Equiv.Perm T} {π : Equiv.Perm T} (h : Witness ρ π) (g : A) :
     Witness ρ (ρ g * π) := by
   have key : ∀ a : A, ρ (a * g⁻¹) * (ρ g * π) = ρ a * π := by
@@ -325,7 +325,7 @@ lemma Witness.mul_left {ρ : A →* Equiv.Perm T} {π : Equiv.Perm T} (h : Witne
     exact ⟨a * g⁻¹, v, hvU, hv0, by rw [key]; exact h1, by rw [key]; exact h2,
       by rw [key]; exact h3, by rw [key]; exact h4⟩
 
-/-! ### Theorem 3.3 -/
+/-! ### the Artin-group criterion (see lean/DIRECT_PROOF.md) -/
 
 section Main
 
@@ -341,7 +341,7 @@ lemma reidemeisterAut_conj (φ : A ≃* A) (a : A) :
   rfl
 
 include E in
-/-- **Theorem 3.3** for a single automorphism `φ`: if `π ρ(a) π⁻¹ = ρ(φ a)` for all `a`, and the
+/-- **the Artin-group criterion (see lean/DIRECT_PROOF.md)** for a single automorphism `φ`: if `π ρ(a) π⁻¹ = ρ(φ a)` for all `a`, and the
 witness condition holds for `π`, then `R(φ) = ∞`. -/
 theorem reidemeister_eq_top_of_witness (φ : A ≃* A) (π : Equiv.Perm T)
     (hπ : ∀ a, ρ (φ a) = π * ρ a * π⁻¹) (hW : Witness ρ π) : reidemeisterAut φ = ⊤ := by
@@ -499,7 +499,7 @@ def OutGeneratedBy (G : Subgroup (Equiv.Perm T)) (π₀ : Equiv.Perm T) : Prop :
     (∀ x : G, (θ x : Equiv.Perm T) = (g * π₀) * x * (g * π₀)⁻¹)
 
 include E in
-/-- **Theorem 3.3, packaged with Remark 3.4.**  Suppose every automorphism of `ρ(A)` is conjugation
+/-- **the Artin-group criterion (see lean/DIRECT_PROOF.md), packaged with the inner-coset reduction.**  Suppose every automorphism of `ρ(A)` is conjugation
 by an element of `ρ(A)` or of `ρ(A) π₀`, and the witness condition holds for `π = 1` and for
 `π = π₀`.  Then every automorphism of `A` has infinite Reidemeister number. -/
 theorem rinf_of_outGeneratedBy [P.FiniteIndex] (π₀ : Equiv.Perm T)
@@ -518,7 +518,7 @@ theorem rinf_of_outGeneratedBy [P.FiniteIndex] (π₀ : Equiv.Perm T)
     · exact hOuter.mul_left b
 
 include E in
-/-- Remark 3.4: if every automorphism of `ρ(A)` is inner and the witness condition holds for
+/-- the inner-coset reduction: if every automorphism of `ρ(A)` is inner and the witness condition holds for
 `π = 1`, then every automorphism of `A` has infinite Reidemeister number. -/
 theorem rinf_of_allInner [P.FiniteIndex] (hOut : OutGeneratedBy ρ.range 1)
     (hInner : Witness ρ 1) : ∀ φ : A ≃* A, reidemeisterAut φ = ⊤ :=

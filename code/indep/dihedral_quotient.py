@@ -187,13 +187,8 @@ def main():
     fixed = [sum(act(hk, node) == node for node in nodes) for hk in sections]
     assert sorted(fixed) == [0] * 5 + [10] * 4 + [140]
     assert sum(fixed) == 10 * 18
-    # The scratch script chose the complementary translation vector.
-    # It differs by a central translation and an inner translation in 2 Z^5.
-    original_d = sp.ones(5, 1) - d
-    original_fixed = [sum(act(hk, node, original_d) == node for node in nodes) for hk in sections]
-    assert sum(original_fixed) == 10 * 18
     print("Full 140-class enumeration: 13 orbits of size 10 and 5 of size 2")
-    print("Burnside check: (140 + 4*10 + 5*0)/10 = 18 (also for the scratch translation)")
+    print("Burnside check: (140 + 4*10 + 5*0)/10 = 18")
     print("Determinant average = 14; it is not the Reidemeister number")
     print("ALL CHECKS PASSED")
 

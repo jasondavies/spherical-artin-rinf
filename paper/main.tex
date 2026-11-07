@@ -37,32 +37,23 @@
 \begin{document}
 
 \begin{abstract}
-Every irreducible Artin group of spherical type and rank at least two has property $\Rinf$.
-We complete this classification by treating $D_5$, $E_6$, $E_7$, $E_8$, $F_4$, $H_3$ and $H_4$.
-We also classify the crystallographic quotients $A/[P,P]$, where $P$ is the pure subgroup: they have
-$\Rinf$ in every rank at least three, and in rank two, of type $I_2(m)$, exactly when $4\mid m$ or
-when $m$ is odd and $3\mid m$. Thus this quotient construction does not preserve $\Rinf$ in general.
-In type $I_2(5)$ we construct an automorphism of $A/[P,P]$ with Reidemeister number $18$.
+We classify property $\Rinf$ for the crystallographic quotients $\Gamma=A/[P,P]$ of irreducible
+spherical Artin groups. Every such quotient of rank at least three has $\Rinf$; in rank two,
+of type $I_2(m)$, this holds exactly when $4\mid m$ or when $m$ is odd and $3\mid m$.
+Since $[P,P]$ is characteristic, the positive quotient results, together with the known dihedral
+Artin-group case, imply that every irreducible spherical Artin group of rank at least two has $\Rinf$.
+The quotient construction therefore does not preserve $\Rinf$ in general. In type $I_2(5)$ we give
+an automorphism of $\Gamma$ with Reidemeister number $18$.
 
-The proof uses the characteristic pure subgroup and its abelianization, viewed as the permutation lattice on the
-reflections. Rational, absolutely irreducible constituents of multiplicity one yield a fixed vector after composing
-with a suitable inner automorphism. The finite action that must be controlled is governed by automorphisms of
-Coxeter groups, so no description of $\Aut(A)$ is required. The constituents are explicit: eigenspaces of strongly
-regular graphs for $E_n$, frame modules for $F_4$ and $H_3$, and matrix coefficients in the icosian model for $H_4$.
-
-The contrast between the positive quotients and the dihedral example is governed by the rational holonomy
-representation and the integral normaliser compatible with the crystallographic extension.
+The positive proofs use explicit absolutely irreducible rational constituents of multiplicity one
+in the reflection permutation module. Multiplicity one restricts commuting integral maps to signs; explicit witnesses on stable
+or exchanged constituents then force eigenvalue one after a holonomy twist.
+Uniform character arguments handle the classical families. The negative dihedral cases use commuting
+integral automorphisms, with compatibility checked against the crystallographic extension.
+An alternative proof for seven Artin groups has a conditional Lean formalisation.
 \end{abstract}
 
 \maketitle
-
-\noindent\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}{\small
-\textbf{[Contribution statement --- placeholder, to be finalised by the authors.]}
-This work was developed with substantial assistance from AI systems (Anthropic's Claude and OpenAI's Codex) for the mathematical
-argument, the programs, the Lean formalisation and the text. So far it has been reviewed only by AI systems,
-through internal audits and external reviews, some including the code and Lean sources. None of this is journal peer
-review, and no human expert has yet checked the work. The authors must replace this paragraph with an accurate
-statement of contributions before submission or posting.}}
 
 \section{Introduction}
 
@@ -80,7 +71,7 @@ is Problem~8.6 of the AIM problem list on Artin groups \cite{AIMPL}. Known cases
 \item many non-spherical types \cite{Juh11,SV24,Sor26}.
 \end{itemize}
 The case $D_5$ is left open (as a conjecture) in \cite[\S1]{SV24}. Paris--Soroko computed $\Aut(A[D_5])$
-\cite[Thm.~1]{PS26}, from which $\Rinf$ follows by a short argument (Remark~\ref{rem:D5}); \cite{PS26} does not state
+\cite[Thm.~1]{PS26}, from which $\Rinf$ follows by the inversion argument documented with the Lean development; \cite{PS26} does not state
 it. The list in \cite[\S1]{Sor26} includes $D_5$, attributing it to \cite{SV24}. We include an independent
 proof for $D_5$ in the completion below.
 For spherical types the known proofs use an explicit description of $\Aut(A)$ or $\Aut(A/Z(A))$. For $I_2(m)$
@@ -90,11 +81,9 @@ they use instead the virtual freeness of $A/Z(A)$ \cite{CS22}.
 Every irreducible Artin group of spherical type and rank at least two has property $\Rinf$.
 \end{mainthm}
 
-The cases proved here are $D_5,E_6,E_7,E_8,F_4,H_3,H_4$; see Section~\ref{sec:exceptional} and
-Proposition~\ref{prop:BD}. Together with \cite{CS22} (types $A_n,B_n,D_4,I_2(m)$) and
-\cite[Thm.~1]{SV24} ($D_n$, $n\ge6$), they give Theorem~A. Rank one must be excluded:
-$A(A_1)\cong\Z$, and inversion has Reidemeister number $2$. The method also gives uniform proofs in types
-$A_n,B_n,D_n$ (Section~\ref{sec:classical}).
+Our proof treats all ranks at least three through their crystallographic quotients; it gives explicit
+proofs for $D_5,E_6,E_7,E_8,F_4,H_3,H_4$.
+Rank one must be excluded: $A(A_1)\cong\Z$, and inversion has Reidemeister number $2$.
 
 Let $P=\ker(A\to W)$. Marin \cite[Thm.~2.1]{Mar15} proves that $A/[P,P]$ is crystallographic with holonomy
 $W/Z(W)$. Our second result concerns all automorphisms of this quotient, including those that need not lift to $A$.
@@ -110,11 +99,11 @@ In rank two, writing $X=I_2(m)$ with $m\ge3$, we have
 \]
 \end{quotientthm}
 
-The proof is given in Section~\ref{sec:quotients}. For the exceptional types it uses the full
+The proof is completed in Section~\ref{sec:quotients}. For the exceptional types it uses the full
 holonomy-automorphism calculations in Appendix~\ref{app:out}; the classical and dihedral families have
 uniform proofs. Since $P$ and hence $[P,P]$ are characteristic \cite{CP03}, the positive cases of Theorem~B
 imply $\Rinf$ for the corresponding Artin groups. Together with the known dihedral Artin-group result
-\cite{CS22}, this also proves Theorem~A, without the Franzsen--Howlett automorphism decomposition.
+\cite{CS22}, this proves Theorem~A. Appendix~\ref{app:artin} explains the different dependencies of the accompanying Lean development.
 The next result makes the failure of preservation concrete.
 
 \begin{counterprop}
@@ -129,7 +118,7 @@ The positive results use absolutely irreducible multiplicity-one constituents to
 maps to signs. In the dihedral example the nontrivial rational constituent instead has an infinite-order unit
 in its commutant; a separate extension calculation shows that this unit yields an admissible automorphism.
 
-A close precedent is the 2024 work of Dekimpe--Gon\c{c}alves--Ocampo \cite[Thms.~28, 31]{DGO24}, which proves
+A close precedent is the work of Dekimpe--Gon\c{c}alves--Ocampo \cite[Thms.~28, 31 and proof of Cor.~32]{DGO24}, which proves
 $\Rinf$ for $VB_n/[VP_n,VP_n]$ for $n=3,4$. Those are virtual-braid quotients; the spherical Artin quotients
 in Theorem~B have different holonomy modules and extensions.
 Recent work also studies torus bundles arising from Bieberbach subgroups of classical braid quotients
@@ -140,72 +129,35 @@ The smallest positive case $A_2$ is already implicit in earlier classifications:
 group IT~161 \cite[\S5]{GGO17}, which is absent from the complete list of three-dimensional groups
 without $\Rinf$ in \cite[Table~2]{DKT19}.
 
-\smallskip\noindent\emph{Significance and novelty.} For the six exceptional types $\Aut(A)$ is not known (cf.\
-\cite[\S1]{PS26}). The general criteria based on hyperbolic actions of $\Aut(A)$, or on $\Aut$-invariant
-quasimorphisms \cite{FFW23,FFIMSW25,SV26}, also require control of $\Aut(A)$.
+The proof uses the finite holonomy action rather than a description of $\Aut(A)$.
+Representation-theoretic approaches to $\Rinf$ occur in \cite{DGO21} and in the multiplicity-one criterion
+of Dekimpe--De Rock--Penninckx \cite[Thm.~4.7]{DDP09}. We combine this mechanism with the
+crystallographic determinant criterion \cite[Cor.~3.10]{DP11}, which permits torsion, and with
+explicit witnesses on stable or exchanged constituents. Section~\ref{sec:alternative} explains an
+alternative using Hiss--Lutowski \cite{HL25,HL26} for $D_5,E_6,E_7,E_8,H_4$.
+That odd-dimensional criterion does not supply the $F_4$ and $H_3$ cases.
 
-Theorem~A would follow from Conjecture~(NA) of \cite[\S6]{SV24}: finitely generated, residually finite,
-non-amenable groups have $\Rinf$. This appears as a theorem in \cite{FT12}, but its proof is reported to be
-flawed \cite[\S6]{SV24}. Our results verify (NA), and Conjecture~(R) \cite[Problem~19.28]{Kourovka}, for these
-groups.
+The resulting classification depends on two separate features: the rational holonomy representation
+and the integral normaliser compatible with the crystallographic extension. Our positive witnesses
+and negative affine maps make both features explicit. The witness argument avoids the classification
+of finite simple groups, which enters the Hiss--Lutowski theorem; it still uses results on finite Coxeter
+groups and exact exhaustive computations.
 
-The broad strategy of obtaining an eigenvalue one via representation theory has precedents:
-\begin{itemize}
-\item Dekimpe--Gon\c{c}alves--Ocampo \cite{DGO21}, for pure braid groups;
-\item Dekimpe--De Rock--Penninckx \cite[Thm.~4.7]{DDP09}, for flat manifolds. They require a $\Q$-irreducible
-$\Z$-subrepresentation $\eta_0$ of multiplicity one in the holonomy representation whose image is not
-$\Q$-conjugate to that of an inequivalent $\Q$-subrepresentation, and such that for every $D_0$ in the
-integral normaliser of $\eta_0(F)$ some $\eta_0(A)D_0$, $A\in F$, has eigenvalue one;
-\item the determinant criterion of Dekimpe--Penninckx for crystallographic groups \cite[Cor.~3.10]{DP11}, as
-stated in \cite[Thm.~3.3]{DKT19};
-\item the eigenvalue-one property of Hiss--Lutowski \cite{HL25,HL26} (announced in \cite{HL24}): for every finite group
-$G$, every non-trivial irreducible $\mathbb RG$-module $V$ of odd dimension and every $n\in N_{GL(V)}(\rho(G))$ of
-finite order, some $\rho(g)n$ has eigenvalue $1$ \cite[Def.~1.1.3, Thm.~1.1.5]{HL25}. The proof uses the classification
-of finite simple groups. Section~\ref{sec:alternative} verifies the hypotheses for five cases of Theorem~B.
-\end{itemize}
-What is new here is:
-\begin{itemize}
-\item the application to Artin groups through the \emph{characteristic reflection lattice}
-$H_1(P;\Z)\cong\Z^\T$;
-\item the control of the relevant finite symmetries by $\Aut(W)$ \cite{FH03};
-\item the explicit sign and swap witnesses;
-\item the spherical Artin-group classification, the classification of their crystallographic quotients,
-and the explicit dihedral counterexample to preservation under $A\mapsto A/[P,P]$.
-\end{itemize}
-The explicit witness argument avoids the classification of finite simple groups. It still uses results on
-finite Coxeter groups and exact exhaustive computations; we do not claim an elementary proof of all its inputs.
+\smallskip\noindent\emph{Organisation of the proof.}
+Section~\ref{sec:lattice} identifies the reflection lattice and the precise translation lattice of $\Gamma$.
+Section~\ref{sec:criterion} states a fixed-vector criterion for crystallographic groups.
+Sections~\ref{sec:exceptional} and~\ref{sec:classical} construct the exceptional and classical witnesses;
+the latter also controls character-preserving holonomy automorphisms in all classical ranks.
+Section~\ref{sec:quotients} combines these inputs and deduces Theorem~A before proving the dihedral classification
+and counting the twisted classes in Proposition~C. Appendix~\ref{app:comp} specifies the computational inputs,
+Appendix~\ref{app:out} controls the exceptional holonomy automorphisms, and Appendix~\ref{app:artin}
+specifies the scope and dependencies of the formalisation.
 
-\smallskip\noindent\emph{Overview of the Artin-group argument.} Let $P=\ker(A\to W)$, let $\T$ be the set of reflections, and let
-$\rho\colon W\to\Sym(\T)$ be the conjugation action.
-\begin{itemize}
-\item $P$ is characteristic, and $H_1(P;\Z)\cong\Z^\T$ is a permutation module (Section~\ref{sec:lattice}).
-\item An automorphism $\varphi$ acts on $\Z^\T$ as $\pi N$, where $\pi$ realises the induced automorphism of
-$\rho(W)\cong W/Z(W)$ and $N$ commutes with $\rho(W)$. On a good constituent $U$, $N=\pm1$.
-\item For a suitable inner automorphism $\iota_a$, the composite $\varphi'=\iota_a\circ\varphi$ has a fixed vector.
-So $R(\varphi'|_P)=\infty$, hence $R(\varphi')=\infty$, and $R(\varphi)=R(\varphi')$ (Section~\ref{sec:criterion}).
-\item The possible $\pi$ are controlled by $\Aut(W)$. Explicit constituents and witnesses finish the proof
-(Section~\ref{sec:exceptional}).
-\end{itemize}
-
-\smallskip\noindent\emph{Formal verification.} A Lean~4/Mathlib formalisation accompanies this paper. It contains
-no \texttt{sorry}, no \texttt{axiom} and no \texttt{native\_decide}. The Lean kernel checks:
-\begin{itemize}
-\item the Reidemeister lemmas and the criterion (both cases);
-\item the Artin group as a presented group, the map $f$, and the equivariant surjection $P^{ab}\to\Z^\T$;
-\item for each exceptional type and for $D_5$, finite certificates (commutant-scalar constituents and $\pm1$
-witnesses);
-\item the finite part of Lemma~\ref{lem:induced}: by a search-tree (orbit--stabiliser) certificate, every
-reflection-preserving automorphism of $\rho(W)$ lies in $\rho(W)\langle\pi_0\rangle$, for all seven types
-($\pi_0=1$ for $D_5$, $E_6$, $E_7$, $E_8$).
-\end{itemize}
-For each of the seven types the final theorem has exactly four hypotheses, the cited inputs:
-$W$ is finite; $P$ is characteristic \cite{CP03}; $P^{ab}\cong\Z^N$ as groups, with $N=|\T|$ (Brieskorn); and
-the Franzsen--Howlett decomposition $\Aut(W)=R(W)\mathcal A(W)$ \cite[Thm.~31]{FH03}. The formalisation uses
-computer-found constituents rather than the hand constructions of Section~\ref{sec:exceptional}. Type $D_5$ is
-formalised with the same four hypotheses (for $D_5$ the Franzsen--Howlett input is \cite[Thm.~31(3)]{FH03});
-its certificate uses the constituent $U^-$ of Proposition~\ref{prop:BD}.
-The quotient results and Proposition~C are not included in this Lean formalisation; the latter has a
-self-contained calculation and an exact Python checker.
+\smallskip\noindent\emph{Verification.}
+Exact computational certificates accompany the exceptional proofs. A conditional Lean~4/Mathlib
+formalisation proves seven direct Artin cases through Franzsen--Howlett, using the same fixed-vector mechanism
+and finite certificates; Appendix~\ref{app:artin} specifies its four external hypotheses.
+The full quotient classification and Proposition~C are not Lean-formalised.
 
 \section{The characteristic reflection lattice}\label{sec:lattice}
 
@@ -225,8 +177,9 @@ Let $\psi\in\Aut(G)$.
 
 (c) $x\mapsto xg$ maps $\iota_g\psi$-classes bijectively to $\psi$-classes.
 
-(d) Write $G=\bigsqcup_iHg_i$. If $y=zx\psi(z)^{-1}\in H$ with $z=hg_i$, then $y$ is $\psi|_H$-conjugate to
-$g_ix\psi(g_i)^{-1}$.
+(d) Fix $x\in H$ and write $G=\bigsqcup_iHg_i$. If $y=zx\psi(z)^{-1}\in H$ with $z=hg_i$, then $y$ is $\psi|_H$-conjugate to
+$g_ix\psi(g_i)^{-1}\in H$. Thus each $G$-twisted class meeting $H$ contains at most
+$[G:H]$ twisted classes for the restriction.
 \end{proof}
 
 \emph{Notation.} For a Coxeter graph with vertex set $S$:
@@ -235,10 +188,14 @@ $g_ix\psi(g_i)^{-1}$.
 has $m$ letters;
 \item $W=A/\langle\!\langle s^2\rangle\!\rangle$, with quotient map $\mu\colon a\mapsto\bar a$, and $P=\ker\mu$;
 \item $\T$ is the set of reflections, $\rho(w)(r)=wrw^{-1}$, and $\rho(w)$ also denotes the permutation matrix on
-$\Z^\T$.
+$\Z^\T$; its permutation character is $\chi_\T(g)=\#\{r:g(r)=r\}$.
 \end{itemize}
-Since $\T$ generates $W$, $\ker\rho=Z(W)$. Each $\alpha\in\Aut(W)$ induces $\theta_\alpha$ on $\rho(W)$ by
-$\theta_\alpha\rho(w)=\rho(\alpha w)$. For finite irreducible $W$ of rank $\ge3$, $Z(W)\subseteq\{\pm1\}$, and
+In spherical type, write $w_0$ for the longest Coxeter element and $\Delta$ for its standard
+Garside lift, obtained by replacing the simple reflections in a reduced expression by Artin generators.
+
+Since $\T$ generates $W$, $\ker\rho=Z(W)$. A central orthogonal operator preserves each simple-root line; commuting with adjacent simple
+reflections forces the corresponding signs to agree. Connectivity therefore gives $Z(W)\subseteq\{\pm1\}$.
+In rank at least three, $-r$ is not a reflection, so
 $r\mapsto\rho(r)$ is injective on $\T$.
 
 \begin{theorem}[{\cite[Thm.~1.4]{CP03}}]\label{thm:char}
@@ -252,8 +209,7 @@ cases:
 \item for $H_3$ it uses one GAP calculation \cite[Lemma~5.1]{CP03};
 \item among the classical types it uses GAP for $B_4,B_6,D_4,D_6$ \cite[Lemmas~3.5, 4.4]{CP03}.
 \end{itemize}
-We have not re-run these calculations. Each $\varphi\in\Aut(A)$ thus induces $\varphi_W\in\Aut(W)$ and
-$\theta_\varphi:=\theta_{\varphi_W}$.
+We have not re-run these calculations.
 
 \begin{lemma}\label{lem:f}
 For any Coxeter group, $s\mapsto(e_s,s)$ defines a homomorphism $f\colon A\to\Z^\T\rtimes W$, with
@@ -270,29 +226,55 @@ conjugation by $a$ acts as the permutation $\rho(\bar a)$.
 \end{proposition}
 \begin{proof}
 We have $f(as^2a^{-1})=(2e_{\bar as\bar a^{-1}},1)$, and these elements generate $f(P)$. Moreover $P\cong\pi_1$ of
-the complexified reflection-arrangement complement \cite{Bri71}, whose $H_1$ is free on the meridians, one per
-hyperplane \cite{Bri73,OT92}. So $H_1(P;\Z)$ has rank $|\T|$, and the surjection onto $2\Z^\T$ is an isomorphism.
+the complexified reflection-arrangement complement \cite{Bri71}, whose $H_1$ is free on one meridian per hyperplane. Indeed, a transverse disk spanning a loop
+in the ambient complex vector space expresses its homology class as a sum of meridians;
+winding numbers of defining linear forms show that these meridians are independent.
+Thus $H_1(P;\Z)$ has rank $|\T|$, and the surjection onto $2\Z^\T$ is an isomorphism.
 \end{proof}
 
-\begin{corollary}\label{cor:twist}
-Let $M_\varphi$ be the matrix of $\varphi_*$ on $\Z^\T$. Then
-$M_\varphi\rho(w)M_\varphi^{-1}=\theta_\varphi(\rho(w))$ and $M_{\iota_a\circ\varphi}=\rho(\bar a)M_\varphi$.
-Hence $\theta_\varphi$ preserves the permutation character $\chi_\T(g)=\#\{r:g(r)=r\}$.
-\end{corollary}
 
-The image $f(A)\cong A/[P,P]$ is the crystallographic quotient of \cite{GGO17,Mar15}; see also \cite{DKNS24}.
+
+\begin{proposition}\label{prop:translation-lattice}
+For irreducible spherical $A$, the group $\Gamma=A/[P,P]$ has a faithful crystallographic action
+on $\mathbb R^\T$, with holonomy $G=\rho(W)=W/Z(W)$ and characteristic translation lattice
+\[
+ L=\begin{cases}2\Z^\T,&Z(W)=1,\\2\Z^\T+\Z\mathbf1,&Z(W)\ne1.\end{cases}
+\]
+Every permutation of $\T$ preserves $L$.
+\end{proposition}
+\begin{proof}
+By Proposition~\ref{prop:H1}, $f(A)\cong\Gamma$. Give it the action
+$(v,w)\cdot x=v+\rho(w)x$.
+\emph{The translation lattice.} Let $\Lambda=\{(v,w)\in\Gamma: w\in Z(W)\}$, the preimage of $Z(W)$ \cite[Thm.~2.1]{Mar15}.
+Its elements act as translations by $v$. This action is faithful: elements with $W$-part $1$ have even coordinates,
+while those with $W$-part $w_0$ (if $w_0=-1$) have odd coordinates, since a reduced expression for $w_0$ encounters each positive root once, giving
+$f(\Delta)=(\mathbf1,w_0)$. So
+$\Lambda\cong L$, where $L=2\Z^\T$ if $Z(W)=1$ and $L=2\Z^\T+\Z\mathbf 1$ otherwise. Every permutation matrix preserves $L$.
+Since $\ker\rho=Z(W)$, the resulting affine action is faithful. Its full translation lattice has finite
+index, so the action is discrete and cocompact.
+
+\emph{$\Lambda$ is characteristic.} $\Gamma/\Lambda=\rho(W)$ acts faithfully on $L$. Let $N'$ be an abelian normal subgroup
+of finite index. For $n\in N'$, the linear part of $n$ fixes the finite-index sublattice $N'\cap\Lambda$ pointwise, so it
+is trivial and $n\in\Lambda$. Thus $\Lambda$ is the unique maximal abelian normal subgroup of finite index, hence
+characteristic.
+
+This identifies the quotient of Marin \cite[Thm.~2.1, Cor.~2.2]{Mar15}; see also
+\cite{GGO17,DKNS24}.
+\end{proof}
 
 \section{The fixed-vector criterion}\label{sec:criterion}
 
-A $\rho(W)$-invariant subspace $U\subseteq\Q^\T$ is \emph{good} if $U\otimes\C$ is irreducible and occurs with
-multiplicity one in $\C^\T$. A good $U$ is a full isotypic component.
+Let $L$ be a lattice, $V=L\otimes\Q$, and $G\le GL(L)$ finite. A rational $G$-submodule
+$U\subseteq V$ is \emph{good} if $U\otimes\C$ is irreducible and occurs with multiplicity one in
+$V\otimes\C$. Such a $U$ is a full isotypic component. Our applications have $V=\Q^\T$.
 
 \begin{lemma}\label{lem:schur}
-If $U$ is good and $N\in GL(\Z^\T)$ commutes with $\rho(W)$, then $NU=U$ and $N|_U=\pm1$.
+If $U$ is good and $N\in GL(L)$ commutes with $G$, then $NU=U$ and $N|_U=\pm1$.
 \end{lemma}
 \begin{proof}
-$NU\cong U$, so $NU=U$. By Schur's lemma $N|_U=c\in\Q^\times$. Applying $N^{\pm1}$ to a primitive vector of
-$U\cap\Z^\T$ gives $c^{\pm1}\in\Z$.
+Multiplicity one gives $NU=U$, and absolute irreducibility gives $N|_U=c\in\Q^\times$.
+Both $N$ and $N^{-1}$ preserve $U\cap L$. Applying them to a primitive lattice vector gives
+$c,c^{-1}\in\Z$, hence $c=\pm1$.
 \end{proof}
 
 \begin{lemma}\label{lem:cert}
@@ -313,42 +295,42 @@ $W$-invariant, $U_\C=V_i\otimes L$ for some $0\ne L\subseteq\C^{m_i}$, and $M_{m
 by scalars. This forces $m_i=1$ and $L=\C$. (ii) and (iii) are standard.
 \end{proof}
 
-\begin{theorem}\label{thm:crit}
-Let $A$ be irreducible of spherical type. Suppose that for every $\varphi\in\Aut(A)$ there is a permutation $\pi$
-of $\T$ with $\pi\rho(w)\pi^{-1}=\theta_\varphi(\rho(w))$ for all $w$, such that one of the following holds.
+\begin{theorem}[Fixed-vector criterion]\label{thm:crit}\label{prop:lattice-criterion}
+Let $\Gamma$ be crystallographic with translation lattice $L$ and holonomy $G$.
+Suppose that every linear part $D$ of an automorphism of $\Gamma$ admits $\pi\in GL(L)$
+inducing the same automorphism of $G$, such that one of the following holds.
 \begin{enumerate}[label=(\roman*)]
-\item\emph{(stable)} There is a good $U$ with $\pi U=U$ such that, for each $\varepsilon=\pm1$, some $h\pi$
-($h\in\rho(W)$) has eigenvalue $\varepsilon$ on $U$.
-\item\emph{(swap)} There are good $U_1\ne U_2$ with $\pi U_1=U_2$ such that, for each $\varepsilon=\pm1$, some
-$(h\pi)^2$ has an eigenvector in $U_1$ with eigenvalue $\varepsilon$.
+\item\emph{(stable)} There is a good $U$ with $\pi U=U$ such that, for each $\varepsilon=\pm1$,
+some $g\pi$, $g\in G$, has eigenvalue $\varepsilon$ on $U$.
+\item\emph{(swap)} There are distinct good constituents $U_1,U_2$ with $\pi U_1=U_2$ and $\pi U_2=U_1$
+such that, for each $\varepsilon=\pm1$, some $(g\pi)^2$ has an eigenvector in $U_1$ of eigenvalue $\varepsilon$.
 \end{enumerate}
-Then $A$ has property $\Rinf$.
+Then $\Gamma$ has property $\Rinf$.
 \end{theorem}
-
 \begin{proof}
-$N:=\pi^{-1}M_\varphi$ commutes with $\rho(W)$.
+The operator $N=\pi^{-1}D$ centralises $G$, so Lemma~\ref{lem:schur} applies.
+In case (i), write $N|_U=c\in\{\pm1\}$ and choose $g\pi v=cv$ with $v\ne0$.
+Then $gDv=v$.
+In case (ii), write $N|_{U_i}=c_i\in\{\pm1\}$ and choose $(g\pi)^2v=c_1c_2v$ with
+$0\ne v\in U_1$. Since $g\pi$ exchanges the two constituents, $(gD)^2v=v$.
+The vector $v+gDv$ is nonzero, because its two terms lie in distinct isotypic components, and is fixed by $gD$.
 
-\emph{Case (i).} $N|_U=c=\pm1$. Choose $h=\rho(\bar a)$ and $0\ne v\in U$ with $h\pi v=cv$, and let
-$\varphi'=\iota_a\circ\varphi$. Then $M_{\varphi'}v=h\pi Nv=v$.
-
-\emph{Case (ii).} $N|_{U_i}=c_i$. Choose $h=\rho(\bar a)$ and $0\ne v\in U_1$ with $(h\pi)^2v=c_1c_2v$. With
-$Q=h\pi$ we have $QU_1=U_2$, and $M_{\varphi'}^2v=QNQNv=v$. Since $M_{\varphi'}v\in U_2$ and $U_1\cap U_2=0$,
-$u=v+M_{\varphi'}v$ is a nonzero fixed vector.
-
-So $M_{\varphi'}$ fixes a nonzero vector of $\Z^\T$. By Lemma~\ref{lem:reid}(b),(a) and
-Proposition~\ref{prop:H1}, $R(\varphi'|_P)=\infty$. Then $R(\varphi')=\infty$ by (d), and $R(\varphi)=R(\varphi')$
-by (c).
+Lift $g$ to $\gamma\in\Gamma$. The restriction of $\iota_\gamma\Phi$ to the characteristic
+finite-index subgroup $L$ has a nonzero rational fixed vector, hence an integral one.
+Lemma~\ref{lem:reid}(b),(d),(c) gives $R(\Phi)=\infty$.
 \end{proof}
 
 \begin{remark}[Relation to the crystallographic criteria]\label{rem:crystal}
-By Marin \cite[Thm.~2.1]{Mar15}, the quotient $\Gamma=A/[P,P]\cong f(A)$ is crystallographic with holonomy group
-$W/Z(W)$. Its translation lattice is the preimage of $Z(W)$, which contains $P/[P,P]$ with finite index.
-(Marin also shows that the holonomy is $W$ itself iff $Z(W)=1$ \cite[Cor.~2.2]{Mar15}.) In this language,
-Theorem~\ref{thm:crit} is close to the Dekimpe--Penninckx criterion \cite[Cor.~3.10]{DP11},
-\cite[Thm.~3.3]{DKT19} for crystallographic groups: $R=\infty$ iff $\det(1-AD)=0$ for some holonomy element $A$.
-It is combined with the multiplicity-one device of \cite[Thm.~4.7]{DDP09} to produce the eigenvector. We work
-directly with $P$ so that the reduction stays in terms of the characteristic pure subgroup and the induced
-automorphisms of $W$. See Theorem~\ref{cor:cryst} for the consequence for $\Gamma$ itself.
+The stable case uses the multiplicity-one device of \cite[Thm.~4.7]{DDP09}.
+The determinant criterion \cite[Cor.~3.10]{DP11}, stated in \cite[Thm.~3.3]{DKT19}, applies also
+with torsion: $R(\Phi)=\infty$ exactly when $\det(I-gD)=0$ for some $g\in G$.
+The swap case covers exchanged constituents excluded by the non-conjugacy hypothesis of the stable criterion.
+Only holonomy automorphisms induced by the actual extension need be considered. Their image satisfies
+\[
+ \Theta_\Gamma\subseteq\Theta_\chi
+ :=\{\theta\in\Aut(G):\chi_V\circ\theta=\chi_V\},
+\]
+since $D$ intertwines the representations. Controlling all of $\Aut(G)$ is a sufficient stronger condition.
 \end{remark}
 
 \begin{remark}\label{rem:reduce}
@@ -365,48 +347,10 @@ $\theta(\rho(\T))=\rho(\T)$, then $\pi(r)=\rho^{-1}\theta\rho(r)$ realises $\the
 
 \section{The exceptional types}\label{sec:exceptional}
 
-\subsection{Induced automorphisms}
-For finite irreducible $W$, write $R(W)$ for its reflection-preserving automorphism group and $\Gr(W)$ for its
-graph automorphism group. A \emph{central twist} $w\mapsto w\,c(w)$, with $c\colon W\to Z(W)$ a homomorphism, induces the
-identity on $W/Z(W)$. Franzsen and Howlett prove the following \cite[Thm.~31, pp.~329--330]{FH03}.
-\begin{itemize}
-\item For $W$ of type $B_n,D_n,E_6,E_7,E_8,F_4,H_3,H_4$, $\Aut(W)=R(W)\mathcal A(W)$, where $\mathcal A(W)$ consists
-of central twists.
-\item $R(W)=\Inn(W)\Gr(W)$ except for $H_3$ and $H_4$, where $[R(W):\Inn(W)]=2$.
-\end{itemize}
-In \cite{FH03} (in the published version as in the preprint) the proof of Theorem~31 is given as an outline, based on the sizes of the conjugacy classes of
-involutions. (In item (9) of that theorem, for $F_4$, ``$\alpha_\chi$'' should read $\alpha_\zeta$.) For the six
-exceptional types, Appendix~\ref{app:out} gives independent control of all of $\Aut(\rho(W))$: by exhaustive
-computation for $E_6,E_7,F_4,H_3,H_4$, and by hand for $E_8$.
+Write $\Theta_X$ for the representatives of holonomy automorphisms modulo inner automorphisms
+listed in the table below. Appendix~\ref{app:out} proves that these exhaust the possibilities.
+We construct the good constituents and witnesses needed for each representative.
 
-\begin{lemma}\label{lem:induced}
-Let $\varphi\in\Aut(A)$, with $A$ of type $X$. Then $\theta_\varphi\in\Inn(\rho(W))\,\Theta_X$, where:
-\begin{itemize}
-\item $\Theta_X=\{1\}$ for $X=E_6,E_7,E_8,B_n$ ($n\ge3$);
-\item $\Theta_{F_4}=\{1,\theta_L\}$, $\Theta_{H_3}=\{1,\theta_\Sigma\}$, $\Theta_{H_4}=\{1,\theta_\Psi\}$;
-\item $\Theta_{D_n}=\{\theta_\gamma:\gamma\in\Gr(D_n)\}$.
-\end{itemize}
-Every element of $\Theta_X$ maps $\rho(\T)$ onto itself, so it is realised by a permutation of $\T$.
-\end{lemma}
-
-\begin{proof}
-Central twists act trivially on $\rho(W)$, so $\theta_\varphi$ is induced by an element of $R(W)$.
-\begin{itemize}
-\item For $E_6$ (and $D_n$, $n$ odd) the graph automorphism is induced by conjugation by $w_0$, hence inner. For $E_7$, $E_8$ and
-$B_n$, $\Gr$ is trivial.
-\item For $F_4$, conjugation by the similarity $L(x)=(x_1+x_2,x_1-x_2,x_3+x_4,x_3-x_4)$ satisfies
-$Ls_\alpha L^{-1}=s_{L\alpha}$. It is reflection-preserving and exchanges the two reflection classes, so it is not
-inner. Since $[R(W):\Inn(W)]\le|\Gr(W)|=2$, it represents the nontrivial coset.
-It remains non-inner on $\rho(W)$: equality of two reflection images there forces equality of the
-reflections, since $-s$ has a $3$-dimensional $(-1)$-eigenspace and is not a reflection in rank four.
-\item For $H_3$, resp.\ $H_4$, conjugation by $\Sigma$, resp.\ $\Psi$ (Propositions~\ref{prop:H3}
-and~\ref{prop:H4}) is reflection-preserving and induces a non-inner automorphism of $\rho(W)$. It therefore
-represents the nontrivial coset of $\Inn(W)$ in $R(W)$.
-\end{itemize}
-Finally, $\theta_r(\rho(\T))=\rho(\T)$ for $r\in R(W)$, by definition of $R(W)$.
-\end{proof}
-
-\subsection{Explicit good constituents}
 
 \begin{proposition}[$E_6,E_7,E_8$]\label{prop:E}
 Let $A_\perp$ be the adjacency matrix of the orthogonality graph on root lines.
@@ -420,7 +364,7 @@ exponents).
 \end{proposition}
 
 \begin{proof}
-By Steinberg's theorem \cite{Ste64}, the stabiliser of a root, or of a pair of roots, is the Weyl group of the
+By the pointwise-stabiliser theorem \cite[Thm.~1.12(c),(d), pp.~22--23]{Hum90}, the stabiliser of a root, or of a pair of roots, is the Weyl group of the
 perpendicular root subsystem. The perpendicular subsystems are listed below. The root counts and ranks are
 finite computations, certified exactly (exact rational ranks) as proof certificates in Appendix~\ref{app:comp}. Each pair (number of roots, rank) in the table occurs for exactly one
 simply-laced root system, irreducible or not, of that rank, so the counts determine the types. These are the
@@ -486,6 +430,8 @@ So $\{h\pi\}$ contains a transposition. In fact $\pi_\Sigma$ itself is a transpo
 \end{proof}
 
 \begin{proposition}[$F_4$]\label{prop:F4}
+Let $L(x)=(x_1+x_2,x_1-x_2,x_3+x_4,x_3-x_4)$ and let $\pi_L$ be its permutation of root lines.
+Conjugation by $L$ induces a non-inner holonomy automorphism $\theta_L$.
 Each class of $12$ root lines (long, short) splits into $3$ orthogonal frames of $4$ lines. Let
 $U_{\rm long},U_{\rm short}$ be the corresponding frame modules (sum zero). Then:
 \begin{enumerate}[label=(\alph*)]
@@ -500,6 +446,12 @@ Hence case (ii) of Theorem~\ref{thm:crit} holds for $\theta_L$.
 \end{proposition}
 
 \begin{proof}
+The similarity $L$ exchanges the long and short root lines and satisfies
+$Ls_\alpha L^{-1}=s_{L\alpha}$, so it normalises $W$. It exchanges the two reflection classes,
+whereas inner automorphisms preserve them. It remains non-inner on $\rho(W)$:
+equality of two reflection images there forces equality of the reflections, since $-s$
+has a three-dimensional $(-1)$-eigenspace and is not a reflection in rank four.
+
 The long roots $\pm e_i\pm e_j$ form a $D_4$, whose frames correspond to the pairings $ij|kl$. The short lines
 $e_i$ form one frame. The lines $\frac12(\pm1,\pm1,\pm1,\pm1)$ form two frames, according to the parity of the
 number of minus signs. Each frame system is permuted through all of $S_3$, so each frame module is the standard
@@ -550,8 +502,8 @@ $U\cong\End(V)$ has dimension $16$.
 \item Let $\Psi=\Omega\circ\sigma$, where $\sigma$ is Galois conjugation and $\Omega$ is the rotation $j\mapsto k$,
 $k\mapsto-j$. Then $\Psi$ is a ring automorphism of $\HH_{\Q(\sqrt5)}$ with $\Psi(I)=I$. The induced permutation
 $\pi_\Psi$ normalises $\rho(W)$, preserves reflections, and is not inner.
-\item For every outer $\theta_\varphi$ induced by $\Aut(A)$ (and in fact every outer automorphism of $\rho(W)$, by
-Appendix~\ref{app:out}) there is $h$ such that $h\pi$ acts on $U$ as conjugation by a transposition. This has
+\item Every outer automorphism of $\rho(W)$ is realised by a permutation $\pi$ for which some
+$h\pi$, $h\in\rho(W)$, acts on $U$ as conjugation by a transposition. This has
 eigenvalues $+1$ (multiplicity $10$) and $-1$ (multiplicity $6$).
 \end{enumerate}
 \end{proposition}
@@ -573,8 +525,7 @@ order five in $K$) to one with real part $-\tau^{-1}/2$ (here $\tau=\frac{1+\sqr
 
 (c) We argue in three steps.
 \begin{enumerate}[label=(\roman*)]
-\item By Lemma~\ref{lem:induced} and Remark~\ref{rem:reduce} (or by Appendix~\ref{app:out} for an arbitrary outer
-$\theta$), we may take $\pi\in\rho(W)\pi_\Psi$. So $\{h\pi:h\in\rho(W)\}=\{h\pi_\Psi\}$.
+\item By Appendix~\ref{app:out} and Remark~\ref{rem:reduce}, we may take $\pi\in\rho(W)\pi_\Psi$. So $\{h\pi:h\in\rho(W)\}=\{h\pi_\Psi\}$.
 \item By (b), $\pi_\Psi=\psi$ is an outer automorphism of $K$.
 \item Since $\Aut(A_5)\cong S_5$, acting on the five Klein four-subgroups, $\psi$ is conjugation by an odd
 permutation $\delta'$. For $a\in K=A_5$, the element $h=(x\mapsto axa^{-1})$ lies in $\rho(W)$, and $h\psi$ is
@@ -583,22 +534,6 @@ conjugation by $a\delta'$. Choose $a$ with $a\delta'=\delta$ a transposition.
 The action of $K$ on $V$ extends to $S_5$, with $\lambda_V(\delta)$ having eigenvalues $1,1,1,-1$. Since
 $h\pi_\Psi$ acts on $U\cong\End(V)$ as $X\mapsto\lambda_V(\delta)X\lambda_V(\delta)^{-1}$, the eigenvalue $+1$ has
 multiplicity $9+1$ and $-1$ has multiplicity $6$.
-\end{proof}
-
-\begin{proof}[Proof of the new cases in Theorem A]
-By Lemma~\ref{lem:induced} and Remark~\ref{rem:reduce}, it suffices to treat $\Theta_X$.
-\begin{itemize}
-\item $E_n$: only the inner class occurs. Proposition~\ref{prop:E} supplies $U$, and Remark~\ref{rem:reduce}
-applies, since all reflections are conjugate.
-\item $H_3$, $H_4$: the inner class is covered by Remark~\ref{rem:reduce} (all reflections are conjugate and $U$ is
-nontrivial). The outer class is covered by Propositions~\ref{prop:H3} and~\ref{prop:H4}: there $\pi U=U$, since $U$
-is the only good constituent of its dimension, and case~(i) applies.
-\item $F_4$: there are two classes of reflections, so the inner class is treated explicitly. Take $\pi=1$ and
-$U=U_{\rm long}$; then $h=1$ gives $+1$, and a long reflection gives $-1$ by Proposition~\ref{prop:F4}(b), so case~(i)
-holds. The outer class $\theta_L$ is covered by Proposition~\ref{prop:F4}, case~(ii).
-\item $D_5$: Proposition~\ref{prop:BD}.
-\end{itemize}
-Apply Theorem~\ref{thm:crit}.
 \end{proof}
 
 \begin{table}[ht]\centering\small
@@ -618,27 +553,27 @@ $H_4$ & 60 & 7200 & $\{1,\theta_\Psi\}$ & $\mathbf{\End(V)}$ (16) & eigen-multip
 (Appendix~\ref{app:comp}).}
 \end{table}
 
-\section{Uniform proofs for the classical types}\label{sec:classical}
+\section{The classical quotients}\label{sec:classical}
 
-Except for $D_5$, these results are known \cite{CS22,SV24}. We include them to illustrate the method, and because
-it gives a uniform treatment of $D_5$ (Remark~\ref{rem:D5}).
+We first construct the constituents, then control the character-preserving holonomy automorphisms.
 
 \begin{proposition}[$A_n$, $n\ge2$]\label{prop:An}
-$A(A_n)$ has property $\Rinf$.
+The standard constituent $S^{(n,1)}$ of $\Q^\T$ is good. Every character-preserving automorphism
+of $\rho(W)=S_{n+1}$ is inner.
 \end{proposition}
 \begin{proof}
 Here $\rho(W)=S_{n+1}$ acts on the transpositions, i.e.\ on the $2$-subsets. By Young's rule
 $\Q^\T=S^{(n+1)}\oplus S^{(n,1)}\oplus S^{(n-1,2)}$ (for $n=2$ the last summand is absent). So $S^{(n,1)}$ is good.
 For $n+1\ne6$, $\Aut(S_{n+1})=\Inn$. For $n+1=6$, an outer automorphism maps $(12)\mapsto(12)(34)(56)$, but
-$\chi_\T$ takes the values $7$ and $3$ there, so it is not of the form $\theta_\varphi$ (Corollary~\ref{cor:twist}).
-Apply Remark~\ref{rem:reduce}.
+$\chi_\T$ takes the values $7$ and $3$ there, so it cannot preserve $\chi_\T$.
 \end{proof}
 
 For $B_n$ and $D_n$ let $u_{ij}=e_{[e_i+e_j]}-e_{[e_i-e_j]}$ ($i<j$) and $U^-=\mathrm{span}\{u_{ij}\}$. Let $E\le W$
 be the group of sign changes: all of them for $B_n$, the even ones for $D_n$.
 
 \begin{proposition}[$B_n$, $n\ge3$; $D_n$, $n\ge5$]\label{prop:BD}
-$U^-$ is good, and $A(B_n)$ and $A(D_n)$ have property $\Rinf$.
+$U^-$ is good. It has witnesses for both signs in the inner class and, for $D_n$,
+in the class of the diagram involution.
 \end{proposition}
 \begin{proof}
 \emph{Weights.} $E$ acts on $u_{ij}$ by $\chi_{ij}(\varepsilon)=\varepsilon_i\varepsilon_j$. These characters are
@@ -648,36 +583,18 @@ iff $\varepsilon_i\varepsilon_j\varepsilon_k\varepsilon_l$ is trivial or the pro
 \emph{Goodness.} $E$ fixes $e_{[e_i+e_j]}+e_{[e_i-e_j]}$ and the short lines. So each $\chi_{ij}$ occurs once in
 $\Q^\T$. Since $S_n\le W$ permutes the weights transitively, $U^-\otimes\C$ is irreducible.
 
-\emph{Automorphisms.} By Lemma~\ref{lem:induced}, $\theta_\varphi$ is inner for $B_n$, and inner up to the diagram
-involution for $D_n$ (for odd $n$ the latter is inner too). For the inner class, $\pi=1$ works: the reflection
+\emph{Witnesses.} For the inner class, $\pi=1$ works: the reflection
 $s_{e_n}$ ($B_n$), resp.\ $s_{e_{n-1}-e_n}$ ($D_n$), acts nontrivially on $U^-$. The diagram involution is realised
 by negating $e_n$, which acts on $u_{ij}$ by $-1$ if $n\in\{i,j\}$ and by $+1$ otherwise. So case~(i) holds with
 $h=1$.
 \end{proof}
-
-\begin{remark}[Type $D_5$]\label{rem:D5}
-Proposition~\ref{prop:BD} with $n=5$ proves $\Rinf$ for $A(D_5)$. Its inputs are \cite{CP03}, \cite{FH03} (here
-$\Aut(W(D_5))=R(W)\cong W$ by \cite[Thm.~31(3)]{FH03}) and the weight argument.
-
-There is also a short derivation from Paris--Soroko's description $\Aut(A[D_5])=\Inn(A)\rtimes\langle\chi\rangle$,
-with $\chi$ the inversion of the generators \cite[Thm.~1]{PS26}:
-\begin{itemize}
-\item $R(\iota_g)=R(\mathrm{id})=\infty$ by Lemma~\ref{lem:reid}(c), since $A^{ab}\cong\Z$ and Lemma~\ref{lem:reid}(a),(b)
-give infinitely many conjugacy classes;
-\item $R(\iota_g\circ\chi)=R(\chi)=\infty$ by Remark~\ref{rem:elem}(b).
-\end{itemize}
-This deduction is nearly immediate once \cite[Thm.~1]{PS26} is available, but we have not found it written down.
-\cite{SV24} states $D_5$ as a conjecture, and \cite{PS26} does not mention $\Rinf$. We therefore record $D_5$ as part
-of Theorem~A.
-\end{remark}
 
 \begin{proposition}[$D_4$]\label{prop:D4}
 In type $D_4$:
 \begin{itemize}
 \item $U^-$ is reducible: $J(u_{ij})=u_{kl}$ ($\{k,l\}$ complementary) is a non-scalar operator on $U^-$ commuting with
 $W(D_4)$;
-\item the frame module $U$ on the $3$ orthogonal frames $\{12|34,13|24,14|23\}$ is good of dimension $2$;
-\item $A(D_4)$ has property $\Rinf$.
+\item the frame module $U$ on the $3$ orthogonal frames $\{12|34,13|24,14|23\}$ is good of dimension $2$.
 \end{itemize}
 \end{proposition}
 \begin{proof}
@@ -686,110 +603,13 @@ even sign change $\varepsilon$ acts by $\varepsilon_i\varepsilon_j$ on $u_{ij}$,
 $\varepsilon_i\varepsilon_j=\varepsilon_k\varepsilon_l$ because $\varepsilon_1\varepsilon_2\varepsilon_3\varepsilon_4=1$. Hence
 $J$ commutes with $W(D_4)=E\rtimes S_4$, and its $\pm1$-eigenspaces are proper invariant subspaces of $U^-$.
 The $E$-fixed part of $\Q^\T$ is the permutation module on the $6$ pairs, namely $1+3+2$ for $S_4$. Its
-$2$-dimensional summand is $U$, which does not occur in $U^-$. Every $\theta_\varphi$ preserves reflections, so
-$\pi$ permutes the frames. $W$ induces all of $S_3$ on frames, so some $h\pi$ is a transposition there, with
-eigenvalues $\pm1$ on $U$.
+$2$-dimensional summand is $U$. On $U^-$ the three nontrivial sign characters are permuted transitively,
+so every irreducible constituent there has dimension divisible by three. Thus $U$ is good and is the
+unique rational irreducible constituent of dimension two. The image of $W$ on $U$ is $S_3$;
+a transposition has eigenvalues $1,-1$.
 \end{proof}
 
-\begin{remark}[Dihedral types]\label{rem:dihedral}
-Let $m$ be odd. Then $Z(W)=1$, so $\rho$ is faithful and injective on $\T$, and $\Q^\T\cong\bigoplus_{d\mid m}U_d$ with $\dim U_d=|(\Z/d\Z)^\times|$, and $U_d$ is
-absolutely irreducible iff $d\in\{1,3\}$.
-\begin{itemize}
-\item If $3\nmid m$ there is no nontrivial good constituent, and Theorem~\ref{thm:crit} cannot be applied. For $m$
-prime, Schur's lemma gives only a unit of $\Q(\cos\frac{2\pi}m)$.
-\item If $3\mid m$, then $U_3$ is the unique good constituent of dimension $2$, so $\pi U_3=U_3$. The group
-$\rho(W)$ acts on $U_3$ as $S_3\le O(2)$. Since $\pi$ is orthogonal and normalises $S_3$, it acts as an element of
-$S_3\times\{\pm1\}$. Hence some $h\pi$ acts as $\pm$(a reflection), with eigenvalues $\pm1$. So
-Theorem~\ref{thm:crit} applies, using \cite{CP03} and that every automorphism of $W$ preserves reflections.
-\end{itemize}
-This was confirmed by computation for odd $m\le21$. In any case $\Rinf$ for
-$I_2(m)$ is known \cite{CS22}; Theorem~\ref{thm:dihedral-classification} below treats the quotients for all $m$.
-For $m=5$ the failure of this criterion reflects an actual obstruction at the quotient level:
-Proposition~\ref{prop:dihedral-counterexample} proves that $A(I_2(5))/[P,P]$ does not have $\Rinf$.
-\end{remark}
-
-\begin{remark}[Two elementary observations]\label{rem:elem}
-\begin{enumerate}[label=(\alph*)]
-\item If $\varphi$ fixes the generator $z\in\{\Delta,\Delta^2\}$ of $Z(A)$ \cite{BS72,Del72}, then $\varphi_*$ fixes
-the nonzero image of $z$ in $H_1(A)$, so $R(\varphi)=\infty$. Only centre-inverting automorphisms need the
-criterion.
-\item For any Artin group that is not free abelian, the inversion $s\mapsto s^{-1}$ has $R=\infty$. Choose
-$m_{st}\ge3$. Via $f$, $\max_r|v_r-v_{srs}|$ is an invariant of twisted classes with $W$-part $s$, and it
-separates the elements $t^{2k}s$. Cf.\ \cite[Thm.~1]{Sor26}, \cite{Juh11}.
-\end{enumerate}
-\end{remark}
-
-\section{Crystallographic quotients}\label{sec:quotients}
-
-\subsection{A criterion on the translation lattice}
-
-Let $L$ be a lattice, let $V=L\otimes\Q$, and let $G\le GL(L)$ be finite. Call a rational
-$G$-submodule of $V$ \emph{good} if its complexification is irreducible of multiplicity one in $V_\C$.
-
-\begin{proposition}\label{prop:lattice-criterion}
-Let $\Gamma$ be crystallographic with translation lattice $L$ and holonomy $G$.
-Suppose that every linear part $D$ of an automorphism of $\Gamma$ admits $\pi\in GL(L)$ inducing the same
-automorphism of $G$, such that either the stable or the swap hypothesis of Theorem~\ref{thm:crit} holds
-with $G,V$ in place of $\rho(W),\Q^\T$. Then $\Gamma$ has property $\Rinf$.
-\end{proposition}
-\begin{proof}
-The operator $N=\pi^{-1}D$ centralises $G$. On each good constituent it is a rational scalar; preservation
-of $U\cap L$ by $N$ and $N^{-1}$ forces this scalar to be $\pm1$.
-The stable and swap arguments in Theorem~\ref{thm:crit} give $g\in G$ such that $gD$ has a nonzero fixed
-vector. Lift $g$ to $\gamma\in\Gamma$ and apply Lemma~\ref{lem:reid} to $\iota_\gamma\Phi$ and its restriction
-to the characteristic finite-index subgroup $L$.
-\end{proof}
-
-The stable case is a lattice reformulation of the multiplicity-one device in
-\cite[Thm.~4.7]{DDP09}, using the crystallographic criterion \cite[Cor.~3.10]{DP11} to allow torsion.
-The swap case also covers exchanged constituents, which do not satisfy the non-conjugacy hypothesis
-of that stable criterion. Only automorphisms induced by the actual extension need be considered.
-More precisely, if $\Theta_\Gamma$ denotes their image in $\Aut(G)$, then
-\[
- \Theta_\Gamma\subseteq\Theta_\chi
- :=\{\theta\in\Aut(G):\chi_V\circ\theta=\chi_V\},
-\]
-because their linear parts intertwine the holonomy representations. Controlling all of $\Aut(G)$ is a
-sufficient, sometimes convenient, stronger condition.
-
-\subsection{The seven positive cases}
-
-\begin{theorem}[Seven positive quotients]\label{cor:cryst}
-For $X\in\{D_5,E_6,E_7,E_8,F_4,H_3,H_4\}$, the crystallographic group $\Gamma=A(X)/[P,P]$ has property $\Rinf$.
-\end{theorem}
-
-\begin{proof}
-Identify $\Gamma$ with $f(A)\le\Z^\T\rtimes W$, acting on $\mathbb R^\T$ by $(v,w)\cdot x=v+\rho(w)x$.
-
-\emph{The translation lattice.} Let $\Lambda=\{(v,w)\in\Gamma: w\in Z(W)\}$, the preimage of $Z(W)$ \cite[Thm.~2.1]{Mar15}.
-Its elements act as translations by $v$. This action is faithful: elements with $W$-part $1$ have even coordinates,
-while those with $W$-part $w_0$ (if $w_0=-1$) have odd coordinates, since $f(\Delta)=(\sum_re_r,w_0)$. So
-$\Lambda\cong L$, where $L=2\Z^\T$ if $Z(W)=1$ and $L=2\Z^\T+\Z\mathbf 1$ otherwise. Every permutation matrix preserves $L$.
-Since $\ker\rho=Z(W)$, the resulting affine action is faithful. Its full translation lattice has finite
-index, so the action is discrete and cocompact. This description also applies to the classical and
-dihedral types below.
-
-\emph{$\Lambda$ is characteristic.} $\Gamma/\Lambda=\rho(W)$ acts faithfully on $L$. Let $N'$ be an abelian normal subgroup
-of finite index. For $n\in N'$, the linear part of $n$ fixes the finite-index sublattice $N'\cap\Lambda$ pointwise, so it
-is trivial and $n\in\Lambda$. Thus $\Lambda$ is the unique maximal abelian normal subgroup of finite index, hence
-characteristic.
-
-\emph{The argument.} Let $\Phi\in\Aut(\Gamma)$. It preserves $\Lambda$ and induces $\theta\in\Aut(\rho(W))$ and
-$D=\Phi|_\Lambda\in GL(L)$ with $D\rho(g)D^{-1}=\theta(\rho(g))$. By Appendix~\ref{app:out} (for $E_8$,
-Proposition~\ref{prop:E8}; for the other types, the exhaustive computations), $\theta$ is realised by a permutation
-$\pi\in\rho(W)\langle\pi_0\rangle$, and $\pi$ preserves $L$. Then $N=\pi^{-1}D\in GL(L)$ commutes with $\rho(W)$. On a
-good constituent $U$, $N$ acts as a rational scalar preserving the lattice $U\cap L$, so as $\pm1$.
-
-The witnesses of Sections~\ref{sec:exceptional} and~\ref{sec:classical} depend only on $\rho(W)$, $U$ and $\pi$.
-They give $\gamma\in\Gamma$ such that $\Phi'=\iota_\gamma\circ\Phi$ has $\Phi'|_\Lambda$ with a nonzero fixed vector.
-Hence $R(\Phi'|_\Lambda)=\infty$ by Lemma~\ref{lem:reid}(b), so $R(\Phi')=\infty$ by Lemma~\ref{lem:reid}(d), and
-$R(\Phi)=R(\Phi')$ by Lemma~\ref{lem:reid}(c).
-\end{proof}
-
-The proof uses all automorphisms of $\rho(W)$, not only those induced from $\Aut(W)$.
-The calculations in Appendix~\ref{app:out} are therefore necessary inputs to this explicit proof.
-
-\subsection{The classical families}\label{sec:classical-quotients}
+\subsection{Character-preserving holonomy automorphisms}\label{sec:classical-quotients}
 
 The distinction between all holonomy automorphisms and those preserving the reflection character is
 useful in the classical families. Write $\chi_\T$ for the permutation character on root lines.
@@ -837,6 +657,9 @@ For $c=2$ its right-hand side is $8-2n<0$; for $c\ge3$ it is at most $-2(c-1)(c-
 For $c=1$ we again get $ab=0$. For $c=0$ we get $(a-2)(b-2)=0$.
 The last possibility is represented, up to the central sign when available, by negating two coordinates.
 Its class has size $\binom n2$, whereas the reflection class has size $n(n-1)$.
+These are also their class sizes in the even signed-permutation group: each representative has
+an unused fixed coordinate, whose sign change is an odd element of its centraliser, so neither
+signed-permutation conjugacy class splits upon restriction to $W(D_n)$.
 For $n\ge5$ passing to $W/Z(W)$ does not halve either size: a lift and its negative have different
 signed cycle types whenever both belong to $W$. This excludes the extra class and proves the lemma.
 \end{proof}
@@ -847,7 +670,7 @@ have property $\Rinf$.
 \end{proposition}
 \begin{proof}
 Let $D$ be the linear part of a quotient automorphism and $\theta$ its holonomy automorphism.
-It preserves $\chi_\T$, and every permutation of $\T$ preserves the translation lattice described above.
+It preserves $\chi_\T$, and every permutation of $\T$ preserves the translation lattice of Proposition~\ref{prop:translation-lattice}.
 
 \emph{Type $A_n$.} The proof of Proposition~\ref{prop:An} applies directly: the exceptional outer
 automorphism of $S_6$ does not preserve $\chi_\T$, so $\theta$ is inner, and the standard constituent
@@ -860,26 +683,64 @@ reflection, with the same length as the corresponding simple root $\alpha_i$; le
 Orders of products of two distinct reflections agree in $W$ and $W/Z(W)$, because their plane action
 fixes a nonzero complement and hence no nontrivial power can equal $-I$.
 The Coxeter product orders therefore determine $|(\beta_i,\beta_j)|$.
-Choose signs along the diagram tree to match all simple-root inner products. The isometry
-$\alpha_i\mapsto\beta_i$ maps the root system into itself, hence onto itself, since the images of
-simple reflections generate a subgroup of $W$. In type $B_n$ every such isometry is a signed permutation
+Choose signs along the diagram tree to match all simple-root inner products. The isometry $g\colon\alpha_i\mapsto\beta_i$ satisfies $gWg^{-1}\le W$ and
+\[g\Phi=(gWg^{-1})\{\beta_i\}\subseteq\Phi.\]
+Since $g$ is injective and $\Phi$ is finite, equality holds. In type $B_n$ every such isometry is a signed permutation
 (it permutes the short roots), so it belongs to $W$. Thus $\theta$ is inner in type $B_n$.
 The $U^-$ witnesses of Proposition~\ref{prop:BD}, including its diagram-involution case for $D_n$,
-now apply through Proposition~\ref{prop:lattice-criterion}. This includes $B_3$ and $B_4$.
+now apply through Theorem~\ref{thm:crit}. This includes $B_3$ and $B_4$.
 
-\emph{Type $D_4$.} The frame constituent $U$ of Proposition~\ref{prop:D4} is the unique rational irreducible
-constituent of dimension two. Indeed, the sign-fixed part is the $S_4$-module on six pairs, with dimensions
-$1,3,2$. On $U^-$, the three distinct nontrivial sign characters are permuted transitively, so every
-irreducible constituent has dimension divisible by three. Hence $DU=U$.
+\emph{Type $D_4$.} By Proposition~\ref{prop:D4}, the frame constituent $U$ is the unique rational irreducible
+constituent of dimension two. Hence $DU=U$.
 The holonomy image on $U$ is $S_3$. Every automorphism of $S_3$ is inner, so $D|_U=c\rho_U(g)$ for some
 $g$ and $c\in\Q^\times$. Both operators preserve $U\cap L$, forcing $c=\pm1$.
 A reflection of this $S_3$ has eigenvalues $1,-1$, giving the required fixed vector after a holonomy twist.
 \end{proof}
 
+\section{The quotient classification}\label{sec:quotients}
+
+\subsection{The seven positive cases}
+
+\begin{theorem}[Seven positive quotients]\label{cor:cryst}
+For $X\in\{D_5,E_6,E_7,E_8,F_4,H_3,H_4\}$, the crystallographic group $\Gamma=A(X)/[P,P]$ has property $\Rinf$.
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:translation-lattice}, the translation lattice $L$ is characteristic
+and every permutation of $\T$ preserves it. An automorphism of $\Gamma$ therefore induces
+$D\in GL(L)$ normalising $G=\rho(W)$.
+Appendix~\ref{app:out} realises the induced holonomy automorphism by a permutation
+$\pi\in G\langle\pi_0\rangle$. For $E_6,E_7,E_8,D_5$, the holonomy automorphism is inner,
+and Propositions~\ref{prop:E} and~\ref{prop:BD} supply a good constituent with both signs.
+For $H_3,H_4$, Propositions~\ref{prop:H3} and~\ref{prop:H4} give stable constituents and witnesses.
+For $F_4$, Proposition~\ref{prop:F4} gives the stable inner case and the exchanged outer case.
+Theorem~\ref{thm:crit} completes the proof.
+\end{proof}
+
+The proof uses all automorphisms of $\rho(W)$, not only those induced from $\Aut(W)$.
+The calculations in Appendix~\ref{app:out} are therefore necessary inputs to this explicit proof.
+
+\subsection{Deduction of Theorem A}
+
+Theorem~\ref{cor:cryst} and Proposition~\ref{prop:classical-quotients} prove the rank-at-least-three
+part of Theorem~B. This already suffices for the Artin-group classification.
+
+\begin{proof}[Proof of Theorem A]
+For rank at least three, $P$ and hence $[P,P]$ are characteristic in $A$
+(Theorem~\ref{thm:char}). Every $\varphi\in\Aut(A)$ therefore induces
+$\bar\varphi\in\Aut(A/[P,P])$. Projection is surjective on twisted conjugacy classes, so
+\[
+R(\varphi)\ge R(\bar\varphi)=\infty
+\]
+by the positive quotient results. In rank two, the Artin-group result is
+\cite[Thm.~1]{CS22}. No negative dihedral construction or exact Reidemeister count is needed
+for this deduction.
+\end{proof}
+
 \subsection{The odd-dimensional alternative}\label{sec:alternative}
 
 The multiplicity-one argument of Dekimpe--De Rock--Penninckx \cite[Thm.~4.7]{DDP09}, combined with
-Hiss--Lutowski \cite{HL25,HL26}, provides an alternative for five of the seven types. We give the reduction
+Hiss--Lutowski \cite[Def.~1.1.3, Thm.~1.1.5]{HL25}, completed in \cite{HL26}, provides an alternative for five of the seven types. We give the reduction
 explicitly, since the flat-manifold statement in \cite{DDP09} assumes torsion-freeness, whereas our quotients
 may have torsion.
 
@@ -956,8 +817,12 @@ The actual quotient is generated affinely by $(e_0,S)$ and $(e_1,C^2S)$, with ho
 $G=\langle C^2,S\rangle$. Its translation lattice is $2\Z^m$ for odd $m$ and
 $2\Z^m+\Z\mathbf1$ for even $m$.
 
-\emph{Odd $m$ divisible by three.} The rational decomposition in Remark~\ref{rem:dihedral} has a unique
-$2$-dimensional rational irreducible constituent $U_3$, and its holonomy image is $S_3$.
+\emph{Odd $m$ divisible by three.} The permutation module on $m$ vertices is the regular module for the cyclic rotation subgroup.
+Its rational decomposition is $\Q^m=\bigoplus_{d\mid m}U_d$, where $U_d\cong\Q(\zeta_d)$,
+rotation acts by multiplication by $\zeta_d$, and reflection acts by complex conjugation.
+Each $U_d$ is rationally irreducible and has dimension $\phi(d)$.
+Among odd divisors $d$, the equality $\phi(d)=2$ holds only for $d=3$.
+Thus for odd $m$ divisible by three, the unique $2$-dimensional constituent is $U_3$, whose holonomy image is $S_3$.
 Every rational normaliser preserves this constituent. The $S_3$ argument in the $D_4$ case of
 Proposition~\ref{prop:classical-quotients} gives a fixed vector after a holonomy twist, so $\Rinf$ holds.
 
@@ -1010,6 +875,8 @@ type of rank at least three. Theorem~\ref{thm:dihedral-classification} covers ra
 $A_2=I_2(3)$ and $B_2=I_2(4)$.
 \end{proof}
 
+
+
 \subsection{A dihedral counterexample}\label{sec:dihedral-counterexample}
 
 \begin{proposition}[Proposition C]\label{prop:dihedral-counterexample}
@@ -1055,7 +922,9 @@ Choose lifts $(a_g,g)\in\Gamma$. Twisted conjugation by translations identifies 
  Q_g=\Z^5/(I-gD)\Z^5,
  \qquad x\longleftrightarrow(a_g+2x,g).
 \]
-The remaining identifications in this fibre are precisely the action of the centraliser $C_G(g)$.
+Every twisted class can first be moved into one of these four representative fibres.
+Two elements of the same fibre can then be identified only by a conjugator whose holonomy centralises $g$.
+Thus the remaining identifications after translation-twisted conjugacy are precisely the action of $C_G(g)$.
 For a lift $(b_h,h)$ with $hg=gh$, that action is
 \begin{equation}\label{eq:centralizer-action}
  x\longmapsto h x+\tfrac12\bigl(b_h+h a_g-gDb_h-g(I-h)d-a_g\bigr)
@@ -1097,6 +966,10 @@ formula \cite[Thm.~3.4]{DKT19} cannot be invoked here. In fact its determinant a
 $(2+4\cdot22+5\cdot10)/10=14$, whereas $R(\Phi)=18$.
 The exact checker \texttt{code/indep/dihedral\_quotient.py} verifies the preceding calculation and independently
 enumerates all $140$ translation-twisted classes: there are $13$ holonomy orbits of size $10$ and $5$ of size $2$.
+Equivalently, the identity fixes all $140$ classes, each nonidentity rotation fixes $10$, and each
+reflection fixes none. Burnside's lemma gives
+\[R(\Phi)=\frac{140+4\cdot10+5\cdot0}{10}=18.\]
+The holonomy action is not free, which explains why dividing $140$ by $10$ gives the wrong answer.
 \end{remark}
 
 \begin{remark}[The representation-theoretic distinction]
@@ -1117,6 +990,8 @@ for this more detailed question.
 \appendix
 \section{Computational certificates and cross-checks}\label{app:comp}
 
+The command \texttt{python3 scripts/verify.py --clean} runs the certificates and builds the paper
+and Lean development. Dependencies are pinned; logs are written to \texttt{verification/}.
 Programs, commands and expected outputs are listed in \texttt{code/README.md} of the accompanying repository. We
 distinguish \emph{proof certificates} from \emph{corroboration}.
 \begin{itemize}
@@ -1150,19 +1025,20 @@ together with the SRG parameters, the three orbitals and the eigenspace dimensio
 into $A_5$; also $Z(K)=1$;
 \item $\Psi(I)=I$, $\Psi$ multiplicative, and the real-part computation in Proposition~\ref{prop:H4}(b).
 \end{itemize}
-\item Propositions~\ref{prop:BD} and~\ref{prop:D4}:
+\item The exceptional cases of Theorem~B use the full holonomy-automorphism certificates in Appendix~\ref{app:out}.
+\end{enumerate}
+\emph{Corroboration.}
+\begin{enumerate}[label=(\arabic*),resume]
+\item Finite checks supporting the algebraic proofs of Propositions~\ref{prop:BD} and~\ref{prop:D4}:
 \begin{itemize}
 \item the weight argument for $B_3$--$B_6$ and $D_4$--$D_7$, including its failure for $D_4$;
 \item the operator $J$ and the frame module of $D_4$;
 \item witnesses for all six graph automorphisms of $D_4$.
 \end{itemize}
-\item Theorem~B uses the full holonomy-automorphism certificates in Appendix~\ref{app:out}.
-Proposition~C has the direct calculation of Section~\ref{sec:dihedral-counterexample}; its independent exact
+\item Proposition~C has the direct calculation of Section~\ref{sec:dihedral-counterexample}; its exact
 checker verifies the extension, all determinants, the cyclic quotient table, and the full twisted-class count.
-\end{enumerate}
-\emph{Corroboration.}
-\begin{enumerate}[label=(\arabic*),resume]
-\item Earlier, independent certificates for the six exceptional types:
+
+\item Independent certificates for the six exceptional types:
 \begin{itemize}
 \item commutant certificates;
 \item character certificates written as fresh code;
@@ -1171,20 +1047,18 @@ checker verifies the extension, all determinants, the cyclic quotient table, and
 They give the same dimensions $15,20$; $27,35$; $35,84$; $4$; $2+2$; $16,25$.
 \item The criterion (for automorphisms preserving $\chi_\T$) checked uniformly for $A_2$--$A_7$, $B_3$--$B_7$,
 $D_4$--$D_7$, odd $I_2(m)$ with $m\le21$, and the exceptional types other than $E_8$.
-\item Independent checkers written by the internal AI referees. The one for $D_n$, $F_4$, $H_3$ and parts of the one
-for $H_4$ use numerical linear algebra, so they are numerical corroboration only; items (1)--(3) above are their exact
-counterparts.
+\item Additional independent checkers. The one for $D_n$, $F_4$, $H_3$ and parts of the one
+for $H_4$ use numerical linear algebra, so they are numerical corroboration only; the exact constituent and classical checks above provide their counterparts.
 \item The uniform arguments in Lemma~\ref{lem:classical-character} and
 Theorem~\ref{thm:dihedral-classification} have an independent finite cross-check in
 \texttt{code/indep/quotient\_families.py}. It counts fixed root lines directly, checks the exceptional
-character coincidences, and verifies the positive constituents or the affine maps and all adjusted
+character coincidences and conjugacy-class sizes, and verifies the positive constituents or the affine maps and all adjusted
 determinants in the dihedral cases. The unbounded statements are proved in the text, not inferred
 from these finite runs.
 \end{enumerate}
 
 \section{Automorphisms of the holonomy groups}\label{app:out}
 
-The Artin-group argument uses automorphisms of $\rho(W)$ induced from $\Aut(W)$.
 For the seven cases of Theorem~\ref{cor:cryst}, we control all holonomy automorphisms, a sufficient
 strengthening of the character-preserving restriction. The following computations are proof certificates
 for these cases of Theorem~B, as well as corroboration of \cite[Thm.~31]{FH03}:
@@ -1197,9 +1071,8 @@ We also record $\Out(\rho(W(D_5)))=1$. These statements were obtained as follows
 \item \emph{Involution classes and Coxeter tuples}, by exact enumeration, for $H_3,H_4,F_4,D_5,E_6,E_7$.
 No involution class other than the reflection classes has a reflection-class size, so every automorphism preserves
 $\rho(\T)$; then the $\Inn$-orbits of generating Coxeter tuples of reflections are counted.
-\item \emph{Brute force over generator images} (all automorphisms, without assuming that reflections are preserved)
-for $E_6,H_3,H_4,F_4,D_5$, and independently by the internal AI referee for $H_3,F_4$. This program was \emph{not} run
-for $E_7$.
+\item For $H_3,F_4$, an independent generator-image enumeration also counts all automorphisms
+without first assuming reflection preservation.
 \item For $E_7$ and $E_8$, the reflection-preserving stage was re-verified with Schreier--Sims stabiliser chains, and
 it also follows from Lemma~\ref{lem:sign} below. For $E_7$ the reflection-preservation stage therefore rests on the
 single exact enumeration above.
@@ -1213,10 +1086,10 @@ $\theta\in\Aut(\rho(W))$ with $\theta\rho(\T)=\rho(\T)$ is inner up to a graph a
 \begin{proof}
 Write $\theta\rho(s_i)=\rho(s_{\beta_i})$; this uses that $\rho$ is injective on $\T$. Orders of products agree in $W$
 and in $\rho(W)$. Indeed, for roots $\beta\ne\pm\gamma$ the element $s_\beta s_\gamma$ is a plane rotation fixing a
-complement of dimension $\ge1$, so no nontrivial power of it lies in $Z(W)\subseteq\{\pm1\}$; in particular
+complement of dimension $\ge1$, so no nonidentity power of it lies in $Z(W)\subseteq\{\pm1\}$; in particular
 $s_is_j\ne-1$. Hence $(\beta_i,\beta_j)=0$ or $\pm1$ according to the diagram. Choose the signs along the tree. Then $g\colon\alpha_i\mapsto\beta_i$ is an isometry, and
 $g\Phi=(gWg^{-1})\{\beta_i\}\subseteq\Phi$. So $g\{\alpha_i\}$ is a simple system. As $W$ is simply transitive on simple systems, $g=w\gamma$ with $w\in W$ and
-$\gamma$ an isometry permuting $\{\alpha_i\}$, i.e.\ $g\in W\rtimes\Gr=\Aut(\Phi)$ \cite{Hum90}. Compare
+$\gamma$ an isometry permuting $\{\alpha_i\}$, i.e.\ $g\in W\rtimes\Gr=\Aut(\Phi)$ \cite[\S1.8, p.~15]{Hum90}. Compare
 \cite[Thm.~18, Cor.~19]{FH03}.
 \end{proof}
 
@@ -1225,7 +1098,7 @@ Every automorphism of $W(E_8)/\{\pm1\}$ is inner.
 \end{proposition}
 \begin{proof}
 $G^+=W^+/\{\pm1\}$ is the commutator subgroup, of index $2$. An involution outside $G^+$ lifts to $w$ with $w^2=1$
-and $\det w=-1$; if $w^2=-1$ then $\det w=1$. By \cite[Lemma~5]{Car72} (provable via Steinberg's theorem), $w$ is a product of $k=\dim\ker(w+1)$ reflections in
+and $\det w=-1$; if $w^2=-1$ then $\det w=1$. By \cite[Lemma~5, p.~5]{Car72} (provable via Steinberg's theorem), $w$ is a product of $k=\dim\ker(w+1)$ reflections in
 mutually orthogonal roots, and $k$ is odd. Replacing $w$ by $-w$, we may take $k\in\{1,3\}$. For $k=3$, the
 $(-1)$-eigenspace of $w$ is spanned by the three roots, and contains only the $6$ roots $\pm\beta_i$: a root
 $\sum c_i\beta_i$ has $2c_i=(\cdot,\beta_i)\in\{0,\pm1,\pm2\}$ and $\sum c_i^2=1$. So $w$ determines the triple,
@@ -1236,45 +1109,70 @@ $E_8\supset E_7\supset D_6$. So the reflections form the unique class of size $1
 automorphism preserves $\rho(\T)$, and Lemma~\ref{lem:sign} applies.
 \end{proof}
 
+\section{Scope of the formalisation}\label{app:artin}
+
+The Lean development proves the direct Artin cases
+$D_5$, $E_6$, $E_7$, $E_8$, $F_4$, $H_3$ and $H_4$ using the same reflection lattice, scalar restriction and
+stable/swap witnesses as the paper. Its automorphism reduction follows a different route:
+Franzsen--Howlett \cite[Thm.~31]{FH03} express Coxeter automorphisms as reflection-preserving
+automorphisms followed by central twists. Central twists disappear on $W/Z(W)$.
+Reflection-tuple search certificates then control the induced holonomy automorphisms.
+This route avoids the stronger full-holonomy computations required by Theorem~B.
+The complete mathematical account is supplied with the Lean sources in
+\texttt{lean/DIRECT\_PROOF.md}.
+
+The Artin-group criterion used there applies the fixed-vector mechanism to the induced map
+on $P^{ab}$: a holonomy twist with eigenvalue one gives infinitely many twisted classes on
+$P^{ab}$, hence on $P$, and then on $A$ by Lemma~\ref{lem:reid}.
+The finite part of the induced-automorphism reduction is checked by orbit--stabiliser search
+certificates for all seven types. The kernel also checks the presented Artin group, its affine map,
+the equivariant pure abelianisation, the scalar commutants and the sign/swap witnesses.
+The constituent bases are computed certificates; the geometric constructions in
+Section~\ref{sec:exceptional} are not formalised.
+
+Each of the seven final Franzsen--Howlett theorems has four external hypotheses:
+finiteness of $W$; characteristicity of $P$ \cite{CP03};
+the abstract group isomorphism $P^{ab}\cong\Z^{|\T|}$ \cite{Bri71}; and the
+Franzsen--Howlett decomposition \cite[Thm.~31]{FH03}.
+These cited results are hypotheses, not formalised theorems of the development.
+For $H_3$ and $F_4$ there are also theorems replacing the last hypothesis by kernel-checked
+full-holonomy enumerations. The source contains no \texttt{sorry}, custom \texttt{axiom}
+or \texttt{native\_decide}; finite certificates are checked by the Lean kernel.
+The full quotient classification and Proposition~C are not formalised.
+
+\section*{Author contributions}
+[To be finalised by the authors.] The mathematical argument, programs, Lean formalisation and text
+were developed with substantial assistance from Anthropic's Claude and OpenAI's Codex.
+The authors should specify their contributions and verification of the results before submission.
+
 \begin{thebibliography}{99}
 \bibitem{AIMPL} AIM Problem List, \emph{Geometry and topology of Artin groups}, Problem 8.6, aimpl.org/geomartingp/8.
 \bibitem{Bri71} E. Brieskorn, Die Fundamentalgruppe des Raumes der regul\"aren Orbits einer endlichen komplexen Spiegelungsgruppe, \emph{Invent.\ Math.} 12 (1971), 57--61.
-\bibitem{Bri73} E. Brieskorn, Sur les groupes de tresses [d'apr\`es V.\,I. Arnol'd], S\'em.\ Bourbaki 1971/72, Exp.~401, LNM 317, Springer, 1973, 21--44.
-\bibitem{BS72} E. Brieskorn, K. Saito, Artin-Gruppen und Coxeter-Gruppen, \emph{Invent.\ Math.} 17 (1972), 245--271.
 \bibitem{CS22} M. Calvez, I. Soroko, Property $R_\infty$ for some spherical and affine Artin--Tits groups, \emph{J.\ Group Theory} 25 (2022), 1045--1054.
 \bibitem{Car72} R.\,W. Carter, Conjugacy classes in the Weyl group, \emph{Compositio Math.} 25 (1972), 1--59.
-\bibitem{CP03} A.\,M. Cohen, L. Paris, On a theorem of Artin, \emph{J.\ Group Theory} 6 (2003), 421--441; arXiv:math/0204242 (same theorem numbering).
+\bibitem{CP03} A.\,M. Cohen, L. Paris, On a theorem of Artin, \emph{J.\ Group Theory} 6 (2003), 421--441; arXiv:math/0204242.
 \bibitem{DDP09} K. Dekimpe, B. De Rock, P. Penninckx, The $R_\infty$ property for infra-nilmanifolds, \emph{Topol.\ Methods Nonlinear Anal.} 34 (2009), 353--373.
 \bibitem{DGO21} K. Dekimpe, D.\,L. Gon\c{c}alves, O. Ocampo, The $R_\infty$ property for pure Artin braid groups, \emph{Monatsh.\ Math.} 195 (2021), 15--33.
-\bibitem{DGO24} K. Dekimpe, D.\,L. Gon\c{c}alves, O. Ocampo, Characteristic subgroups and the $R_\infty$-property for virtual braid groups, arXiv:2403.12528 (2024), \url{https://arxiv.org/abs/2403.12528}.
+\bibitem{DGO24} K. Dekimpe, D.\,L. Gon\c{c}alves, O. Ocampo, Characteristic subgroups and the $R_\infty$-property for virtual braid groups, \emph{J.\ Algebra} 663 (2025), 20--47, \url{https://doi.org/10.1016/j.jalgebra.2024.09.002}.
 \bibitem{DKT19} K. Dekimpe, T. Kaiser, S. Tertooy, The Reidemeister spectra of low dimensional crystallographic groups, \emph{J.\ Algebra} 533 (2019), 353--375; arXiv:1709.07649.
 \bibitem{DP11} K. Dekimpe, P. Penninckx, The finiteness of the Reidemeister number of morphisms between almost-crystallographic groups, \emph{J.\ Fixed Point Theory Appl.} 9 (2011), 257--283.
-\bibitem{Del72} P. Deligne, Les immeubles des groupes de tresses g\'en\'eralis\'es, \emph{Invent.\ Math.} 17 (1972), 273--302.
 \bibitem{DKNS24} N.\,K. Dhanwani, P. Kumar, T.\,K. Naik, M. Singh, Linear representations, crystallographic quotients, and twisted conjugacy of virtual Artin groups, arXiv:2409.10270.
 \bibitem{FG10} A. Fel'shtyn, D.\,L. Gon\c{c}alves, Twisted conjugacy classes in symplectic groups, mapping class groups and braid groups, \emph{Geom.\ Dedicata} 146 (2010), 211--223.
 \bibitem{FN16} A. Fel'shtyn, T. Nasybullov, The $R_\infty$ and $S_\infty$ properties for linear algebraic groups, \emph{J.\ Group Theory} 19 (2016), 901--921.
-\bibitem{FT12} A. Fel'shtyn, E. Troitsky, Twisted conjugacy classes in residually finite groups, arXiv:1204.3175.
 \bibitem{FT15} A. Fel'shtyn, E. Troitsky, Aspects of the property $R_\infty$, \emph{J.\ Group Theory} 18 (2015), 1021--1034.
-\bibitem{FFW23} F. Fournier-Facio, R.\,D. Wade, Aut-invariant quasimorphisms on groups, arXiv:2211.00800.
-\bibitem{FFIMSW25} F. Fournier-Facio, H. Iveson, A. Martino, W. Sgobbi, P. Wong, Property $R_\infty$ for groups with infinitely many ends, arXiv:2504.12002.
 \bibitem{FP06} N. Franco, L. Paris, On a theorem of Artin, II, \emph{J.\ Group Theory} 9 (2006), 731--751.
-\bibitem{FH03} W.\,N. Franzsen, R.\,B. Howlett, Automorphisms of nearly finite Coxeter groups, \emph{Adv.\ Geom.} 3 (2003), 301--338, \url{https://doi.org/10.1515/advg.2003.018}. Theorem numbering agrees with the authors' preprint, \url{https://www.maths.usyd.edu.au/u/bobh/fh02.pdf}.
+\bibitem{FH03} W.\,N. Franzsen, R.\,B. Howlett, Automorphisms of nearly finite Coxeter groups, \emph{Adv.\ Geom.} 3 (2003), 301--338, \url{https://doi.org/10.1515/advg.2003.018}. Author manuscript: \url{https://www.maths.usyd.edu.au/u/bobh/fh02.pdf}.
 \bibitem{GGO17} D.\,L. Gon\c{c}alves, J. Guaschi, O. Ocampo, A quotient of the Artin braid groups related to crystallographic groups, \emph{J.\ Algebra} 474 (2017), 393--423.
-\bibitem{HL24} G. Hiss, R. Lutowski, The $R_\infty$-property of flat manifolds: toward the eigenvalue one property of finite groups, arXiv:2412.10206.
 \bibitem{HL25} G. Hiss, R. Lutowski, The eigenvalue one property of finite groups, I, \emph{J.\ Algebra} 692 (2026), 592--626; arXiv:2504.04978.
 \bibitem{HL26} G. Hiss, R. Lutowski, The eigenvalue one property of finite groups, II, arXiv:2601.09622.
 \bibitem{Juh11} A. Juh\'asz, Twisted conjugacy in certain Artin groups, in: \emph{Ischia Group Theory 2010}, World Sci., 2012, 175--195.
-\bibitem{Kourovka} E.\,I. Khukhro, V.\,D. Mazurov (eds.), \emph{The Kourovka Notebook}, 21st ed., Novosibirsk, 2026 (Problem 19.28, as cited in \cite[\S6]{SV24}).
 \bibitem{LOST26} \^E. Leite, O. Ocampo, P.\,C.\,C. dos Santos J\'unior, A.\,C.\,M. Teixeira, A crystallographic quotient of the framed braid group and associated flat manifolds, arXiv:2610.33308 (2026).
 \bibitem{Oca26} O. Ocampo, Crystallographic quotients of Artin braid groups and torus bundles over flat $3$-manifolds, arXiv:2610.20478 (2026).
 \bibitem{Mar15} I. Marin, Crystallographic groups and flat manifolds from complex reflection groups, \emph{Geom.\ Dedicata} 182 (2016), 233--247.
-\bibitem{OT92} P. Orlik, H. Terao, \emph{Arrangements of Hyperplanes}, Springer, 1992.
 \bibitem{PS26} L. Paris, I. Soroko, Automorphisms of the Artin group of type $D_5$, arXiv:2606.26082.
 \bibitem{Sor26} I. Soroko, Property $R_\infty$ for Artin and Coxeter groups whose outer automorphisms are length-preserving, arXiv:2610.13904.
 \bibitem{SV24} I. Soroko, N. Vaskou, Property $R_\infty$ for new classes of Artin groups, arXiv:2409.18123.
-\bibitem{SV26} I. Soroko, N. Vaskou, Acylindrical hyperbolicity of automorphism groups and property $R_\infty$ for generalized Higman groups, arXiv:2604.27526.
 \bibitem{Hum90} J.\,E. Humphreys, \emph{Reflection Groups and Coxeter Groups}, Cambridge Univ.\ Press, 1990.
-\bibitem{Ste64} R. Steinberg, Differential equations invariant under finite reflection groups, \emph{Trans.\ Amer.\ Math.\ Soc.} 112 (1964), 392--400.
 \end{thebibliography}
 
 \end{document}

@@ -1,5 +1,5 @@
 /-
-# Replacing `hOut` by Franzsen–Howlett (paper v3, Lemma 4.1)
+# The Franzsen–Howlett reduction (alternative Artin-group proof)
 
 * `FranzsenHowlett M`: every automorphism of the Coxeter group `W = M.Group` is a reflection-preserving
   automorphism composed with a central twist ([FH03, Thm. 31]).  This is a statement about Mathlib's
@@ -9,7 +9,7 @@
 * A *search-tree certificate* (`TreeCert`, an orbit/stabiliser reduction checked by the kernel) then shows
   that every tuple of reflections with the Coxeter orders of the generators is conjugate to the tuple of
   simple reflections by an element of `ρ(W)` or `ρ(W)π₀`.  Hence the induced automorphism of `ρ(W)` is
-  conjugation by an element of `ρ(W)⟨π₀⟩`, and Theorem 3.3 applies.
+  conjugation by an element of `ρ(W)⟨π₀⟩`, and the Artin-group criterion (see lean/DIRECT_PROOF.md) applies.
 -/
 import ArtinRinf.OutCert
 
@@ -158,7 +158,7 @@ lemma RpData.center_trivial (R : D.RpData) {x : Equiv.Perm T} (hx : x ∈ D.ρ.r
   rw [← R.conj hx, hc _ (R.mem t), mul_inv_cancel_right]
   rfl
 
-/-- **Bridge (Lemma 4.1).**  Under Cohen–Paris and Franzsen–Howlett, `ρ(φ(σ_i))` is a reflection
+/-- **Bridge (the induced-automorphism lemma (see lean/DIRECT_PROOF.md)).**  Under Cohen–Paris and Franzsen–Howlett, `ρ(φ(σ_i))` is a reflection
 permutation for every `φ ∈ Aut(A)`. -/
 theorem RpData.image_refl (R : D.RpData) [(pure M).Characteristic] (hFH : FranzsenHowlett M)
     (φ : ArtinGroup M ≃* ArtinGroup M) (i : B) : ∃ x, D.ρ (φ (σ M i)) = R.rp x := by

@@ -76,6 +76,46 @@ def classical_characters():
     assert comb(6, 3) // 2 == 10 != 30
     print("Character coincidences and exceptional class-size exclusions through rank 120 passed")
 
+    # Independently compute conjugacy orbits, rather than reuse the class-size formulas.
+    # A signed permutation lists the images of e_1,...,e_n as signed indices.
+    def multiply(p, q):
+        return tuple((1 if j > 0 else -1) * p[abs(j) - 1] for j in q)
+
+    def class_size(n, family, representative, central_quotient):
+        identity = tuple(range(1, n + 1))
+        generators = []
+        for j in range(n - 1):
+            g = list(identity)
+            g[j], g[j + 1] = g[j + 1], g[j]
+            generators.append(tuple(g))
+        generators.append(tuple(-i if i <= (1 if family == "B" else 2) else i
+                                for i in identity))
+
+        def quotient(p):
+            return min(p, tuple(-i for i in p)) if central_quotient else p
+
+        seen = {quotient(representative)}
+        pending = list(seen)
+        while pending:
+            p = pending.pop()
+            for g in generators:  # Each chosen generator is an involution.
+                conjugate = quotient(multiply(multiply(g, p), g))
+                if conjugate not in seen:
+                    seen.add(conjugate)
+                    pending.append(conjugate)
+        return len(seen)
+
+    for n in range(5, 13):
+        reflection = (2, 1, *range(3, n + 1))
+        diagonal = (-1, -2, *range(3, n + 1))
+        for central_quotient in (False, n % 2 == 0):
+            assert class_size(n, "D", reflection, central_quotient) == n * (n - 1)
+            assert class_size(n, "D", diagonal, central_quotient) == comb(n, 2)
+    assert class_size(6, "B", (-1, -2, -3, 4, 5, 6), False) == 20
+    assert class_size(6, "B", (-1, -2, -3, 4, 5, 6), True) == 10
+    assert class_size(6, "B", (2, 1, 3, 4, 5, 6), True) == 30
+    print("Direct conjugacy orbits: B6 and D5-D12 class-size exclusions passed")
+
 
 def determinant(matrix):
     return int(DomainMatrix.from_Matrix(matrix).det())

@@ -1,292 +1,65 @@
-# AUDIT: Twisted conjugacy in irreducible spherical Artin groups (R∞ for D5, E6, E7, E8, F4, H3, H4)
+# Proof and source audit
 
-Auditors: AI (Claude; v4/v5 revisions checked by Codex). No human expert has checked this. Newest section first.
+Audit date: 7 November 2026. This records the current argument and its verification scope. It is an AI audit; no human expert review has been recorded.
 
-## v5: full quotient classification from THEOREM_B_NOTES.md, with uniform proof gaps filled
+## Dependency structure
 
-Read the user-supplied `THEOREM_B_NOTES.md`, the focused quotient referee report, the prior-art notes, and the scripts/logs in `s6-crystquot/`. The candidate classification is now Theorem B: all irreducible spherical ranks ≥ 3 are positive; in rank two the positive parameters are exactly 4 | m or m odd with 3 | m.
+Theorem B is the main mathematical route. The translation-lattice proposition identifies the actual crystallographic group. The fixed-vector criterion reduces positive cases to rational constituents and holonomy witnesses. The exceptional cases use exact certificates, the classical families use uniform character arguments, and the dihedral theorem treats all parameters explicitly. Theorem A follows from characteristicity of [P,P], the quotient inequality for Reidemeister numbers, and the known dihedral Artin-group result. Proposition C independently counts the classes of one finite-Reidemeister automorphism.
 
-The notes' statement “all proved, exact checks passed” was not used as a proof. In particular, `lemmaC_check.py` only lists character coincidences for n ≤ 60. The revision supplies the missing unbounded arguments:
+The [direct Artin proof](lean/DIRECT_PROOF.md) beside the Lean sources treats seven cases through Franzsen–Howlett. Appendix C only summarises its scope and dependencies. This is the route covered by the conditional Lean theorems. The main proof of Theorem B does not depend on that decomposition.
 
-| Claim | Verification and manuscript treatment |
+## Mathematical audit
+
+| Obligation | Argument checked | Verification boundary |
+|---|---|---|
+| Actual affine quotient and translation lattice | The affine map has kernel [P,P]. The preimage of Z(W) acts faithfully by translations: its coordinates are even over 1 and odd over −I. Thus L = 2ℤ^T, enlarged by ℤ𝟙 exactly when the centre is nontrivial. Faithful finite holonomy and the full lattice give discreteness and cocompactness. | Uses the arrangement-complement identification and Marin's crystallographic theorem; the meridian argument for H₁ is included. |
+| Characteristicity of L | Any abelian normal subgroup of finite index centralises its intersection with L, so its linear parts fix a full lattice and are trivial. | Applies with torsion. |
+| Scalar signs and swaps | A commuting integral automorphism acts as a rational scalar on a good constituent; it and its inverse preserve the constituent lattice, forcing ±1. In the swap case both directions of interchange are stated, and v+gDv is nonzero in a direct sum of distinct constituents. | Absolute irreducibility and multiplicity one are essential. Rational irreducibility alone does not suffice. |
+| B_n/D_n reflection preservation | For signed involutions (a,b,c), fixed-line counts are a(a−1)+b(b−1)+2c in D and a²+b²+2c in B. Lifts squaring to −I fix no real line. Solving the reflection-character equations uniformly leaves only reflections and two extra kinds. | Algebraic inequalities cover every rank; bounded checks only corroborate them. |
+| Class-size exclusions | The B6 diagonal (3,3,0) class has quotient size 10 rather than 30. The D_n two-negative-coordinate class has size C(n,2), rather than n(n−1). Neither D class splits on restricting to even signed permutations: an unused fixed coordinate supplies an odd centraliser element. Central quotienting does not halve these D class sizes for n ≥ 5. | The restriction and central-quotient steps are separately justified; direct conjugacy-orbit checks cover B6 and D5–D12. |
+| Root-isometry reduction | Orders of products of reflections survive quotienting by ±I because the product fixes a nonzero complement. Signs can be chosen along the diagram tree to recover the simple-root Gram matrix. The resulting isometry normalises W. For B_n it preserves root lengths and is a signed permutation; for D_n it is inner up to a diagram symmetry. | No lifting assumption for an arbitrary holonomy automorphism. |
+| D4 | The sign-fixed module has dimensions 1,3,2. The other sign weights have orbit size three, so no other degree-two rational constituent occurs. The degree-two holonomy image is S3; its integral normaliser acts as ±S3. | Avoids the reducible U⁻ as a purported good constituent. |
+| Odd dihedral m divisible by 3 | The rational rotation decomposition has U_d ≅ ℚ(ζ_d), d dividing m. The unique rational degree-two constituent is U₃, with image S3. | Distinguishes rational constituents from their complex splittings. |
+| Dihedral 4 dividing m | The two nontrivial rational character lines occur once, with opposite values on S. Normalisers preserve or exchange them. In the exchanged case D² is a common scalar ±1, and choosing g = 1 or S makes (gD)² = 1. | Includes m = 4 and the enlarged translation lattice. |
+| Odd dihedral m not divisible by 3 | D = I−C−C⁻¹ has determinant −1 by (I+C)(I−C+C²)=I+C³. With d=e₀+e₁, generator corrections are −2e_(m−1), −2e₂. The only eigenvalue of modulus one is −1 on the constant line; no gD has eigenvalue one. | Checks lattice and extension, not merely ambient affine conjugation. No exact general-m Reidemeister number is asserted. |
+| Dihedral m ≡ 2 modulo 4 | Pair even j with j+m/2 and apply the block [[1,2],[2,5]]. The pairing is G-equivariant; D and its inverse preserve L and the extension. Eigenvalues 3±2√2 avoid the unit circle. | Works for every such m ≥ 3. |
+| I₂(5) exact count | Ten adjusted determinants are nonzero. Four conjugacy fibres have cyclic quotients of orders 2,22,22,10 and centraliser orbit counts 1,6,6,5. Independent enumeration of all 140 translation-twisted classes gives 13 orbits of size ten and five of size two. | R=18. Torsion is exhibited explicitly; the determinant average 14 is not used as a Reidemeister formula. |
+| Odd-dimensional alternative | The unique good constituents of degrees 5,15,27,35,25 for D5,E6,E7,E8,H4 have finite integral normaliser: its kernel in Aut(image) is ±I. Hiss–Lutowski then gives a holonomy-adjusted fixed vector. | The torsion-free DDP conclusion is not applied directly to these quotients; the crystallographic determinant criterion is used. This particular route does not supply F4/H3. |
+
+The audit found no obstruction to the stated classification. It tightened the interchange hypothesis, the class-size justifications, the rational dihedral decomposition and the separation of the two proof routes. This conclusion is not a substitute for human verification of the proofs.
+
+## Primary-source checks
+
+The table records specific mathematical inputs, not a claim to an exhaustive priority search.
+
+| Source and location | Use in the paper |
 |---|---|
-| Character-preserving holonomy automorphisms preserve reflections in B_n/D_n | New Lemma 6.3 derives the character equations for signed involutions of type (a,b,c). In B_n the only extra long-reflection coincidence is (3,3,0) at n=6; its quotient class size is 10, versus 30. In D_n, n≥5, the only extra type negates two coordinates; its class size is n(n−1)/2, versus n(n−1). The equations exclude every other type for all n, using n≥2c. Lifts squaring to −I have character zero. |
-| Reflection-preserving automorphisms give usable witnesses | For D_n use the existing simply-laced root lemma. For B_n the character distinguishes root lengths; the tree sign-choice construction gives a root-system isometry, necessarily a signed permutation. Thus the existing U⁻ witnesses apply without requiring an arbitrary holonomy automorphism to lift to W. |
-| D4 quotient | The frame constituent is the unique rational degree-two constituent. The sign-fixed part has degrees 1,3,2; constituents in U⁻ have degree divisible by three by the sign-weight orbit. Its image is S3, whose normaliser on this lattice acts as ±S3. |
-| Odd m, 3 ∣ m | The unique rational degree-two constituent U3 has image S3. Every rational normaliser preserves it, giving the same argument as D4. |
-| 4 ∣ m | The two nontrivial rational character lines have multiplicity one. Their values on the rotation generator are both −1 and on S are +1/−1. A normaliser preserves or swaps them; the stable/swap argument works directly, including m=4. |
-| Odd m, 3 ∤ m | For D=I−C−C⁻¹, d=e0+e1, the generator corrections are −2e_(m−1) and −2e2. The identity (I+C)(I−C+C²)=I+C³ gives det D=−1 because C and C³ are odd m-cycles. The only eigenvalue of modulus one is −1 on the constant line, so every adjusted determinant is nonzero. This is a uniform existence proof, not a claim about the exact Reidemeister number. |
-| m ≡ 2 mod 4 | Pair even j with j+m/2 and use the block [[1,2],[2,5]], with translation zero. The pairing is holonomy-equivariant. The matrix and inverse are integral and congruent to I modulo two, preserving the full lattice and the extension. Its eigenvalues 3±2√2 have modulus different from one. |
-| Theorem B implies the Artin result | [P,P] is characteristic by Cohen–Paris; projection gives the Reidemeister inequality. Together with the known dihedral Artin cases this proves Theorem A, without the Franzsen–Howlett decomposition. The existing Lean theorem still uses its original four hypotheses; no new formalisation is claimed. |
+| [Cohen–Paris, Theorem 1.4](https://arxiv.org/pdf/math/0204242); Proposition 5.4, Corollary 5.5 and the cited classical lemmas | P is characteristic. Their GAP-assisted calculations are cited inputs and have not been rerun here. |
+| Brieskorn, *Inventiones* 12 (1971), 57–61 | Identifies P with the fundamental group of the reflection-arrangement complement. The required first-homology computation is proved directly using meridians and winding numbers. |
+| [Marin, Theorem 2.1 and Corollary 2.2](https://arxiv.org/pdf/1509.06213) | A/[P,P] is crystallographic with holonomy W/Z(W), also when the Coxeter centre is nontrivial. |
+| [Humphreys, §1.8 p. 15 and Theorem 1.12(c),(d), pp. 22–23](https://sites.math.washington.edu/~billey/classes/reflection.groups/references/Humphreys.ReflectionGroupsAndCoxeterGroups.pdf) | Simple transitivity on simple systems and pointwise stabilisers generated by perpendicular reflections. Locations checked in the scanned text. |
+| [Carter, Lemma 5, p. 5](https://www.numdam.org/item/CM_1972__25_1_1_0.pdf) | Decomposition of a Weyl-group involution into orthogonal reflections, used in the E8 holonomy proof. |
+| [Franzsen–Howlett, Theorem 31](https://www.maths.usyd.edu.au/u/bobh/fh02.pdf), published pp. 329–330; Theorem 18 and Corollary 19 | Alternative Artin proof only. Theorem 31 is presented with a proof outline; no claim of a fully reproduced classification proof is made. |
+| [Dekimpe–De Rock–Penninckx, Theorem 4.7, pp. 363–364](https://www.tmna.ncu.pl/static/files/v34n2-10.pdf) | The integral subrepresentation, image non-conjugacy and normaliser-eigenvalue hypotheses are explicit. The manifold theorem assumes torsion-freeness. |
+| [Dekimpe–Kaiser–Tertooy, Theorem 3.3, Theorem 3.4 and Algorithm 1](https://arxiv.org/pdf/1709.07649) | The determinant test applies to crystallographic groups with torsion. The averaging formula requires a Bieberbach group. Algorithm 1 tests affine extension compatibility. Theorem 3.3 credits Dekimpe–Penninckx, Corollary 3.10. |
+| [Hiss–Lutowski I, Definition 1.1.3 and Theorem 1.1.5](https://arxiv.org/pdf/2504.04978), with [Part II](https://arxiv.org/html/2601.09622v1) | Requires a nontrivial irreducible real representation of odd degree and a finite-order normalising operator. The paper proves that last hypothesis for the relevant integral normalisers. |
+| [Calvez–Soroko, Theorem 1 and its dihedral proof](https://arxiv.org/pdf/2106.13260) | Supplies R∞ for dihedral Artin groups, including the parameters with negative crystallographic quotients. |
+| [Dekimpe–Gonçalves–Ocampo, Theorems 28, 31 and the proof of Corollary 32](https://arxiv.org/pdf/2403.12528); [journal metadata](https://arxiv.org/abs/2403.12528) | R∞ for the virtual-braid quotients with three and four strings. Published in Journal of Algebra 663 (2025), 20–47, DOI 10.1016/j.jalgebra.2024.09.002; the bibliography gives this publication. |
+| [Gonçalves–Guaschi–Ocampo, §5](https://arxiv.org/pdf/1503.04527), and [Dekimpe–Kaiser–Tertooy, Table 2](https://arxiv.org/pdf/1709.07649) | The A2 quotient is IT 161; the complete three-dimensional negative list omits it. Its positive result is acknowledged as implicit in these sources. |
+| [Ocampo, §1](https://arxiv.org/html/2610.20478v1); [Leite–Ocampo–Santos Júnior–Teixeira](https://arxiv.org/html/2610.33308v1) | Related torus-bundle and framed-braid quotient work, distinguished by the groups and questions studied. |
 
-The new `code/indep/quotient_families.py` is a fresh exact checker, importing none of the scratch modules. Recorded validation: direct root-line counts through rank 12; character coincidences through rank 120; every dihedral m from 3 to 46, checking positive constituent multiplicities or the affine map, inverse, lattice, generator corrections and every adjusted determinant. Output: `code/logs/quotient_families.log`. These are explicitly labelled finite corroboration, not the proof of the uniform statements. The existing I₂(5) checker was rerun and still gives R = 18.
+For D5, [Soroko–Vaskou, Theorem 1 and §1](https://arxiv.org/html/2409.18123v2) cover n ≥ 6 and explicitly leave n = 5 open. [Paris–Soroko, Theorem 1](https://arxiv.org/html/2606.26082v2) give Aut(A[D5]) = Inn ⋊ ⟨inversion⟩; the paper records the short R∞ deduction without attributing that statement to their theorem. [Soroko, §1](https://arxiv.org/html/2610.13904v1) lists n ≥ 5 with a reference to Soroko–Vaskou. These statements have been checked directly; they do not justify a priority claim for D5.
 
-Other changes: credited the stable criterion to DDP/DP and distinguished the swap extension; made the inclusion Θ_Γ ⊆ Θ_χ explicit; added the F4 non-innerness check after passage to W/Z; stated discreteness/cocompactness. The finite exceptional certificates remain proof inputs; the suggested ATLAS substitutions were not adopted without separate verification. The notes' blanket “Γ_X has torsion” was not adopted: the statements and criteria allow torsion without claiming it for every type.
+## Certificate failure checks
 
-New primary-source checks: [Ocampo 2610.20478, §1](https://arxiv.org/html/2610.20478v1) explicitly discusses possible Nielsen/Reidemeister questions for fibre-preserving maps of its torus bundles; [Leite–Ocampo–Santos Júnior–Teixeira 2610.33308](https://arxiv.org/html/2610.33308v1) concerns framed-braid quotients and flat manifolds. The introduction now cites both. The A2 quotient result is acknowledged as implicit in [GGO, §5](https://arxiv.org/pdf/1503.04527), identifying IT 161, together with [DKT, Table 2](https://arxiv.org/pdf/1709.07649), the complete list of three-dimensional groups without R∞. No priority probability or “scoop risk” estimate was adopted.
+A positive computation must establish that all required objects were found. The auxiliary outer-witness checker now requires the full dimension multiset and both signs for every constituent, rejects duplicate or missing witnesses, and verifies scalar commutants and stable/swap images exactly. The scalar checker requires the exact requested dimensions, nontrivial reflection action and both F4 constituents. The independent commutant checker requires its complete expected eigenspace decomposition. Positive uniform checks require nonempty constituent and automorphism lists. Empty command lines are rejected by the scripts that require explicit types.
 
-The former classification question is replaced by the Reidemeister-spectrum question for the negative dihedral families. Exact values printed in the old general-m scratch logs are not promoted to the paper.
+`code/test_certificate_guards.py` injects empty and partial data into these paths, including the actual outer-checker entry point and the E8 commutant calculation. It also exercises the command-line exit codes. These regression checks are part of the one-command verification workflow; passing runs on intact data alone would not establish that omissions are rejected.
 
----
+## Reproduction and remaining work
 
-## v4: quotient results promoted; dihedral counterexample verified and exact count corrected
+`python3 scripts/verify.py --clean` is the complete verification command after dependency setup. It runs eleven Python verification jobs, builds the PDF with resolved references and no overfull boxes, rebuilds the Lean package while retaining the Mathlib cache, and checks the axiom report. Logs and JSON summaries are generated in `verification/`; they are reproducible build outputs rather than source files.
 
-The latest review proposed Theorems A/B and Proposition C. The cited exploratory files were outside this repository, in the user-supplied scratch directory `pa-crystquot/scripts/i25.py` and `i2m.py`. They were inspected; the original files were not modified or imported as proof certificates.
+The final full workflow passes all eleven Python jobs, including eight certificate-failure regression tests, every m from 3 through 46, direct conjugacy orbits in B6 and D5–D12, and the two independent R=18 counts. The 17-page PDF builds with resolved references and no overfull boxes. Project Lean outputs were cleaned and rebuilt; the final source-tree build and axiom report both pass. The reported axioms are only `propext`, `Classical.choice` and `Quot.sound`. Lean definitions and proof terms are unchanged; source edits update documentation. The final commands, timings and outcomes are recorded in `verification/all-summary.json`.
 
-| Review point | Verification | Change |
-|---|---|---|
-| Does the I₂(5) affine map preserve the actual quotient? | **Yes.** With C e_j = e_{j+1}, S e_j = e_{−j}, D = I−C−C⁻¹ and d = e₀+e₁, the two generator corrections are −2e₄ and −2e₂. D⁻¹ = I−C²−C⁻² preserves L = 2ℤ⁵. The induced holonomy map is the identity, so preservation is onto. | Proposition C includes the extension and lattice calculation. The exact checker also verifies inverse membership for all ten parity cosets. |
-| Are all holonomy-adjusted determinants nonzero? | **Yes, exactly:** rotations give 2,22,22,22,22 and reflections give −10 five times. | Finite R follows without needing an exact counting formula. |
-| Is R = 14? | **No for the supplied automorphism.** The scratch scripts use the torsion-free determinant average. The actual quotient contains ((−1,0,−1,1,1),C), of order five. Direct counting gives **R = 18**. The scratch translation (0,0,1,1,1) differs from our choice by a central translation and an inner translation, and was checked separately. | Corrected headline to R = 18. The paper proves the count via four centralizer actions: 1+6+6+5. A separate enumeration gives 13 orbits of size ten and five of size two among 140 translation-twisted classes. |
-| Is a unit in the commutant sufficient? | **No.** The unit must preserve the extension as well as the lattice, and all adjusted determinants must be nonzero. | Proposition 6.3 records the standard affine compatibility test and cites DKT Algorithm 1. The example verifies this condition explicitly. No general negative-dihedral classification is claimed. |
-| Does DDP + Hiss–Lutowski apply to five cases? | **Yes, with an explicit torsion-safe reduction.** Unique good constituents have dimensions 5,15,27,35,25 for D5,E6,E7,E8,H4. Their integral normalisers have finite image in Aut(G|U) and kernel ±I. Hiss–Lutowski then gives a fixed vector, and DKT Thm 3.3 applies with torsion. | Section 6.3 proves the reduction, checks the constituents, and includes the comparison table. The flat-manifold theorem itself is not applied to a group with torsion. |
-| Promote the quotient result. | The old Cor. B.3 already treated all quotient automorphisms, using the full Aut(W/Z) inputs. | Theorem B is now a headline and Theorem 6.2 in the main text. Appendix B calculations are explicitly labelled proof inputs for this result. |
-| Cite the virtual-braid precedent. | Read DGO arXiv:2403.12528, Thms 28 and 31 and Cor. 32: the quotients VB_n/[VP_n,VP_n] have R∞ for n = 3,4. | Prominent introductory citation, distinguishing their modules/extensions from spherical Artin quotients. |
-| Scope and novelty. | Five quotient cases also follow from the general odd-dimensional theorem; F4/H3 use the explicit witnesses here. | Avoids a blanket elementary-proof claim, adds the quotient classification question, and expressly excludes §6 from the existing Lean coverage. |
-
-Sources read for this revision:
-
-- [Dekimpe–Kaiser–Tertooy, Theorem 3.3, Theorem 3.4 and Algorithms 1/3](https://arxiv.org/pdf/1709.07649): the determinant criterion permits torsion; the averaging formula does not in general.
-- [Hiss–Lutowski I, Definition 1.1.3, Theorem 1.1.5 and Corollary 1.1.6](https://arxiv.org/pdf/2504.04978), with [Part II](https://arxiv.org/pdf/2601.09622) completing the theorem. The cited DDP criterion is also reproduced in Part I, Theorem 1.1.1.
-- [Dekimpe–Gonçalves–Ocampo (2024)](https://arxiv.org/pdf/2403.12528), the virtual-braid results above.
-
-Reproduction: `python3 code/indep/dihedral_quotient.py` (SymPy, exact arithmetic, under one second here); output is in `code/logs/dihedral_quotient.log`. The general-m scratch search is exploratory only, and its printed `R` values remain unverified. No new Lean theorem is claimed. Author names and the contribution statement still need author completion before submission.
-
-Validation in this revision: the new dihedral checker, `explicit_constituents.py`, `out_check.py H3 F4 H4 D5 E6 E7`, `out_check_stab.py E7 E8`, and `indep_check.py H4 D5` all passed. The PDF was rebuilt with resolved references. The existing Lean sources were unchanged and the Lean build was not rerun.
-
----
-
-## v3.2: second external AI review (it read the paper, the Python and the Lean sources) → verified? → how handled
-
-I treated every claim as a hypothesis and checked it against the source or by exact computation. All scripts were
-re-run after the changes (4 parallel groups, all exit 0); the logs are in `code/logs/`.
-
-| # | Review point | Verified? | How handled |
-|---|---|---|---|
-| A | Remark 3.4 wrongly says f(A) ≅ A/[P,P] is not crystallographic when Z(W) ≠ 1 | **CONFIRMED (our v3.1 text was wrong).** Marin, arXiv:1509.06213, Thm 2.1: "B/(P,P) is crystallographic with holonomy group W/Z(W) of dimension N = \|A\|. The kernel of the projection map B/(P,P) → W/Z(W) is the subgroup P0 generated by P^ab and Z0(B). We have P0 ≃ ℤ^N." Cor 2.2: the holonomy is W iff Z(W) = 1. The wording "not crystallographic in the strict sense" had been suggested by the v3 cold referee; that suggestion was itself wrong. | Remark 3.4 rewritten from Marin's statement, as the review suggests. It now also points to the new Cor. B.3. |
-| B | Prop 4.6(a): the decomposition 1 + 3⊗3 + 3′⊗3′ + 16 + 25 holds over ℂ, not ℚ | **CONFIRMED.** The character of 3⊗3* at (g,1), g a 5-cycle, is 3·χ_3(g) = 3(1+√5)/2 ∉ ℚ. So over ℚ, 9 ⊕ 9′ is one 18-dimensional summand. | Removed from the statement. The proof now argues only for U: U⊗ℂ ≅ V_ℂ⊗V_ℂ* is irreducible for A5×A5, occurs once in ℂ[A5] and is inversion-stable; U ≅ End_ℚ(V) is rational. The ℂ and ℚ decompositions are mentioned in a parenthesis, correctly. |
-| C | H4: justify K ≅ A5; narrow the quantifier in 4.6(c); trivial centraliser; "order five" wording | **CONFIRMED** as gaps. The finite identification is certified exactly (`explicit_constituents.py h4`): \|K\| = 60, 15 involutions, 5 Klein subgroups, and conjugation is an injective homomorphism into A5 (all images even). Z(K) = 1 is also checked. | Lemma 4.5 states the certificate. 4.6(c) is restricted to induced outer θ_φ, or to any outer automorphism via Appendix B. Added the centraliser sentence (left and right translations force Z(K) = 1). The wording now reads "a quaternion with real part τ/2 (order 10 in I, an element of order five in K)". **Baake–Moody was not cited**, because I did not verify the reference; the finite certificate replaces it. |
-| D | Prop 5.4 (D4): "both 3-dimensional J-eigenspaces are good" is unproved and unused | **CONFIRMED** (true by computation, but unproved in the text and unused) | Claim deleted. Added a short proof that J commutes with W(D4) = E ⋊ S4, so U⁻ is reducible. The computational value is kept in the log, marked "not used in the paper". |
-| E | Remark 3.5 needs injectivity of ρ on T; the presentation needs s ≠ t, m_st < ∞ | **CONFIRMED** | Both added. |
-| F | The finite calculations the proofs depend on should be labelled as proof certificates | **CONFIRMED** | Appendix A now separates *proof certificates* (E-type perpendicular counts and ranks, closure of I, Ψ(I) = I, the K ≅ A5 data, frames, characters, D4/BD) from *corroboration*. Prop 4.2, Lemma 4.5 and Prop 4.6 cite them as certificates. |
-| G | Exactness is overstated: numpy matrix_rank in the E scripts; numerical referee code; scripts do not assert | **CONFIRMED.** `explicit_constituents.py`, `referee_v3_E.py`, `indep_check.py` (invariance test) and `uniform_check.py` (span test) used float ranks. The exact recomputation gives the same nine perpendicular ranks: E6 5, 3, 4; E7 6, 5, 5; E8 7, 6, 6. | All reported ranks now use exact rational row reduction. Assertions with nonzero exit codes were added to `explicit_constituents`, `referee_v3_E`, `certify`, `certify_outer`, `indep_check`, `out_check`, `out_check_stab` and `uniform_check`. Intentional negatives are labelled: D4 U⁻; odd I2(m) with 3∤m; even m is informational only. `referee_v3_DFH3.py` and parts of `referee_v3_H4.py` are labelled numerical corroboration (header comment, code README, Appendix A). Everything was re-run. |
-| H | Appendix B overstates the E7 check (fastaut.py was never run on E7) | **CONFIRMED** | Appendix B now lists each method with its scope. Involution classes plus Coxeter tuples: H3, H4, F4, D5, E6, E7. Brute force: E6, H3, H4, F4, D5 (not E7). Schreier–Sims for the reflection-preserving stage: E7, E8. E8 by hand. |
-| I | Documentation consistency (hOut, Lean status, duplicates, numbering, commit id, memory) | **CONFIRMED** (REVIEWER_NOTE was stale: it said "D5 is not formalised" and that H4/E6–E8 need hOut) | REVIEWER_NOTE rewritten: seven types, four hypotheses (hW, hCP, hBr, hFH), hOut no longer needed. README checked: no duplicated sections, hOut described as legacy only, memory figures 25 GB vs 11 GB. In `lean/README.md`, documentation only: Remark 3.4 → 3.5 (two places); build time and `#print axioms` output tied to commit 296176a; memory figures clarified; wording fix. `code/README.md` numbering references updated to the current paper. |
-| J | D5 priority: be more cautious | Agreed | Abstract: "The method also gives uniform proofs in types A_n, B_n and D_n, including D5; the latter case also follows from the automorphism classification of Paris–Soroko and the inversion argument." The introduction has a short factual paragraph with no long quotation. D5 is kept in the Main Theorem. |
-| K | Cite Hiss–Lutowski Parts I and II with precise hypotheses | **CONFIRMED** IDs via the arXiv API: 2504.04978 ("The eigenvalue one property of finite groups, I") and 2601.09622 ("…, II"). Read: Def. 1.1.3 and Thm 1.1.5 ("Every finite group has the eigenvalue one property", for non-trivial irreducible ℝG-modules of odd dimension and normalising n of finite order; the proof uses CFSG). | Cited with their hypotheses. The paper notes they apply to our odd-dimensional constituents (15, 27, 35, 25, 5), not to H3 or F4. |
-| 8 (opt.) | R∞ for A/[P,P] | **Proved and included** as Cor. B.3, for D5, E6, E7, E8, F4, H3, H4. Key points: Λ = preimage of Z(W) acts faithfully by translations (parity argument), giving the lattice L = 2ℤ^T (+ℤ𝟙). Λ is characteristic because it is the unique maximal abelian normal subgroup of finite index (the holonomy acts faithfully). The permutations π of Appendix B preserve L. The same scalar ±1 and witness argument applies. Quick arXiv searches (crystallographic + twisted conjugacy/Reidemeister + braid) found only Dhanwani–Kumar–Naik–Singh (virtual Artin groups). | Presented as a corollary in Appendix B that depends on the full Aut(W/Z) statements (by computer except E8). |
-
-**Refuted review claims:** none. One clarification: the review's suggested Remark 3.4 wording reverses the v3 cold
-referee's (wrong) suggestion. Marin's statement settles it in the review's favour.
-
----
-
-
-## v3.1: internal v3 AI cold referee (minor revision) → how handled
-
-The referee found no mathematical error and confirmed every explicit constituent and witness with their own code.
-That code is now in `code/indep/referee_v3_*.py`, with logs in `code/logs/referee_v3_*.log`.
-
-### The main finding: D5 is not in the literature
-
-I checked the referee's reading myself, in the arXiv texts.
-
-* **SV24 = arXiv:2409.18123v2** (7 Feb 2026). §1, Theorem 1: "Let n ⩾ 6. Then the Artin group A[Dn] and its central quotient A[Dn]/Z(A[Dn]) have property R∞." A little later: "The only remaining case in the family A[Dn] is A[D5]. At present we do not have a description of Aut(A[D5]), which is the key input in our approach; we conjecture though that both A[D5] and A[D5]/Z(A[D5]) have property R∞ as well." **Confirmed: n ≥ 6 only, and D5 is conjectured.**
-* **PS26 = arXiv:2606.26082v2.** Theorem 1: "Let A = A[D5] and C2 = Z/2Z. Then Aut(A) = Inn(A) ⋊ ⟨χ⟩ ≃ A/Z(A) ⋊ C2. In particular, Out(A) ≃ C2", where χ is the inversion t_i ↦ t_i⁻¹. A full-text search for "R∞", "twisted" and "Reidemeister" finds **no occurrence**. **Confirmed: Aut is computed, R∞ is never stated.**
-* **Sor26 = arXiv:2610.13904v1, §1.** It lists "spherical groups of type Dn, n ⩾ 5, in [SV24]". This **misattributes** D5, given the two items above. Its own theorems concern non-spherical groups only (abstract: "every length-preserving automorphism of a nonspherical Artin or Coxeter group").
-
-**How it is handled.** D5 is now claimed as part of the Main Theorem: in the abstract, the introduction, the Main Theorem statement, the Corollary proof, §5 and the new Remark 5.3. Two routes are given:
-
-1. Prop 5.2 with n = 5. This uses Cohen–Paris, Franzsen–Howlett Thm 31(3) (Aut(W(D5)) = R(W) ≅ W), and the weight argument. The exact checks (D5: U⁻ good, negating e_5 gives dimensions (6,4)) are in `explicit_constituents.log` and `referee_v3_DFH3.log`.
-2. PS26 Thm 1 + the inversion remark (Remark 5.6(b)) + R(id) = ∞ (A^ab ≅ ℤ) + Lemma 2.1(c). This is presented honestly as a near-immediate deduction that, as far as we can tell, nobody has written down.
-
-Sor26 is no longer cited for any spherical case. Its misattribution is noted politely in the introduction.
-
-### Minor items
-
-| # | Referee point | How handled |
-|---|---|---|
-| 1 | Main Theorem proof: treat the F4 inner class explicitly; say how H3 and H4 inner are covered | Done. F4 inner uses π = 1, U = U_long, with witnesses h = 1 and a long reflection (Prop 4.4(b)). H3/H4 inner use Remark 3.5 (reflections conjugate, U nontrivial). D5 is added as a bullet. |
-| 2 | Lemma 3.2(i): rule out U meeting two isotypic components; U stable under the orbital matrices | Done. The proof now uses central idempotents, then U_ℂ = V_i ⊗ L, then m_i = 1. |
-| 3 | Prop 4.6(c): spell out the steps | Done, in three steps: π ∈ ρ(W)π_Ψ; π_Ψ = ψ is outer in Aut(K); Aut(A5) = S5, so composing with an inner conjugation gives conjugation by a transposition δ. Notation: λ_V for the representation of V, Ω for the rotation. |
-| 4 | Prop B.2: 6-root line; Carter Lemma 5 numbering | Done. **Carter's numbering verified** in the Numdam scan of Compositio Math. 25 (1972) 1–59: "LEMMA 5. Every involution w in W can be expressed as a product of l(w) reflections corresponding to mutually orthogonal roots." |
-| 5 | Lemma B.1: Φ irreducible; Aut(Φ) = W⋊Gr; orders of products in W/Z | Done. |
-| 6 | Lemma 4.1: circular last sentence | Replaced by "θ_r(ρ(T)) = ρ(T) for r ∈ R(W), by definition of R(W)". |
-| 7 | Prop 4.2: reference for the perpendicular subsystems | Not done as asked: I could not verify a specific table reference. The paper instead proves the identification. Each (number of roots, rank) pair in the table occurs for exactly one simply-laced root system of that rank, and the counts and ranks are machine-checked. It also notes that these are the classical centraliser facts. |
-| 8 | FH03: outline, typo, published theorem number | Done. The paper says the proof of Thm 31 is an outline based on involution class sizes, and points to Appendix B for corroboration. It notes the typo α_χ → α_ζ in item (9). **The published theorem number could not be verified**: the journal PDF was not accessible. The bibliography says we cite the preprint numbering and gives its URL. |
-| 9 | Position Thm 3.3 relative to DP11/DKT19/DDP09; f(A) is not strictly crystallographic when Z(W) ≠ 1 | Done. New Remark 3.4. DP11 is added to the bibliography (JFPTA 9 (2011) 257–283, as cited in DKT19). The DDP09 summary now includes its uniqueness-of-image hypothesis, which implies multiplicity one. |
-| 10 | Lean paragraph: hBr is P^ab ≅ ℤ^N | Done. The paper also says D5 is not formalised. |
-| 11 | Notation clashes (P, f, ρ, φ) | Done: rotation P → Ω; central-twist homomorphism f → c; ρ_V → λ_V; DDP's ρ_0 → η_0; golden ratio φ → τ, with the H3 coordinate swap renamed ς and the H4 transposition δ; Euler φ(d) → \|(ℤ/d)^×\|. |
-| 12 | Prop 4.3: display ℚ^T = 1 + 4 + 5 + 5 | Done, with proof via dim χ^{V4} = 1, 0, 0, 1, 2. |
-| 13 | References | DKT19: J. Algebra 533 (2019) 353–375 (arXiv journal-ref). CP03: arXiv:math/0204242 added; the theorem numbering matches the arXiv text. FH03: preprint URL. Kourovka 19.28: "as cited in [SV24, §6]", since the notebook itself was not consulted. AimPL 8.6: checked against the local copy of the problem list (`aimpl/geometric-group-theory/geomartingp/08-algebraic-properties/12-…`). |
-| 14 | Remark 5.4 (now 5.5): ρ injective on T for odd m | Done (Z(W) = 1 for odd m). |
-| 15 | Prop 4.4: redundant non-isomorphism remark | Removed. Distinct good constituents are automatically non-isomorphic. |
-| 16 | explicit_constituents.log is stale | Regenerated; it now contains the "(rank r)" fields and matches `code/README.md`. |
-| 17 | lean/README.md uses the v2 numbering | Not touched, per instructions (another agent is handling `lean/`). |
-
----
-
-## v3 (earlier round)
-
-The section below is the **v3 revision after
-an external AI review**, written 2026-11-07. The older sections below it (the v1 audit and the v2 response to the
-cold referee) use the **old theorem numbering**; the old-to-new correspondence is in `code/README.md`.
-
-## v3: external review → verified? → how handled
-
-The review came from another AI system that saw only `main.tex`. Every claim in it was treated as a hypothesis. I
-checked each one by exact computation (`code/indep/explicit_constituents.py`, log
-`code/logs/explicit_constituents.log`) and/or by reading the cited source.
-
-| # | Review point | Verified? | How handled |
-|---|---|---|---|
-| 1a | D4: U⁻ = span{u_ij} is reducible, because J(u_ij) = u_kl commutes with W(D4) | **CONFIRMED** (exact): J commutes with all generators on U⁻. Its ±1 eigenspaces are 3-dimensional and each is good (⟨χ,χ⟩ = ⟨χ,perm⟩ = 1). On the even sign group, χ_ij = χ_kl when {i,j} ⊔ {k,l} = {1,2,3,4}. | **This was an error in v2** (Remark 5.3 claimed U⁻ good for D_n, n ≥ 4). Fixed: Prop 5.2 now requires n ≥ 5, and the new Prop 5.3 handles D4 with the frame module. |
-| 1b | E-type simple roots: α_k = e_{k−1} − e_{k−2} (3 ≤ k ≤ 8) in Bourbaki's coordinates | **CONFIRMED.** The v2 text had α_k = e_{k−2} − e_{k−3}, which is wrong. The code always used the correct roots (`rootsys.py`, `roots.py`: α_3 = e_2 − e_1, …, α_8 = e_7 − e_6); `explicit_constituents.py bourbaki` prints them. | **Error in the v2 text, fixed** in Appendix A. The paper now states the ambient space ℝ^8, the 1-based coordinates, and that E7 and E6 use α_1..α_7 and α_1..α_6 inside ℝ^8. |
-| 2 | Use Aut(W) (Franzsen–Howlett Thm 31) instead of Out(W/Z) | **CONFIRMED by reading the source**: the authors' preprint https://www.maths.usyd.edu.au/u/bobh/fh02.pdf, Theorem 31 and the discussion before it (Prop 30, R(W) vs Inn·Gr). Statement: for B_n, D_n, E6, E7, E8, F4, H3, H4, Aut(W) = R(W)·A(W), where A(W) consists of central twists w ↦ w f(w) with f: W → Z(W). R(W) = Inn·Gr except for H3 and H4, where [R : Inn] = 2. The induced actions mod Inn are exactly as the review says. **Caveats:** the journal version (Adv. Geom. 3 (2003) 301–338) could not be downloaded (the EMIS link returned HTML), so I read the preprint. The proof of Thm 31 is labelled "(Outline)" and rests on involution class sizes from Carter. Bannai (1969) and Franzsen's thesis were **not** consulted. | **Adopted** as Lemma 4.1. Prop 4.1 and the Out(W/Z) enumeration moved to Appendix B as corroboration. For the six exceptional types the Main Theorem does **not** depend on FH alone: Appendix B controls all of Aut(W/Z) independently (by computer for E6, E7, H3, H4, F4; by hand for E8). FH is essential only for the uniform B_n/D_n proofs for all n. |
-| 3 | Uniform B_n (n ≥ 3) and D_n (n ≥ 5) via the weights χ_ij; D4 via frames | **CONFIRMED.** Proof written. Exact checks: B3–B6 and D5–D7 (weights distinct and nontrivial, sign-fixed vectors fixed, U⁻ good, negating e_n has eigenvalues ±1). D4: frame module good (dimension 2), W induces S3 on frames, both witnesses exist for all six graph automorphisms. **Minor nuance:** the review says "triality permutes the frames". Our explicit isometries realising the graph automorphisms happen to act trivially on frames. This is harmless, since only the coset modulo W matters and W already induces the full S3. | Props 5.2 and 5.3. Presented as a demonstration of the method (these cases are known). |
-| 4 | Explicit exceptional constituents | **CONFIRMED** (exact): see the details below the table. | Props 4.2–4.6, Lemma 4.5. The computations are kept as Appendix A cross-checks. The Baake–Moody reference suggested by the review was **not** added (not verified); the icosian model is proved directly in Lemma 4.5. |
-| 5a | Outline should conclude R(φ′\|_P) = ∞ and then R(φ) = R(φ′) | Correct | Fixed (Introduction, Overview). |
-| 5b | Delete "hπ need not preserve U"; in the stable case it does | **CONFIRMED**: v ∈ U ∩ hπU, and both are isotypic components, so they are equal. | Sentence deleted. πU = U is now part of hypothesis (i). The swap case states πU₁ = U₂ explicitly. |
-| 5c | Mark the useful constituents; prove or drop the H4 remainder claim | — | The table lists the constituent used in bold. The H4 remainder is now **proved** (Wedderburn: 1 + 9 + 9′ + 16 + 25). |
-| 6 | Related work: DDP09 Thm 4.7, DKT Thm 3.3, Hiss–Lutowski | **CONFIRMED by reading.** DDP09 (TMNA 34 (2009) 353–373), journal PDF, Thm 4.7: the flat-manifold criterion, quoted in the paper. DKT (arXiv:1709.07649v4, J. Algebra 2019), Thm 3.3: R(φ) = ∞ ⇔ det(1 − AD) = 0 for some A ∈ F (citing DP11 Cor 3.10). Hiss–Lutowski (arXiv:2412.10206): an *announcement* (proof in a separate preprint) that every finite group has the E1-property. | Added to the introduction. The novelty claim is sharpened as requested. The D5 attribution is shortened. |
-| 7a | Dihedral: the criterion works iff (m odd and 3\|m) or 4\|m | **Partly confirmed.** For **odd m** I proved it (Remark 5.4): a good constituent exists iff 3\|m, and then U_3 with π ∈ S3 × {±1} gives witnesses. Computation agrees for odd m ≤ 21. The **even-m half (4\|m) is NOT verified**: ρ is not injective on T for even m, and `uniform_check.py` is unreliable there (it reports `pi realises theta: False` for some classes). | Odd case included as a remark. The even case is **not adopted**, and the paper says "we have not analysed even m". |
-| 7b | R∞ for A/[P,P] | — | Not claimed. |
-| 8 | Restructure and shorten; Lean paragraph; wording | — | Done. The new order is introduction / reflection lattice / criterion / exceptional / classical / appendices. Program names and runtimes moved to `code/README.md` (Appendix A only points there). The rate-limit sentence is removed, the (R)/(NA) discussion shortened, and "automorphism-free" removed. The AI reviews are described as AI reviews, not peer review. Added a Lean paragraph per `lean/README.md`. The title and abstract follow the review, adapted to what is proved. |
-
-Details for row 4:
-- **E6/E7/E8.** SRG parameters (36,15,6,6), (63,30,13,15), (120,63,30,36). Three orbitals. Spectra 3^15 (−3)^20; 3^35 (−5)^27; 3^84 (−9)^35. Dimensions match the earlier certificates (15/20, 27/35, 35/84). The perpendicular root counts and ranks are as tabulated in the proof of Prop 4.2. **Correction to the review's suggestion:** root counts alone do not identify the E6 subsystems (A3 and A2×A2 both have 12 roots), so the proof also uses the ranks.
-- **H3.** 5 frames; the frame module is good and 4-dimensional; π₀ acts as a transposition on frames, with eigenspace dimensions (3, 1).
-- **F4.** Frames [4,4,4] in both classes. U_long is moved only by s1, s2, and U_short only by s3, s4. π₀ swaps them; (s1π₀)² has eigenvalue −1 on U_short.
-- **H4.** The icosian group closes; s_r acts on lines by x ↦ r x⁻¹ r; ⟨left, right, inversion⟩ = ρ(W) (order 7200); the matrix-coefficient space is 16-dimensional and good.
-- **Correction (H4):** the natural Galois-type outer representative Ψ (Galois composed with the rotation j ↦ k, k ↦ −j) has **order 4** on lines and is not an involution. Only after composing with a suitable inner element x ↦ a x a⁻¹ does it act as conjugation by a transposition, with dimensions (10, 6). The paper says this. Ψ is in the same outer class as the original π₀.
-
-**New open items (v3).**
-* FH Thm 31 has now been checked in the published version (Adv. Geom. 3 (2003) 301–338, doi:10.1515/advg.2003.018, Thm 31 on pp. 329–330, same numbering as the preprint, typo α_χ also present). Its proof is an outline in both versions. For B_n/D_n with n > 7 the uniform proof rests on it.
-* The Lean development (not modified) uses the v2 numbering and the stronger `hOut` hypothesis. It does not formalise the FH-based argument or the explicit constituents.
-* Textbook section numbers (G2) are still unchecked, and so are the Cohen–Paris GAP computations (G8). Note that for B4, B6, D4 and D6, Cohen–Paris also use GAP (their Lemmas 3.5 and 4.4); this is now disclosed.
-
----
-
-# (v1/v2) AUDIT: Property R∞ for A(E6), A(E7), A(E8), A(F4), A(H3), A(H4)
-
-Audit date: 2026-11-07. Auditor: AI (Claude). No human expert has checked this yet.
-Inputs audited: `s2-rinf/REPORT.md` (with its prior-art addendum), `s2-rinf/code/*`, `pa-rinf/notes.txt`, and the
-downloaded papers. Output: `paper/main.tex` (references below are to its numbering).
-
-**Verdict.** The Main Theorem is proved in the manuscript, subject to:
-1. standard cited facts: Cohen–Paris; Brieskorn plus the free H₁ of hyperplane complements;
-2. the exact computer certificates, each reproduced by two independent programs;
-3. ~~for E8 only, one literature input from the ATLAS~~ **(revision)** E8 is now handled by a proof by hand
-   (paper Prop. 4.2), using no ATLAS input and no computer.
-
-**Disclosure (revision).** Cohen–Paris Thm 1.4 is itself computer-assisted for exactly these types: GAP
-calculations in [CP03, Prop. 5.4, Cor. 5.5] (H4, F4, E6, E7, E8), and [CP03, Lemma 5.1] (H3). We have not re-run
-them, so the Main Theorem depends on them. The paper now says so.
-
-I found no mathematical error in the argument. Several steps were implicit or only numerically checked in the
-original work and are now proved or certified exactly (see "fixed" below).
-
-Status legend: **verified** = full proof written and checked, or exact certificate reproduced; **fixed** =
-original statement was wrong, incomplete or only numerical, and has been corrected or completed; **cited** =
-relies on the literature (statement checked against the source where possible); **gap** = not verified.
-
-## Claim-by-claim table
-
-("Where" refers to the first version, except where marked "rev.". In the revision: Table 1 data is Prop. 4.4; D5 is Prop. 5.2; inversion is Prop. 6.2; the E8 Out is Prop. 4.2.)
-
-| # | Claim | Where | Status | Notes |
-|---|---|---|---|---|
-| 1 | P = ker(A→W) is characteristic in A (A irreducible spherical) | Thm 2.3 | **cited, statement checked** | Cohen–Paris, J. Group Theory 6 (2003), Thm 1.4, quoted verbatim from arXiv:math/0204242: "Let A be an irreducible Artin group of spherical type. Then CA is a characteristic subgroup of A." Franco–Paris (arXiv:math/0411193) extends this to reducible spherical types; it is not needed here. |
-| 2 | f: A → ℤ^R ⋊ W, s ↦ (e_s, s), is well defined | Lemma 2.4 | **verified** | Self-contained proof: the reflection sequences of both alternating words are {(st)^j s : 0≤j<m}. Equivalent to Cohen–Paris Lemma 3.7(1). Machine check: `check.py` (float) and `indep_check.py` (exact) for all types. |
-| 3 | f(P) = 2ℤ^R; f induces H₁(P;ℤ) ≅ 2ℤ^R; the A-action is ρ(ā), a permutation with no signs | Prop 2.6 | **verified (modulo cited rank)** | Surjectivity and equivariance proved algebraically. Injectivity uses H₁(P) ≅ ℤ^{|R|}: Brieskorn π₁(M) = P, plus H₁ of a hyperplane complement being free on meridians [Bri73, OT92 Ch. 5]. Standard; theorem numbers not given. Consistency: f(Δ²) = 2Σe_r verified by machine. |
-| 4 | ker ρ = Z(W), so ρ(W) ≅ W/Z(W); φ_W induces θ on ρ(W) | Lemma 2.2 | **verified** | |
-| 5 | M_φ ρ(w) M_φ⁻¹ = ρ(φ_W(w)); M_{ι_a φ} = ρ(ā) M_φ | Cor 2.9 | **verified** | |
-| 6 | Schur step: N commuting with ρ(W) acts on a good constituent U by ±1 | Lemma 2.11 | **verified** | Uses multiplicity one in ℚ^R (in fact over ℂ) and the lattice U ∩ ℤ^R. |
-| 7 | Certificates: (i) commutant scalar ⇒ good constituent; (ii) ⟨χ,χ⟩ = ⟨χ,perm⟩ = 1 ⇒ good constituent | Lemma 2.12 | **verified** | `certify.py` read line by line. It checks A_ω·B = μ·B exactly for every orbital matrix A_ω on the exact kernel B of X−λI, where X = Σc(A+Aᵀ) lies in the commutant. Floats are used only to pick λ. This certifies rationality (U is the kernel of a rational matrix), absolute irreducibility and multiplicity one (over ℂ). |
-| 8 | Existence of π realising θ for all automorphism classes | Rem 3.2, 3.4; Prop 4.1 | **fixed (made explicit)** | The REPORT asserted this without proof. Now: inner θ → π = ρ(g); outer θ → gπ₀. `out_check.py` proves every automorphism maps ρ(R) onto ρ(R) (H3, F4, H4, D5, E6, E7), which gives π directly. The original `eig.py` builds π from θ by π(r) = θ(r) and checks πρ(s_i)π⁻¹ = θ(ρ(s_i)) on generators, which suffices. |
-| 9 | Stable case (i) of the criterion | Thm 3.1 | **verified; fixed** | The REPORT's phrase "ρ(W)π has elements with eigenvalue ±1 on U" implicitly assumes πU = U. The written proof does not need this (for v∈U with hπv = cv, M_χv = c·hπv = v). For H3 and H4, π₀U = U holds anyway, checked exactly. |
-| 10 | Swap case (ii) (F4) | Thm 3.1 | **verified; fixed** | The brief mentioned an "anticommuting J" argument, which does not appear in the REPORT. We wrote a direct proof: M_χ² v = c₁c₂T²v = v, and u = v + M_χ v ≠ 0 because U₁ ∩ U₂ = 0. This needs π₀(U₁) = U₂ exactly. Originally this was checked only numerically (`eig.py`); it is now certified exactly by `indep_check.py`. |
-| 11 | Reidemeister facts (a)–(d), incl. R(ψ\|_H) ≤ [G:H]·R(ψ) | Lemma 2.1 | **verified** | Full proofs. (d) needs neither normality of H nor ψ(H) = H beyond ψ(H) ⊆ H. |
-| 12 | Out(W/Z) = 1 for E6 | Prop 4.1 | **verified (two programs)** | `fastaut.py E6` rerun: \|Aut\| = 51840 = \|Inn\| (2.4 min now; 24 min originally). `out_check.py`: 4 involution classes (36, 45, 270, 540); one Inn-orbit of Coxeter tuples. |
-| 13 | Out(W/Z) = 1 for E7 | Prop 4.1 | **fixed (upgraded)** | The REPORT took this from the ATLAS. It is now computed: `out_check.py` enumerates all 1,451,520 elements (7 s). Involution classes: 63, 315, 945, 3780; the reflection class is the unique class of size 63; one Inn-orbit. Cross-check: `out_check_stab.py`. |
-| 14 | Out(W/Z) = 1 for E8 | Prop 4.2 | **verified by hand (revision)** | [G,G] = W⁺/±1 has index 2 and is characteristic. Outer involutions are w² = 1 with det −1, hence k odd; by the Steinberg argument they are products of k orthogonal reflections. So they form exactly two classes: ρ(T) (120) and triple products (37800, one class by transitivity on orthogonal triples, E8 ⊃ E7 ⊃ D6). Hence ρ(T) is preserved. Lemma 3.5 (sign choice on the tree, isometry, simple systems) then shows θ is inner. Confirmed by `referee_e8_involutions.py` and `out_check_stab.py`. The former gap G1 is closed. |
-| 15 | \|Out(W/Z)\| = 2 for H3, H4, F4, with explicit outer π₀ | Prop 4.1(b) | **verified (two programs)** | Original brute force rerun (`certify_outer.py`). Independent: Galois conjugation √5 ↦ −√5 composed with a coordinate swap (H3, H4), and L(x) = (x1+x2, x1−x2, x3+x4, x3−x4) for F4. `indep_check.py` verifies that π₀ normalises ρ(W), that it is outer, and its action on constituents. |
-| 16 | Good constituents: H3 {4}; H4 {16, 25}; F4 {2_short, 2_long}; E6 {15, 20}; E7 {27, 35}; E8 {35, 84}; D5 {4, 5, 10}; each moved by simple reflections | Prop 4.3, Table 1 | **verified (two methods)** | `certify.py` rerun (commutant method). `indep_check.py` uses fresh code: exact roots, class-sum eigenspaces and exact characters, for all types except E8. For E8 it uses fresh-code commutant (rank-3 action, 3 orbitals). |
-| 17 | Outer witnesses | Prop 4.3 | **verified (two programs)** | `certify_outer.py` rerun: H3 (3, 1); H4 (10, 6), (15, 10); F4 swap 1, 1, 1, 1. `indep_check.py`: for H3 and H4, h = 1 works for both signs; for F4, h = 1 (ε = +1) and h = s₁ (ε = −1). |
-| 18 | Classification corollary (all irreducible spherical, rank ≥ 2) | Intro | **cited, checked** | Calvez–Soroko abstract (A_n, B_n, D4, I2(m)) and SV24 Thm 1 (D_n, n ≥ 6) checked. D5 is credited to SV24 in Soroko 2610.13904 §1 ("spherical groups of type D_n, n ⩾ 5, in [SV24]"). SV24 v2 still states D5 as a conjecture, and Paris–Soroko 2606.26082 does not discuss R∞. **Gap G5**: the journal version of SV24 was not seen. |
-| 19 | D5 independent proof | Prop 5.1 | **verified** | Out = 1 (both programs). The diagram involution is inner via diag(−1,−1,−1,−1,1) ∈ W(D5). Good constituents 4, 5, 10. |
-| 20 | Centre-fixing automorphisms are elementary | Rem 6.1 (rev.) | **verified** (elementary proof) | Elementary argument via H₁(A): the image of Δ has coordinate sum \|T\| ≠ 0. The FLT/Jabara sentence was deleted in the revision. |
-| 21 | Inversion has R = ∞ in every non-free-abelian Artin group | Prop 5.3 | **verified** (uniform proof) | Invariant max\|v_r − v_{srs}\| for W-part s. Not new (Soroko 2610.13904 Thm 1 for non-spherical; Juhász). `check.py` random tests: 0 violations. |
-| 22 | Novelty of the Main Theorem | Intro | **gap (G6)** | Prior-art sweep confidence 80–85%; citation-graph APIs failed. |
-
-## Errors and inaccuracies found in the original REPORT / brief
-
-1. **D5 attribution** (REPORT table): "Paris–Soroko arXiv:2606.26082 and Soroko arXiv:2610.13904". Paris–Soroko does
-   not prove R∞; it computes Aut(A(D5)). R∞ for D5 is credited to SV24 in Soroko 2610.13904. *(Already corrected in
-   the REPORT addendum; the manuscript follows the correction.)*
-2. **"Theorem 3 ... and D5"** presented D5 as new. It is not; the manuscript presents it as an independent proof.
-3. **Kourovka 19.28.** The brief calls Conjecture (NA) "Kourovka 19.28". Per SV24 §6, Kourovka 19.28 is
-   Conjecture (R) (f.g. residually finite ⇒ R∞ or solvable-by-finite); (NA) is a weaker variant. Corrected in the
-   manuscript.
-4. **E7 relied on the ATLAS.** This is now unnecessary (computed). Only E8 still uses the ATLAS.
-5. **Implicit assumption πU = U in the stable case.** It is not needed (proof rewritten); it holds anyway for
-   H3 and H4.
-6. **Swap case relied on a numerical check of π(U₁) = U₂.** It is now certified exactly.
-7. **Existence of π** for every automorphism was asserted without argument. It is now proved
-   (Remarks 3.2 and 3.4, plus the reflection-preservation check).
-8. **Runtime.** The REPORT says E6 takes about 25 min; the rerun took 2.4 min (load-dependent).
-9. **Minor (code).** `certify_outer.py D5` crashes because D5 has no outer class; this is benign and documented.
-   `grp.py` and `pgrp.py` are identical copies (only `pgrp.py` is shipped).
-10. **Minor (JMS Cor. H).** The prior-art notes say it "needs a separating vertex"; the manuscript adds that the
-    defining graph of a spherical type is complete, so it has none.
-
-No error was found in: Theorem 1 logic, the Schur/lattice step, the finite-index inequality, the twisting step,
-the certificates, or any computed number (all reproduced).
-
-## Remaining gaps (the PDF no longer contains [GAP] markers; open items are listed here only)
-
-* ~~G1~~ **closed** (E8 by hand).
-* **G2.** The paper now cites Humphreys and Orlik–Terao without section numbers. The standard facts used are: order
-  of st is m; W transitive on simple systems and on roots of a simply-laced system; centre of W; H₁ of an
-  arrangement complement. Precise locations still need to be filled in by a human. They are not marked in the PDF.
-* ~~G3~~ **closed**: the FLT/Jabara sentence was deleted from Remark 6.1.
-* **G8 (revision).** The Main Theorem depends on the GAP computations in Cohen–Paris §5, which we have not
-  re-verified (disclosed in the paper).
-* **G4.** Charney–Crisp Prop. 9 (Aut(A(F4))) is seen only as quoted by Jones–Mangioni–Sartori (context only).
-* **G5.** D5 credit: the SV24 journal version was not seen.
-* **G6.** Novelty: the literature search was incomplete.
-* **G7.** AI-only review; an expert check is needed.
-
-
-## Revision after the cold referee report (minor revision; no mathematical errors found)
-
-| # | Referee point | Action taken | Where |
-|---|---|---|---|
-| 1 | Make E8 free of the ATLAS and of the computer | Done. New Prop. 4.2: Step 1, [G,G] index 2 and characteristic; Step 2, outer involutions = ρ(T) (120) ⊔ one class of 37800, via the Steinberg-theorem proof of Carter's Lemma 5 and transitivity on orthogonal triples; Step 3, new Lemma 3.5 (sign choice on the tree; isometry; W simply transitive on simple systems). The S3/ATLAS argument was **dropped**, not kept as a remark, so C_G(S) = 1 and Steinberg's Out(Ω8+(2)) are no longer needed; the ATLAS is mentioned only as agreeing. Referee scripts added as `code/indep/referee_*.py` with README entries and logs. Gap G1 removed. | §3 Lemma 3.5, §4 Prop. 4.2 and remark |
-| 2 | Disclose that Cohen–Paris Thm 1.4 is computer-assisted | Done, with exact locations: Prop. 5.4 and Cor. 5.5 (GAP) for H4, F4, E6, E7, E8. Also disclosed: Lemma 5.1 (GAP) for H3. | §2.2 after Thm 2.3 |
-| 3 | Qualify "two independent programs" for Out(E7), Out(E8) | Done. E7: one enumeration (`out_check.py`), plus `uniform_check.py` (same author, separate code), plus the stabiliser check and Lemma 3.5 by hand for the second step; `fastaut.py` was not run for E7. E8: now by hand. | Prop. 4.1 proof |
-| 4a | Prop 4.3 F4 wording | Fixed: only s1, s2 act nontrivially on U_long, only s3, s4 on U_short. | Prop. 4.4 |
-| 4b | Table 1, F4 "2·9" justification invalid | Fixed: rank-3 action on each 12-point class, 10 orbitals = 3+3+2+2, shared constituents = trivial and 9-dim. Same care taken for H3 (degrees of A5) and H4 (now "ψ+ψ′, dim 18"; dimension 9 only numerical). | text after Table 1 |
-| 4c | Remark 5.2 FLT/Jabara sentence | Deleted. | Remark 6.1 |
-| 5 | Calvez–Soroko for I2(m) | Fixed: I2(m) uses virtual freeness of A/Z and Fel'shtyn's theorem (checked in arXiv:2106.13260 §3). | Intro §1.1 |
-| 6 | Add Dhanwani–Kumar–Naik–Singh arXiv:2409.10270 | Added (crystallographic quotients of virtual Artin groups; R∞ for right-angled virtual Artin groups). | Intro, bibliography |
-| 7 | Weaken Thm 3.1 hypothesis to α induced from Aut(A) | Done ("for every φ ∈ Aut(A)"). Added Cor. 2.9: θ_φ preserves the permutation character χ_T. This is what rules out the S6 outer automorphism. | Thm 3.1, Cor. 2.9 |
-| 8 | Notation clashes | Fixed: reflections are now 𝒯 (vs R(φ)); complement is X (vs M_φ); twisted automorphism is φ′ (vs χ_U, χ_T); Q = hπ; Σ = Galois map; κ for inversion on ℤ^T⋊W. ρ is still used for both the action and its permutation matrix, as stated explicitly. | throughout |
-| 9 | Housekeeping | GGO17 → J. Algebra 474 (2017) 393–423 (confirmed from the DKNS reference list). Marin → Geom. Dedicata 182 (2016) 233–247 (from a citing paper via web search). Prop 2.6 stated for all spherical A. README now says `eig.py D5` (and `certify_outer.py D5`) crash, as expected. | bibliography, Prop 2.6, README |
-| 10 | Remove all [GAP] markers | Done. Unresolved items (textbook section numbers, G2) moved here. "[Author names]" and the AI placeholder kept; the placeholder now also mentions the AI cold referee. | PDF, AUDIT |
-| 11 (optional) | Uniform treatment of all spherical types | **Partly done.** A_n: full proof by hand for all n ≥ 2 (Prop. 5.1; S6 outer excluded by χ_T). B_n (3–7), D_n (4–7, incl. D4 triality and D5), I2(9), I2(15), and E6, E7, F4, H3, H4: verified by exact computation (`uniform_check.py`, Prop. 5.2). General B_n, D_n: good constituent U⁻ and the reflection-preserving step proved by hand (Remark 5.3). **Missing:** that every Aut(A)-induced automorphism of W/Z preserves reflections, for all n. I2(m), m odd: a good constituent exists iff 3 \| m. For m prime ≥ 5 the criterion cannot apply (End = real cyclotomic field with infinitely many units). Even m not analysed (ρ not injective on T); computation finds no good constituent for m = 6, 10, 18. Stated honestly in Remark 5.4. | §5 |
-
-New claim rows (revision):
-
-| # | Claim | Status |
-|---|---|---|
-| 23 | Lemma 3.5 (reflection-preserving ⇒ inner·diagram, simply-laced; B_n variant) | **verified** (hand proof) |
-| 24 | Prop 4.2 (Out(W(E8)/±1) = 1) | **verified** (hand proof; computational confirmation) |
-| 25 | Prop 5.1 (A_n, Aut-free) | **verified** (hand proof; uses Young's rule and Aut(S_k)) |
-| 26 | Prop 5.2 (finite verification for B_n ≤ 7, D_n ≤ 7, I2(9), I2(15)) | **verified** by `uniform_check.py` (one program, author-written) |
-| 27 | Remark 5.4 (I2(m), m odd: good constituent iff 3 \| m) | **verified** (hand argument; matches computation) |
-
-
-## Update: Franzsen–Howlett journal version
-
-The user supplied the published PDF. Theorem 31 is on pp. 329–330, with the same number and statement as the preprint. The proof is labelled "(Outline)". Item (9) also has the α_χ typo. The paper's citation is updated to the DOI and page numbers, and the preprint caveat is removed.
+Before submission, the authors still need to supply names, affiliations and a contribution statement, obtain a human mathematical review, and refresh the priority/bibliography check. No new Lean theorem for Theorem B or Proposition C is claimed.

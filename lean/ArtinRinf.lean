@@ -20,7 +20,7 @@ import ArtinRinf.Types.H4
 import ArtinRinf.Types.E6
 import ArtinRinf.Types.E7
 import ArtinRinf.Types.E8
--- Franzsen–Howlett route (paper v3, Lemma 4.1): theorems without `hOut`
+-- Franzsen–Howlett route (alternative Artin-group proof): theorems without `hOut`
 import ArtinRinf.FH
 import ArtinRinf.Types.H3FH
 import ArtinRinf.Types.F4FH
@@ -28,7 +28,7 @@ import ArtinRinf.Types.H4FH
 import ArtinRinf.Types.E6FH
 import ArtinRinf.Types.E7FH
 import ArtinRinf.Types.E8FH
--- Type D₅ (paper v3.1, Prop. 5.2 with n = 5, Remark 5.3)
+-- Type D₅ (the signed-pair constituent)
 import ArtinRinf.CoxD5
 import ArtinRinf.Types.D5
 import ArtinRinf.Types.D5FH

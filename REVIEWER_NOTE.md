@@ -1,97 +1,25 @@
-# Note for an external reviewer (geometric group theory)
+# Note for a mathematical reviewer
 
-**Provenance.** This is AI-assisted work (Anthropic's Claude and OpenAI's Codex): the argument, code, Lean formalisation and manuscript.
-It has been reviewed only by AI systems:
-- an internal audit;
-- two internal AI "cold referee" rounds;
-- external AI reviews, including manuscript-only reviews, a review of the Python and Lean sources, and the latest
-  quotient-focused review.
+The main result is a classification of property R∞ for Γ_X = A(X)/[P,P], where X is irreducible spherical of rank at least two. All ranks at least three are positive. For I₂(m), the positive parameters are exactly 4 | m or m odd with 3 | m. This implies the corresponding Artin-group result; the remaining dihedral Artin cases are known. An explicit automorphism for I₂(5) has R = 18.
 
-The tables in AUDIT.md list every review point, whether it was confirmed or refuted, and how it was handled. None of
-this is journal peer review, and no human expert has checked the work. We are asking you to be that check.
+The paper and supporting code were developed with substantial AI assistance. The current audit is an AI mathematical and computational audit, not independent human peer review. [AUDIT.md](AUDIT.md) records the proof dependencies and source checks.
 
-**Claim.** The Artin groups of spherical types D5, E6, E7, E8, F4, H3 and H4 have property R∞. Combined with
-Calvez–Soroko (A_n, B_n, D4, I2(m)) and Soroko–Vaskou (D_n, n ≥ 6), every irreducible spherical Artin group of
-rank ≥ 2 then has R∞.
+## Suggested reading order
 
-**About D5.**
-- Soroko–Vaskou (arXiv:2409.18123v2) leave D5 open as a conjecture.
-- Paris–Soroko (arXiv:2606.26082) compute Aut(A[D5]) = Inn ⋊ ⟨inversion⟩. R∞ follows from this in a few lines
-  (Remark 5.3), but they do not state it.
-- Soroko (arXiv:2610.13904, §1) lists D5, attributing it to Soroko–Vaskou.
+1. **Translation lattice and fixed-vector criterion.** Check the lattice 2ℤ^T, enlarged by ℤ𝟙 when the Coxeter centre is nontrivial; its characteristicity; and the stable/swap argument. The swap hypothesis explicitly exchanges both constituents.
+2. **Uniform classical proof.** Check the signed-involution character equations, the B6 and D_n class-size exclusions, and the root-isometry reduction. Only character-preserving holonomy automorphisms need be controlled. D4 uses its unique rational degree-two frame constituent.
+3. **All four dihedral cases.** Check the rational degree-two constituent for odd multiples of three, the two character lines for multiples of four, and the actual extension compatibility of both negative families. These are uniform proofs, not extrapolations from finite searches.
+4. **The I₂(5) count.** Check the cyclic quotient coordinates and centraliser actions, giving 1 + 6 + 6 + 5 = 18. The group has torsion, so the Bieberbach determinant average does not compute its Reidemeister number.
+5. **Exceptional proof inputs.** Check the explicit constituents and Appendix B's full holonomy automorphism certificates, including the hand proof for E8. The Hiss–Lutowski comparison applies to D5/E6/E7/E8/H4 through odd-dimensional constituents; the proof establishes finiteness of their integral normalisers and uses the determinant criterion valid with torsion.
 
-Our method gives an independent proof (Prop 5.2). Please check the attribution.
+## Attribution and formal scope
 
-**Theorem B (now a full classification).** A(X)/[P,P] has R∞ for every irreducible spherical X of rank at least three. In rank two, X = I₂(m), it has R∞ exactly when 4 divides m, or m is odd and 3 divides m. The seven original positive cases remain in §6.2 with the full Aut(W/Z) inputs from Appendix B. Section 6.3 gives uniform classical arguments, and §6.6 proves the complete dihedral classification. These are proofs for all ranks/parameters, not extrapolations from the scratch computations.
+D5 also follows from Paris–Soroko's automorphism classification and the inversion argument in [the Lean documentation](lean/DIRECT_PROOF.md). Soroko–Vaskou's stated theorem covers n ≥ 6; a later list includes n = 5. The paper states these facts without claiming priority for D5. The virtual-braid quotient results of Dekimpe–Gonçalves–Ocampo are acknowledged separately from these spherical quotients. The A2 quotient is already implicit in the earlier space-group classification.
 
-**Classical proof point.** Lemma 6.3 uses fixed-root-line counts for signed involutions. The equations leave the reflection classes, the (3,3,0) class in B6, and the two-negative-coordinate class in D_n; class sizes exclude the latter two. The root-isometry argument then handles B_n/D_n. D4 uses its unique rational two-dimensional frame constituent. Only character-preserving holonomy automorphisms need be controlled.
+Appendix C summarises the dependencies of the direct Artin-group route formalised in Lean; its complete account is in [the accompanying documentation](lean/DIRECT_PROOF.md). Its seven main theorems assume finiteness of W, characteristicity of P, the rank of P's abelianisation and the Franzsen–Howlett decomposition. H3 and F4 also have theorems avoiding the latter assumption. The full quotient classification and R = 18 are not Lean-formalised.
 
-**Proposition C.** A(I₂(5))/[P,P] admits an automorphism with **R = 18**. This confirms failure of R∞ for the quotient while correcting the exploratory claim R = 14. The script behind that claim used the Bieberbach determinant average on a group with torsion. Section 6.7 gives the matrix, translation, extension check, ten nonzero determinants, and a direct class count. The independent exact checker `code/indep/dihedral_quotient.py` confirms the count by both centralizer orbits and enumeration of all 140 translation-twisted classes. General-m existence is now proved uniformly; the scratch scripts' numerical `R` labels have not been certified.
+## Reproduction
 
-**Alternative proofs and attribution.** Section 6.4 verifies the odd-dimensional route for D5, E6, E7, E8 and H4, using unique good constituents of dimensions 5, 15, 27, 35 and 25. It proves the required normalisers are finite and uses the determinant criterion for crystallographic groups with torsion. The explicit witnesses also cover F4 and H3. The stable criterion is credited to DDP/DP; the swap case handles exchanged constituents excluded by the stable hypothesis. Theorem B also implies the Artin-group result outside the negative dihedral families, since [P,P] is characteristic; the remaining Artin cases are known. This route does not use the Franzsen–Howlett decomposition.
+After the setup in [README.md](README.md), run `python3 scripts/verify.py --clean`. The [code guide](code/README.md) maps scripts to proof obligations; the [Lean guide](lean/README.md) specifies hypotheses. Fresh logs are generated in `verification/`.
 
-**Related work.** The introduction cites DGO (2024) for the virtual-braid quotients with three and four strings, and the recent Ocampo and Leite–Ocampo–Santos Júnior–Teixeira papers for torus bundles and framed-braid quotients. The A2 quotient result is acknowledged as implicit in GGO's identification as IT 161 and the DKT classification. No blanket novelty claim for A2 is made.
-
-**Novelty and precedents.**
-- New:
-  - the Artin-group application via the characteristic reflection lattice H₁(P) ≅ ℤ^T;
-  - controlling the finite symmetry by Aut(W) (Franzsen–Howlett) instead of Aut(A);
-  - explicit sign and swap witnesses;
-  - the exceptional cases.
-- Precedents for "eigenvalue one via representation theory":
-  - Dekimpe–Gonçalves–Ocampo;
-  - Dekimpe–De Rock–Penninckx, Thm 4.7;
-  - Dekimpe–Penninckx / Dekimpe–Kaiser–Tertooy, Thm 3.3;
-  - Hiss–Lutowski, Parts I and II (arXiv:2504.04978, 2601.09622).
-- A/[P,P] is crystallographic with holonomy W/Z(W), by Marin, Thm 2.1.
-
-**Argument.**
-1. P = ker(A → W) is characteristic (Cohen–Paris Thm 1.4). For these types that proof is GAP-assisted, and we have
-   not re-run it.
-2. f: A → ℤ^T ⋊ W gives H₁(P) ≅ ℤ^T as a permutation module.
-3. Thm 3.3: φ acts as πN, and N = ±1 on a good constituent. Witnesses then give a fixed vector for φ′ = ι_a∘φ.
-4. Lemma 4.1 (Franzsen–Howlett, Adv. Geom. 3 (2003), Thm 31, pp. 329–330; its proof there is an outline).
-   Modulo inner automorphisms, the induced automorphisms of W/Z are:
-   - trivial for E_n and B_n;
-   - graph automorphisms for D_n and F4;
-   - one extra class for H3 and H4.
-5. Explicit good constituents:
-   - SRG eigenspaces for E_n;
-   - frame modules for H3 and F4;
-   - End(V) in the icosian model for H4.
-
-**What to check (in order).**
-1. The uniform classical proof (§6.3), especially the class-size exclusions and root-isometry reduction.
-2. The dihedral classification (§6.6), including both positive cases and both explicit negative families.
-3. Proposition C (§6.7), the seven positive cases (§6.2), and the odd-dimensional comparison (§6.4).
-4. Thm 3.3, case (ii), and Prop 2.4.
-5. Lemma 4.1, the quotation of Franzsen–Howlett, and Props 4.2–4.6 with their finite certificates.
-6. Prop 5.2 and Remark 5.3 (D5).
-
-**Literature questions.**
-- Is R∞ for E6–E8, F4, H3 or H4, or for A/[P,P], known or announced?
-- Is there a complete published proof of Franzsen–Howlett Thm 31?
-- Has D5 been proved anywhere?
-- What are the exact section numbers for the cited textbook facts (Humphreys, Orlik–Terao)?
-
-**Formal verification** (`lean/`, as of commit 296176a).
-- The new quotient results and Proposition C are not Lean-formalised.
-- The kernel checks the criterion and the finite certificates for **all seven types** D5, E6, E7, E8, F4, H3 and H4.
-- No `sorry`, no `axiom`, no `native_decide`.
-- Each final theorem `artin_X_R_infty_FH` has exactly four hypotheses: `hW` (W finite), `hCP` (Cohen–Paris),
-  `hBr` (P^ab ≅ ℤ^N as groups, N = |T|) and `hFH` (Franzsen–Howlett Thm 31).
-- The older `hOut` hypothesis is **no longer needed**. It survives only in legacy theorems, and is proved there for
-  H3 and F4.
-- The Lean development uses computer-found constituents, not the hand constructions of §4.
-
-**Reproduce** (Python 3 + numpy + sympy; see `code/README.md`). Every certificate script exits with a nonzero status
-if an expected value fails:
-```
-cd code/indep
-python3 dihedral_quotient.py          # actual I2(5) extension, determinants, torsion, two exact R = 18 counts
-python3 quotient_families.py --max-m 46  # finite exact cross-checks of the uniform classical/dihedral proofs
-python3 explicit_constituents.py      # proof certificates for §4.2, Lemma 4.5, Prop 4.6, §5 (exact; asserts)
-python3 referee_v3_E.py               # E types (exact ranks; asserts)
-python3 indep_check.py H3 F4 H4 E6 E7 && python3 out_check.py H3 F4 H4 D5 E6 E7 && python3 out_check_stab.py E7 E8
-cd .. && python3 certify.py H3 F4 H4 E6 E7 E8 D5 && python3 certify_outer.py H3 F4 H4
-```
+The remaining external checks are a human mathematical review and a final priority/bibliography check close to submission. Author names, affiliations and contributions also remain to be supplied.

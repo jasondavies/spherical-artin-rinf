@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Referee's independent check (written from scratch, imports nothing from the package).
+"""Independent check (written from scratch, imports nothing from the package).
 
 For a type in {H3, F4}:
   * builds the root system exactly (coefficients in Z[phi] in the simple-root basis),
@@ -9,7 +9,7 @@ For a type in {H3, F4}:
   * computes the orbitals, rational eigenspaces of a generic commutant element, checks good constituents
     by BOTH the commutant criterion and character inner products (exact rationals),
   * builds pi for the outer class from an explicit outer automorphism found in the tuple search,
-  * checks the witness conditions of Theorem 3.1 (i) / (ii) exactly.
+  * checks the witness conditions of the stable/swap criterion exactly.
 """
 import sys, random, itertools
 from fractions import Fraction

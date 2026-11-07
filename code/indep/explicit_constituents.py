@@ -1,10 +1,9 @@
-"""Exact checks of the EXPLICIT good constituents and witnesses used in the revised paper (Sections 4-5).
+"""Exact checks of the EXPLICIT good constituents and witnesses used in the paper.
 
 Each part constructs the constituent by hand-style recipe (strongly regular graph eigenspace, frame
 functions, matrix coefficients, weight vectors) and verifies by exact arithmetic that it is a good
 constituent (W-invariant, character norms 1 and multiplicity 1, or commutant-scalar), that it has the
-expected dimension, and that the stated witnesses exist.  It also checks the two errors pointed out by the
-external review (D4 reducibility of U^-, Bourbaki indexing of E8 simple roots).
+expected dimension, and that the stated witnesses exist.  It also checks D4 reducibility of U^- and Bourbaki indexing of E8 simple roots.
 
 Usage:  python3 explicit_constituents.py [srg] [h3] [f4] [h4] [d4] [bd] [bourbaki]   (default: all)
 Imports only rootsys.py / permgroup.py / indep_check.py (helpers) from this directory.

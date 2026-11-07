@@ -39,19 +39,30 @@ def perm_matrix(p):
     for r in range(N): P[p[r]][r]=1
     return Matrix(P)
 def main(name,dims):
+    if not dims:
+        raise ValueError('At least one constituent dimension is required')
     C=Cox(name); lab,k=orbitals(C); A=[(lab==i).astype(np.int64) for i in range(k)]
     out={}
     for d in dims:
         for lam,dd,scal,Bm in certify_constituent(C,A,d):
             if not scal: continue
+            if dd != d or Bm.shape != (C.N, d):
+                raise ValueError(f'{name}: exact constituent dimension differs from requested {d}')
             moved=[]
             for i in range(C.n):
                 P=perm_matrix(C.rp[i])
                 if P*Bm!=Bm: moved.append(i)
+            if not moved:
+                raise ValueError(f'{name}: no nontrivial simple-reflection witness in dimension {d}')
             print(f'{name}: exact constituent dim {dd} (eigenvalue {lam}), commutant scalar: {scal}, simple gens acting nontrivially: {moved}',flush=True)
             out.setdefault(d,[]).append(Bm)
+    expected = {d: (2 if name == 'F4' and d == 2 else 1) for d in dims}
+    if {d: len(bases) for d, bases in out.items()} != expected:
+        raise ValueError(f'{name}: missing or duplicate certified constituents; expected {expected}')
     return C,out
 if __name__=='__main__':
+    if not sys.argv[1:]:
+        sys.exit('Usage: certify.py TYPE [TYPE ...]')
     spec={'E6':[15,20],'E7':[27,35],'E8':[35,84],'H3':[4],'H4':[16,25],'F4':[2],'D5':[4,5,10]}
     bad=[]
     for nm in sys.argv[1:]:

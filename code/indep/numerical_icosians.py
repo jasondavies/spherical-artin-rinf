@@ -1,12 +1,12 @@
-# Referee's independent check of Lemma 4.5 / Prop 4.6 (H4). Imports nothing from the package.
-# NOTE (package revision): parts of this checker are numerical (matrix_rank, QR, pinv, float characters).
+# Independent check of the H4 icosian model and constituent. Imports nothing from the package.
+# NOTE: parts of this checker are numerical (matrix_rank, QR, pinv, float characters).
 # Treat it as corroboration; the exact companion is explicit_constituents.py h4 (exact Q(sqrt5) arithmetic).
 import itertools, sys
 from fractions import Fraction as F
 import numpy as np
 import sympy
 sys.path.insert(0, __file__.rsplit('/', 1)[0])
-from referee_v3_q5 import Q5, PHI, PHIi
+from quadratic_field import Q5, PHI, PHIi
 
 Z, ONE = Q5(0), Q5(1)
 half = Q5(F(1, 2))

@@ -1,6 +1,0 @@
-H3 rank 3 #refl 15 braid rels ok True Delta^2->2*sum e_r True rho(s) moves t: True random psi-tests 1183 violations 0
-H4 rank 4 #refl 60 braid rels ok True Delta^2->2*sum e_r True rho(s) moves t: True random psi-tests 1323 violations 0
-F4 rank 4 #refl 24 braid rels ok True Delta^2->2*sum e_r True rho(s) moves t: True random psi-tests 1318 violations 0
-E6 rank 6 #refl 36 braid rels ok True Delta^2->2*sum e_r True rho(s) moves t: True random psi-tests 1616 violations 0
-E7 rank 7 #refl 63 braid rels ok True Delta^2->2*sum e_r True rho(s) moves t: True random psi-tests 1733 violations 0
-E8 rank 8 #refl 120 braid rels ok True Delta^2->2*sum e_r True rho(s) moves t: True random psi-tests 1794 violations 0

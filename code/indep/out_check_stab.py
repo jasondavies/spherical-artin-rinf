@@ -3,8 +3,8 @@ using Schreier-Sims stabiliser chains (sympy) instead of element lists.
 
 Proves: every automorphism of rho(W) that maps the set of reflections rho(R) onto itself is inner
 (number of Inn-orbits of generating Coxeter tuples of reflections = 1).
-Does NOT prove that every automorphism of rho(W) preserves rho(R) (step (1)); for E8 that step is
-taken from the literature (ATLAS: W(E8)/Z = O8+(2):2 and Out(O8+(2)) = S3).
+Does NOT prove that every automorphism of rho(W) preserves rho(R) (step (1)); the paper proves
+that step for E8 using its involutions and the pointwise-stabiliser theorem.
 """
 import sys, time
 import numpy as np
@@ -50,6 +50,8 @@ def run(name):
 
 FAIL = []
 if __name__ == '__main__':
+    if not sys.argv[1:]:
+        sys.exit('Usage: out_check_stab.py TYPE [TYPE ...]')
     for nm in sys.argv[1:]: run(nm)
     if FAIL: print('FAILED CHECKS:', FAIL); sys.exit(1)
     print('ALL CHECKS PASSED')

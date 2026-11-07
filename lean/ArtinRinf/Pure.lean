@@ -209,7 +209,7 @@ noncomputable def permModuleIso (hBr : Nonempty (Abelianization (pure M) ≃* Mu
     exact β.injective (Multiplicative.toAdd.injective this)
   exact ⟨MulEquiv.ofBijective D.ebar ⟨hinj, D.ebar_surjective⟩, fun a p => D.ebar_equivariant a p⟩
 
-/-- **Main theorem for a type given by explicit data** (Theorem 3.3 + Remark 3.4 +
+/-- **Main theorem for a type given by explicit data** (the Artin-group criterion (see lean/DIRECT_PROOF.md) + the inner-coset reduction +
 Proposition 2.4).  The hypotheses `hW`, `hCP`, `hBr` stand for cited theorems; `hOut` for the
 computation of `Out(W/Z(W))`; `hInner`, `hOuter` are the finite certificates. -/
 theorem rinf (hW : Finite M.Group) (hCP : (pure M).Characteristic)

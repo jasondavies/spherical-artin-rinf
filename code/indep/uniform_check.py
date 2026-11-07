@@ -1,4 +1,4 @@
-"""Exploratory check: does the criterion (Theorem 3.1, weakened hypothesis) apply to the classical types?
+"""Exploratory check: does the character-preserving criterion apply to the classical types?
 
 For a type (A_n, B_n, D_n, I2(m), or any exceptional type):
   1. enumerate G = rho(W) acting on the reflections R;
@@ -7,7 +7,7 @@ For a type (A_n, B_n, D_n, I2(m), or any exceptional type):
      size and chi_R-value of a reflection class is itself a reflection class, then every such theta preserves rho(R);
   3. Inn-orbits of reflection-preserving automorphisms (generating Coxeter tuples of reflections);
   4. good constituents (exact eigenspaces of a random commutant element, certified by characters);
-  5. for each automorphism class: the permutation pi, and conditions (i)/(ii) of Theorem 3.1 checked exactly.
+  5. for each automorphism class: the permutation pi, and the stable/swap conditions checked exactly.
 This is a finite check for the listed ranks only.
 """
 import sys, time
@@ -168,11 +168,19 @@ def analyze(name, verbose=True):
 POSITIVE = {'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'B3', 'B4', 'B5', 'B6', 'B7', 'D4', 'D5', 'D6', 'D7',
             'E6', 'E7', 'F4', 'H3', 'H4', 'I2(3)', 'I2(9)', 'I2(15)', 'I2(21)'}
 NEGATIVE = {'I2(5)', 'I2(7)', 'I2(11)', 'I2(13)', 'I2(17)', 'I2(19)'}
+
+def positive_criterion_holds(result):
+    return (bool(result['results']) and bool(result['good'])
+            and all(ok and witness for _, ok, witness in result['results'])
+            and not result['clash'])
+
 if __name__ == '__main__':
+    if not sys.argv[1:]:
+        sys.exit('Usage: uniform_check.py TYPE [TYPE ...]')
     FAIL = []
     for nm in sys.argv[1:]:
         o = analyze(nm)
-        allok = all(ok and v for _, ok, v in o['results']) and not o['clash']
+        allok = positive_criterion_holds(o)
         if nm in POSITIVE and not allok: FAIL.append(nm)
         if nm in NEGATIVE:
             print(f'  [{nm}: INTENDED NEGATIVE RESULT -- the criterion is expected to fail here]')

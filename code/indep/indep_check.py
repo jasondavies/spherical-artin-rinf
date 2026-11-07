@@ -90,6 +90,8 @@ def run(name):
                 seqs.append(refl)
             if not (len(set(seqs[0])) == m and set(seqs[0]) == set(seqs[1])): ok = False
     print(f'  braid relations respected by f (vector parts agree, each reflection once): {ok}', flush=True)
+    if len(E) != WORDER[name] // ZORDER[name] or len(Z) != 1 or not ok:
+        FAIL.append(f'{name}: group order, centre or braid relations')
 
     # --- reflection classes and class sums
     orbits = []; seen = set()
@@ -122,7 +124,10 @@ def run(name):
         tag = 'GOOD' if (n1 == 1 and n2 == 1 and d > 1) else ''
         print(f'  eigenspace lam={lam}: dim {d}, W-invariant {inv_ok}, <chi,chi> = {n1}, <chi,perm> = {n2}, '
               f'chi(1) = {chi[0]}, simple reflections acting nontrivially: {moved} {tag}', flush=True)
-        if tag: good.append((lam, Bi, chi))
+        if tag:
+            if not inv_ok or not moved:
+                FAIL.append(f'{name}: invariance or nontriviality in dimension {d}')
+            good.append((lam, Bi, chi))
     res = {'rs': rs, 'E': E, 'index': index, 'good': good}
     EXP_GOOD = {'H3': [4], 'F4': [2, 2], 'H4': [16, 25], 'E6': [15, 20], 'E7': [27, 35], 'D5': [4, 5, 10]}
     if name in EXP_GOOD and sorted(B.shape[1] for _, B, _ in good) != sorted(EXP_GOOD[name]):
@@ -157,6 +162,10 @@ def explicit_pi0(name, rs):
     raise RuntimeError
 
 def outer_witnesses(name, rs, E, index, good, Y):
+    expected = {'H3': [4], 'F4': [2, 2], 'H4': [16, 25]}
+    if sorted(B.shape[1] for _, B, _ in good) != expected[name]:
+        FAIL.append(f'{name}: missing outer-case constituents')
+        return
     N = rs.N; n = rs.n; dt = E.dtype
     pi0, desc = explicit_pi0(name, rs)
     pi0 = pi0.astype(dt); pinv = inverse(pi0)
@@ -169,6 +178,9 @@ def outer_witnesses(name, rs, E, index, good, Y):
         hi = inverse(h)
         if all(np.array_equal(h[np.asarray(g, dtype=dt)][hi], c) for g, c in zip(rs.gens, conj)): inner = True; break
     print(f'  explicit pi_0 ({desc}): normalises rho(W): {norm_ok}; induced automorphism is outer: {not inner}', flush=True)
+    if not norm_ok or inner:
+        FAIL.append(f'{name}: invalid outer normaliser')
+        return
     Pp = permmat(pi0)
     # which good constituents does pi0 map where (exactly)
     img = {}
@@ -177,6 +189,10 @@ def outer_witnesses(name, rs, E, index, good, Y):
             if Ba.shape[1] == Bb.shape[1] and np.all((Y - lb * np.eye(N, dtype=np.int64)) @ (Pp @ Ba) == 0):
                 img[a] = b
         print(f'  pi_0 maps constituent {a} (dim {Ba.shape[1]}) exactly onto constituent {img.get(a)}', flush=True)
+    expected_images = {0: 1, 1: 0} if name == 'F4' else {a: a for a in range(len(good))}
+    if img != expected_images:
+        FAIL.append(f'{name}: missing stable/swap image')
+        return
     for a, (la, Ba, _) in enumerate(good):
         d = Ba.shape[1]
         Q, _ = np.linalg.qr(Ba.astype(float))
@@ -224,9 +240,13 @@ def commutant_check(name):
     ev = np.linalg.eigvalsh(T.astype(float))
     cands = sorted(set(int(round(x)) for x in ev if abs(x - round(x)) < 1e-6))
     print(f'===== {name} (commutant method, exact roots): |R| = {N}, number of orbitals = {len(orb)}', flush=True)
+    observed = []
     for lam in cands:
         B = int_basis(nullspace_basis(T - lam * np.eye(N, dtype=np.int64)))
         d = B.shape[1]
+        if d == 0:
+            FAIL.append(f'{name}: empty candidate eigenspace')
+            continue
         scal = True
         for O in orb:
             OB = O @ B
@@ -236,11 +256,23 @@ def commutant_check(name):
         moved = [i for i in range(rs.n) if not np.array_equal(permmat(np.array(rs.gens[i])) @ B, B)]
         print(f'  T-eigenspace lam={lam}: dim {d}, all orbital matrices scalar on it: {scal}, '
               f'simple reflections acting nontrivially: {moved}', flush=True)
+        observed.append((lam, d, scal))
         if name == 'E8' and d in (35, 84) and not (scal and len(moved) == rs.n): FAIL.append(f'E8 commutant dim {d}')
+    expected = {
+        'E8': [(60, 84, True), (72, 35, True), (120, 1, True)],
+        'H3': [(0, 4, True), (3, 10, False), (15, 1, True)],
+        'F4': [(8, 18, False), (12, 4, False), (24, 2, False)],
+    }
+    if name in expected and observed != expected[name]:
+        FAIL.append(f'{name}: missing or incorrect commutant eigenspaces')
+    if not observed or sum(d for _, d, _ in observed) != N:
+        FAIL.append(f'{name}: incomplete commutant decomposition')
     print(f'  [{name} commutant check done in {time.time() - t0:.1f}s]', flush=True)
 
 FAIL = []
 if __name__ == '__main__':
+    if not sys.argv[1:]:
+        sys.exit('Usage: indep_check.py TYPE|commutant:TYPE [...]')
     for nm in sys.argv[1:]:
         if nm.startswith('commutant:'): commutant_check(nm.split(':')[1])
         else: run(nm)

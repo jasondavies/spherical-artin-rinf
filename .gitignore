@@ -11,3 +11,4 @@ paper/*.synctex.gz
 paper/*.toc
 lean/.lake/
 lean/build/
+verification/

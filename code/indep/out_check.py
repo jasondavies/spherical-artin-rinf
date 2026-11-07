@@ -97,6 +97,8 @@ def run(name):
 
 FAIL = []
 if __name__ == '__main__':
+    if not sys.argv[1:]:
+        sys.exit('Usage: out_check.py TYPE [TYPE ...]')
     for nm in sys.argv[1:]: run(nm)
     if FAIL: print('FAILED CHECKS:', FAIL); sys.exit(1)
     print('ALL CHECKS PASSED')
