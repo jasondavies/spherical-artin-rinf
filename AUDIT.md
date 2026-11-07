@@ -81,7 +81,7 @@ Details for row 4:
 - **Correction (H4):** the natural Galois-type outer representative Ψ (Galois composed with the rotation j ↦ k, k ↦ −j) has **order 4** on lines and is not an involution. Only after composing with a suitable inner element x ↦ a x a⁻¹ does it act as conjugation by a transposition, with dimensions (10, 6). The paper says this. Ψ is in the same outer class as the original π₀.
 
 **New open items (v3).**
-* FH Thm 31 was read in the preprint only. Its proof is an outline. For B_n/D_n with n > 7 the uniform proof rests on it.
+* FH Thm 31 has now been checked in the published version (Adv. Geom. 3 (2003) 301–338, doi:10.1515/advg.2003.018, Thm 31 on pp. 329–330, same numbering as the preprint, typo α_χ also present). Its proof is an outline in both versions. For B_n/D_n with n > 7 the uniform proof rests on it.
 * The Lean development (not modified) uses the v2 numbering and the stronger `hOut` hypothesis. It does not formalise the FH-based argument or the explicit constituents.
 * Textbook section numbers (G2) are still unchecked, and so are the Cohen–Paris GAP computations (G8). Note that for B4, B6, D4 and D6, Cohen–Paris also use GAP (their Lemmas 3.5 and 4.4); this is now disclosed.
 
@@ -205,3 +205,8 @@ New claim rows (revision):
 | 25 | Prop 5.1 (A_n, Aut-free) | **verified** (hand proof; uses Young's rule and Aut(S_k)) |
 | 26 | Prop 5.2 (finite verification for B_n ≤ 7, D_n ≤ 7, I2(9), I2(15)) | **verified** by `uniform_check.py` (one program, author-written) |
 | 27 | Remark 5.4 (I2(m), m odd: good constituent iff 3 \| m) | **verified** (hand argument; matches computation) |
+
+
+## Update: Franzsen–Howlett journal version
+
+The user supplied the published PDF. Theorem 31 is on pp. 329–330, with the same number and statement as the preprint. The proof is labelled "(Outline)". Item (9) also has the α_χ typo. The paper's citation is updated to the DOI and page numbers, and the preprint caveat is removed.

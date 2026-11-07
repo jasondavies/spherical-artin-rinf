@@ -49,7 +49,7 @@ Please check this attribution question in particular.
 **What to check (in order).**
 1. Thm 3.3 (case ii).
 2. Prop 2.4.
-3. Lemma 4.1, and whether Franzsen–Howlett Thm 31 is correctly quoted. We read the authors' preprint, and its proof
+3. Lemma 4.1, and whether Franzsen–Howlett Thm 31 is correctly quoted. We read both the preprint and the published version (Adv. Geom. 3 (2003), Thm 31, pp. 329–330; same numbering); in both, its proof
    there is an outline. For the exceptional types Appendix B gives independent control.
 4. Props 4.2–4.6 and Lemma 4.5.
 5. Prop 5.2 and Remark 5.3 (D5); Prop 5.4 (the D4 correction).
@@ -57,7 +57,7 @@ Please check this attribution question in particular.
 
 **Literature questions.**
 - Is R∞ for E6–E8, F4, H3 or H4 known or announced?
-- Is the journal version of Franzsen–Howlett Thm 31 identical to the preprint statement we read? Is there a complete
+- Is there a complete published proof of Franzsen–Howlett Thm 31? Both the preprint and the journal version give only an outline.
   published proof?
 - Has D5 been proved anywhere (perhaps in a journal version of Soroko–Vaskou)?
 - Exact section numbers for the textbook facts we cite (Humphreys, Orlik–Terao).
