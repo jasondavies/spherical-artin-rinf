@@ -18,7 +18,7 @@ PYTHON_CHECKS = [
     ("certificate_guards", "code", ["test_certificate_guards.py"]),
     ("explicit_constituents", "code/indep", ["explicit_constituents.py"]),
     ("exceptional_srg", "code/indep", ["exceptional_srg.py"]),
-    ("holonomy", "code/indep", ["out_check.py", "H3", "F4", "H4", "D5", "E6", "E7"]),
+    ("holonomy", "code/indep", ["out_check.py", "H3", "F4", "H4", "E6", "E7"]),
     ("holonomy_stabilisers", "code/indep", ["out_check_stab.py", "E7", "E8"]),
     ("dihedral", "code/indep", ["dihedral_quotient.py"]),
     ("quotient_families", "code/indep", ["quotient_families.py", "--max-m", "46"]),

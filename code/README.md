@@ -16,7 +16,7 @@ All paths below are relative to `code/`. The runner executes each row and first 
 |---|---|
 | `indep/explicit_constituents.py` | Exact constructions of E-type graph eigenspaces, H3/F4 frames, H4 matrix coefficients and icosians, D4 frames and signed-pair witnesses. Checks rational ranks, multiplicities and sign/swap witnesses. |
 | `indep/exceptional_srg.py` | Independent integer-coordinate checks of E6/E7/E8 graph parameters and perpendicular subsystem counts and ranks. |
-| `indep/out_check.py H3 F4 H4 D5 E6 E7` | Full holonomy automorphisms: involution classes followed by inner orbits of Coxeter tuples. Required in the exceptional quotient proof. |
+| `indep/out_check.py H3 F4 H4 E6 E7` | Full holonomy automorphisms: involution classes followed by inner orbits of Coxeter tuples. Required for the exceptional quotient cases treated computationally; E8 is proved by hand. |
 | `indep/out_check_stab.py E7 E8` | Schreier–Sims check of the reflection-preserving stage. E8's full automorphism result is proved in the paper. |
 | `indep/dihedral_quotient.py` | Actual I₂(5) extension, lattice, inverse, all ten determinants, torsion, and two exact twisted-class counts. |
 | `indep/quotient_families.py --max-m 46` | Finite corroboration of the uniform family proofs: direct root-line counts through rank 12, character equations through rank 120, conjugacy orbits in B6 and D5–D12, and all dihedral m = 3,…,46. |
@@ -31,7 +31,7 @@ The unbounded classical and dihedral statements are proved algebraically in the 
 
 - E6, E7, E8 have graph parameters (36,15,6,6), (63,30,13,15), (120,63,30,36), and nontrivial constituent dimensions (15,20), (27,35), (35,84).
 - H3's frame constituent has dimension 4 with outer eigenvalue multiplicities (3,1). F4 has exchanged dimension-two constituents and witnesses for both signs of the squared operator. H4's matrix-coefficient constituent has dimension 16 with outer multiplicities (10,6).
-- Full holonomy outer automorphism orders are 2,2,2,1,1,1 for H3,F4,H4,D5,E6,E7. E8's reflection-preserving automorphisms are inner.
+- Full holonomy outer automorphism orders are 2,2,2,1,1 for H3,F4,H4,E6,E7. The optional D5 check gives order 1. E8's reflection-preserving automorphisms are inner.
 - I₂(5): adjusted determinants are 2 at the identity, 22 at the four nonidentity rotations, and −10 at the five reflections. Centraliser counts are 1+6+6+5=18. The full enumeration gives 13 orbits of size ten and five of size two. The determinant average is 14 and is not R.
 
 ## Arithmetic and additional tools
@@ -42,6 +42,7 @@ The `indep/` exact checks use root systems over ℚ(√5) in `rootsys.py`, permu
 
 Additional corroboration tools are retained for mathematical use:
 
+- `indep/out_check.py D5`: optional full-holonomy computation. The main proof handles D5 uniformly with the classical family; the seven-case Lean account still includes D5.
 - `indep/small_holonomy.py`, `indep/f4_blocks.py`, `indep/e8_involutions.py`: independent small-group or involution calculations.
 - `indep/uniform_check.py`: finite exploration of the character-preserving criterion. Failure of that criterion is not itself a proof of failure of R∞.
 - `indep/numerical_frames.py` and `indep/numerical_icosians.py`, using `quadratic_field.py`: numerical corroboration, including QR decompositions, pseudoinverses or rounded characters. They are not proof certificates.

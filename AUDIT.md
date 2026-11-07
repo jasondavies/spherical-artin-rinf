@@ -4,9 +4,9 @@ Audit date: 7 November 2026. This records the current argument and its verificat
 
 ## Dependency structure
 
-Theorem B is the main mathematical route. The translation-lattice proposition identifies the actual crystallographic group. The fixed-vector criterion reduces positive cases to rational constituents and holonomy witnesses. The exceptional cases use exact certificates, the classical families use uniform character arguments, and the dihedral theorem treats all parameters explicitly. Theorem A follows from characteristicity of [P,P], the quotient inequality for Reidemeister numbers, and the known dihedral Artin-group result. Proposition C independently counts the classes of one finite-Reidemeister automorphism.
+Theorem B is the main mathematical route. The translation-lattice proposition identifies the actual crystallographic group. The fixed-vector criterion reduces positive cases to rational constituents and holonomy witnesses. The exceptional cases use exact certificates, the classical families, including D5, use uniform character arguments, and the dihedral theorem treats all parameters explicitly. Theorem A follows from characteristicity of [P,P], the quotient inequality for Reidemeister numbers, and the known dihedral Artin-group result. Proposition C independently counts the classes of one finite-Reidemeister automorphism.
 
-The [direct Artin proof](lean/DIRECT_PROOF.md) beside the Lean sources treats seven cases through Franzsen–Howlett. Appendix C only summarises its scope and dependencies. This is the route covered by the conditional Lean theorems. The main proof of Theorem B does not depend on that decomposition.
+The [direct Artin proof](lean/DIRECT_PROOF.md) beside the Lean sources treats seven cases through Franzsen–Howlett. Appendix C only summarises its scope and dependencies. This is the route covered by the conditional Lean theorems. The main proof of Theorem B does not depend on that decomposition or on the separate full-holonomy computation for D5.
 
 ## Mathematical audit
 
@@ -48,7 +48,7 @@ The table records specific mathematical inputs, not a claim to an exhaustive pri
 | [Gonçalves–Guaschi–Ocampo, §5](https://arxiv.org/pdf/1503.04527), and [Dekimpe–Kaiser–Tertooy, Table 2](https://arxiv.org/pdf/1709.07649) | The A2 quotient is IT 161; the complete three-dimensional negative list omits it. Its positive result is acknowledged as implicit in these sources. |
 | [Ocampo, §1](https://arxiv.org/html/2610.20478v1); [Leite–Ocampo–Santos Júnior–Teixeira](https://arxiv.org/html/2610.33308v1) | Related torus-bundle and framed-braid quotient work, distinguished by the groups and questions studied. |
 
-For D5, [Soroko–Vaskou, Theorem 1 and §1](https://arxiv.org/html/2409.18123v2) cover n ≥ 6 and explicitly leave n = 5 open. [Paris–Soroko, Theorem 1](https://arxiv.org/html/2606.26082v2) give Aut(A[D5]) = Inn ⋊ ⟨inversion⟩; the paper records the short R∞ deduction without attributing that statement to their theorem. [Soroko, §1](https://arxiv.org/html/2610.13904v1) lists n ≥ 5 with a reference to Soroko–Vaskou. These statements have been checked directly; they do not justify a priority claim for D5.
+For D5, [Soroko–Vaskou, Theorem 1 and §1](https://arxiv.org/html/2409.18123v2) cover n ≥ 6 and explicitly leave n = 5 open. [Paris–Soroko, Theorem 1](https://arxiv.org/html/2606.26082v2) give Aut(A[D5]) = Inn ⋊ ⟨inversion⟩; the supplementary account records the short R∞ deduction without attributing that statement to their theorem. [Soroko, §1](https://arxiv.org/html/2610.13904v1) lists n ≥ 5 with a reference to Soroko–Vaskou. These statements have been checked directly; they do not justify a priority claim for D5.
 
 ## Certificate failure checks
 

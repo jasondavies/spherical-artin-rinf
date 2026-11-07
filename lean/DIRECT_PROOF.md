@@ -1,6 +1,6 @@
 # The direct Artin-group argument
 
-This account explains the mathematical route implemented in the Lean development for D5, E6, E7, E8, F4, H3 and H4. The paper proves its Artin-group classification through the stronger crystallographic quotient result. The direct route described here shares the reflection lattice and finite witnesses, but uses Franzsen–Howlett to control only the holonomy automorphisms induced from Coxeter automorphisms. It does not require the paper's full-holonomy computations.
+This account explains the mathematical route implemented in the Lean development for D5, E6, E7, E8, F4, H3 and H4. The paper proves its Artin-group classification through the stronger crystallographic quotient result. The direct route described here uses the same reflection-lattice and fixed-vector mechanism, with separately certified constituent bases and witnesses, but uses Franzsen–Howlett to control only the holonomy automorphisms induced from Coxeter automorphisms. It does not require the paper's full-holonomy computations.
 
 The [Lean guide](README.md) gives theorem names, build instructions and the precise external hypotheses. References below use the bibliography keys in [the manuscript](../paper/main.tex).
 

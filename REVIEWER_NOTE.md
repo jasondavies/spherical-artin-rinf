@@ -10,16 +10,18 @@ The paper and supporting code were developed with substantial AI assistance. The
 2. **Uniform classical proof.** Check the signed-involution character equations, the B6 and D_n class-size exclusions, and the root-isometry reduction. Only character-preserving holonomy automorphisms need be controlled. D4 uses its unique rational degree-two frame constituent.
 3. **All four dihedral cases.** Check the rational degree-two constituent for odd multiples of three, the two character lines for multiples of four, and the actual extension compatibility of both negative families. These are uniform proofs, not extrapolations from finite searches.
 4. **The I₂(5) count.** Check the cyclic quotient coordinates and centraliser actions, giving 1 + 6 + 6 + 5 = 18. The group has torsion, so the Bieberbach determinant average does not compute its Reidemeister number.
-5. **Exceptional proof inputs.** Check the explicit constituents and Appendix B's full holonomy automorphism certificates, including the hand proof for E8. The Hiss–Lutowski comparison applies to D5/E6/E7/E8/H4 through odd-dimensional constituents; the proof establishes finiteness of their integral normalisers and uses the determinant criterion valid with torsion.
+5. **Exceptional proof inputs.** Check the explicit constituents and Appendix B's full holonomy automorphism certificates, including the hand proof for E8. D5 is covered by the uniform classical proof; its separate full-holonomy computation is optional corroboration. The Hiss–Lutowski comparison applies to D5/E6/E7/E8/H4 through odd-dimensional constituents; the proof establishes finiteness of their integral normalisers and uses the determinant criterion valid with torsion.
 
 ## Attribution and formal scope
 
-D5 also follows from Paris–Soroko's automorphism classification and the inversion argument in [the Lean documentation](lean/DIRECT_PROOF.md). Soroko–Vaskou's stated theorem covers n ≥ 6; a later list includes n = 5. The paper states these facts without claiming priority for D5. The virtual-braid quotient results of Dekimpe–Gonçalves–Ocampo are acknowledged separately from these spherical quotients. The A2 quotient is already implicit in the earlier space-group classification.
+D5 also follows from Paris–Soroko's automorphism classification and the inversion argument in [the Lean documentation](lean/DIRECT_PROOF.md#the-d5-attribution). Soroko–Vaskou's stated theorem covers n ≥ 6; a later list includes n = 5. The paper states these facts without claiming priority for D5. The virtual-braid quotient results of Dekimpe–Gonçalves–Ocampo are acknowledged separately from these spherical quotients. The A2 quotient is already implicit in the earlier space-group classification.
 
 Appendix C summarises the dependencies of the direct Artin-group route formalised in Lean; its complete account is in [the accompanying documentation](lean/DIRECT_PROOF.md). Its seven main theorems assume finiteness of W, characteristicity of P, the rank of P's abelianisation and the Franzsen–Howlett decomposition. H3 and F4 also have theorems avoiding the latter assumption. The full quotient classification and R = 18 are not Lean-formalised.
 
 ## Reproduction
 
 After the setup in [README.md](README.md), run `python3 scripts/verify.py --clean`. The [code guide](code/README.md) maps scripts to proof obligations; the [Lean guide](lean/README.md) specifies hypotheses. Fresh logs are generated in `verification/`.
+
+The matching source-and-code archive is produced by `python3 scripts/package_review.py` after a successful full verification run. It includes the PDF, supplementary proof account, checkers, dependency pins, current logs and a checksum manifest, so the implementation and the manuscript can be reviewed together.
 
 The remaining external checks are a human mathematical review and a final priority/bibliography check close to submission. Author names, affiliations and contributions also remain to be supplied.

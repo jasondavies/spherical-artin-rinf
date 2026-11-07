@@ -37,9 +37,10 @@
 \begin{document}
 
 \begin{abstract}
-We classify property $\Rinf$ for the crystallographic quotients $\Gamma=A/[P,P]$ of irreducible
-spherical Artin groups. Every such quotient of rank at least three has $\Rinf$; in rank two,
-of type $I_2(m)$, this holds exactly when $4\mid m$ or when $m$ is odd and $3\mid m$.
+Let $A$ be an irreducible spherical Artin group of Coxeter rank at least two, and let $P$ be its pure subgroup.
+We classify property $\Rinf$ for the crystallographic quotient $\Gamma=A/[P,P]$.
+If $A$ has rank at least three, then $\Gamma$ has $\Rinf$; in type $I_2(m)$, this holds exactly
+when $4\mid m$ or when $m$ is odd and $3\mid m$.
 Since $[P,P]$ is characteristic, the positive quotient results, together with the known dihedral
 Artin-group case, imply that every irreducible spherical Artin group of rank at least two has $\Rinf$.
 The quotient construction therefore does not preserve $\Rinf$ in general. In type $I_2(5)$ we give
@@ -71,7 +72,8 @@ is Problem~8.6 of the AIM problem list on Artin groups \cite{AIMPL}. Known cases
 \item many non-spherical types \cite{Juh11,SV24,Sor26}.
 \end{itemize}
 The case $D_5$ is left open (as a conjecture) in \cite[\S1]{SV24}. Paris--Soroko computed $\Aut(A[D_5])$
-\cite[Thm.~1]{PS26}, from which $\Rinf$ follows by the inversion argument documented with the Lean development; \cite{PS26} does not state
+\cite[Thm.~1]{PS26}, from which $\Rinf$ follows by the inversion argument in \texttt{lean/DIRECT\_PROOF.md},
+subsection ``The D5 attribution''; \cite{PS26} does not state
 it. The list in \cite[\S1]{Sor26} includes $D_5$, attributing it to \cite{SV24}. We include an independent
 proof for $D_5$ in the completion below.
 For spherical types the known proofs use an explicit description of $\Aut(A)$ or $\Aut(A/Z(A))$. For $I_2(m)$
@@ -193,7 +195,8 @@ $\Z^\T$; its permutation character is $\chi_\T(g)=\#\{r:g(r)=r\}$.
 In spherical type, write $w_0$ for the longest Coxeter element and $\Delta$ for its standard
 Garside lift, obtained by replacing the simple reflections in a reduced expression by Artin generators.
 
-Since $\T$ generates $W$, $\ker\rho=Z(W)$. A central orthogonal operator preserves each simple-root line; commuting with adjacent simple
+Since $\T$ generates $W$, $\ker\rho=Z(W)$. For finite irreducible $W$, in its Euclidean reflection
+representation, a central orthogonal operator preserves each simple-root line; commuting with adjacent simple
 reflections forces the corresponding signs to agree. Connectivity therefore gives $Z(W)\subseteq\{\pm1\}$.
 In rank at least three, $-r$ is not a reflection, so
 $r\mapsto\rho(r)$ is injective on $\T$.
@@ -308,6 +311,7 @@ such that, for each $\varepsilon=\pm1$, some $(g\pi)^2$ has an eigenvector in $U
 Then $\Gamma$ has property $\Rinf$.
 \end{theorem}
 \begin{proof}
+Fix $\Phi\in\Aut(\Gamma)$, and let $D=\Phi|_L$.
 The operator $N=\pi^{-1}D$ centralises $G$, so Lemma~\ref{lem:schur} applies.
 In case (i), write $N|_U=c\in\{\pm1\}$ and choose $g\pi v=cv$ with $v\ne0$.
 Then $gDv=v$.
@@ -337,10 +341,10 @@ since $D$ intertwines the representations. Controlling all of $\Aut(G)$ is a suf
 \begin{itemize}
 \item If $\pi$ works for $\theta$, then $g\pi$ works for $\iota_g\theta$, since $\{hg\pi\}=\{h\pi\}$. So one
 $\theta$ per coset of $\Inn(\rho(W))$ suffices.
-\item For inner $\theta$ take $\pi=1$. Then (i) holds for any good $U$ on which some reflection acts nontrivially.
+\item For the identity representative of the inner class, take $\pi=1$. Then (i) holds for any good $U$ on which some reflection acts nontrivially.
 This is automatic for a nontrivial good $U$ when all reflections are conjugate: the kernel of the action is normal,
 so if it contained one reflection it would contain all of them.
-\item If $r\mapsto\rho(r)$ is injective on $\T$ (true in rank $\ge3$, and for odd dihedral types) and
+\item If $r\mapsto\rho(r)$ is injective on $\T$ (true for finite irreducible $W$ in rank $\ge3$, and for odd dihedral types) and
 $\theta(\rho(\T))=\rho(\T)$, then $\pi(r)=\rho^{-1}\theta\rho(r)$ realises $\theta$.
 \end{itemize}
 \end{remark}
@@ -350,6 +354,9 @@ $\theta(\rho(\T))=\rho(\T)$, then $\pi(r)=\rho^{-1}\theta\rho(r)$ realises $\the
 Write $\Theta_X$ for the representatives of holonomy automorphisms modulo inner automorphisms
 listed in the table below. Appendix~\ref{app:out} proves that these exhaust the possibilities.
 We construct the good constituents and witnesses needed for each representative.
+For a displayed root-line permutation $\pi_F$ normalising $G=\rho(W)$, write
+$\theta_F(g)=\pi_Fg\pi_F^{-1}$ for the induced automorphism of $G$.
+This convention applies to $F=\Sigma,L,\Psi$ below.
 
 
 \begin{proposition}[$E_6,E_7,E_8$]\label{prop:E}
@@ -699,19 +706,20 @@ A reflection of this $S_3$ has eigenvalues $1,-1$, giving the required fixed vec
 
 \section{The quotient classification}\label{sec:quotients}
 
-\subsection{The seven positive cases}
+\subsection{The six exceptional quotients}
 
-\begin{theorem}[Seven positive quotients]\label{cor:cryst}
-For $X\in\{D_5,E_6,E_7,E_8,F_4,H_3,H_4\}$, the crystallographic group $\Gamma=A(X)/[P,P]$ has property $\Rinf$.
+\begin{theorem}[Six exceptional quotients]\label{cor:cryst}
+For $X\in\{E_6,E_7,E_8,F_4,H_3,H_4\}$, the crystallographic group $\Gamma=A(X)/[P,P]$ has property $\Rinf$.
 \end{theorem}
 
 \begin{proof}
 By Proposition~\ref{prop:translation-lattice}, the translation lattice $L$ is characteristic
 and every permutation of $\T$ preserves it. An automorphism of $\Gamma$ therefore induces
 $D\in GL(L)$ normalising $G=\rho(W)$.
-Appendix~\ref{app:out} realises the induced holonomy automorphism by a permutation
-$\pi\in G\langle\pi_0\rangle$. For $E_6,E_7,E_8,D_5$, the holonomy automorphism is inner,
-and Propositions~\ref{prop:E} and~\ref{prop:BD} supply a good constituent with both signs.
+Appendix~\ref{app:out} realises each holonomy automorphism by a permutation $\pi$ consisting of an inner permutation followed by
+the appropriate representative $1$, $\pi_\Sigma$, $\pi_L$ or $\pi_\Psi$ from Section~\ref{sec:exceptional}.
+For $E_6,E_7,E_8$, the holonomy automorphism is inner,
+and Proposition~\ref{prop:E} supplies a good constituent with both signs.
 For $H_3,H_4$, Propositions~\ref{prop:H3} and~\ref{prop:H4} give stable constituents and witnesses.
 For $F_4$, Proposition~\ref{prop:F4} gives the stable inner case and the exchanged outer case.
 Theorem~\ref{thm:crit} completes the proof.
@@ -740,7 +748,7 @@ for this deduction.
 \subsection{The odd-dimensional alternative}\label{sec:alternative}
 
 The multiplicity-one argument of Dekimpe--De Rock--Penninckx \cite[Thm.~4.7]{DDP09}, combined with
-Hiss--Lutowski \cite[Def.~1.1.3, Thm.~1.1.5]{HL25}, completed in \cite{HL26}, provides an alternative for five of the seven types. We give the reduction
+Hiss--Lutowski \cite[Def.~1.1.3, Thm.~1.1.5]{HL25}, completed in \cite{HL26}, provides an alternative for five positive cases. We give the reduction
 explicitly, since the flat-manifold statement in \cite{DDP09} assumes torsion-freeness, whereas our quotients
 may have torsion.
 
@@ -1059,16 +1067,16 @@ from these finite runs.
 
 \section{Automorphisms of the holonomy groups}\label{app:out}
 
-For the seven cases of Theorem~\ref{cor:cryst}, we control all holonomy automorphisms, a sufficient
+For the six exceptional cases of Theorem~\ref{cor:cryst}, we control all holonomy automorphisms, a sufficient
 strengthening of the character-preserving restriction. The following computations are proof certificates
 for these cases of Theorem~B, as well as corroboration of \cite[Thm.~31]{FH03}:
 \begin{itemize}
 \item $\Out(\rho(W))=1$ for $E_6$, $E_7$, $E_8$;
 \item $|\Out(\rho(W))|=2$ for $H_3$, $H_4$, $F_4$.
 \end{itemize}
-We also record $\Out(\rho(W(D_5)))=1$. These statements were obtained as follows.
+These statements were obtained as follows.
 \begin{itemize}
-\item \emph{Involution classes and Coxeter tuples}, by exact enumeration, for $H_3,H_4,F_4,D_5,E_6,E_7$.
+\item \emph{Involution classes and Coxeter tuples}, by exact enumeration, for $H_3,H_4,F_4,E_6,E_7$.
 No involution class other than the reflection classes has a reflection-class size, so every automorphism preserves
 $\rho(\T)$; then the $\Inn$-orbits of generating Coxeter tuples of reflections are counted.
 \item For $H_3,F_4$, an independent generator-image enumeration also counts all automorphisms
@@ -1078,6 +1086,10 @@ it also follows from Lemma~\ref{lem:sign} below. For $E_7$ the reflection-preser
 single exact enumeration above.
 \item For $E_8$, Proposition~\ref{prop:E8} below gives a proof by hand.
 \end{itemize}
+
+The separate computation $\Out(\rho(W(D_5)))=1$ is optional corroboration.
+The main proof covers $D_5$ uniformly in Proposition~\ref{prop:classical-quotients} and does not use it.
+Write $\Gr$ for the diagram automorphism group, acting by isometries that permute the chosen simple roots.
 
 \begin{lemma}\label{lem:sign}
 Let $\Phi$ be an irreducible simply-laced root system of rank $\ge3$ (so its diagram is a tree). Then every
@@ -1112,8 +1124,8 @@ automorphism preserves $\rho(\T)$, and Lemma~\ref{lem:sign} applies.
 \section{Scope of the formalisation}\label{app:artin}
 
 The Lean development proves the direct Artin cases
-$D_5$, $E_6$, $E_7$, $E_8$, $F_4$, $H_3$ and $H_4$ using the same reflection lattice, scalar restriction and
-stable/swap witnesses as the paper. Its automorphism reduction follows a different route:
+$D_5$, $E_6$, $E_7$, $E_8$, $F_4$, $H_3$ and $H_4$ using the same reflection-lattice and fixed-vector
+mechanism, with separately certified constituent bases and witnesses. Its automorphism reduction follows a different route:
 Franzsen--Howlett \cite[Thm.~31]{FH03} express Coxeter automorphisms as reflection-preserving
 automorphisms followed by central twists. Central twists disappear on $W/Z(W)$.
 Reflection-tuple search certificates then control the induced holonomy automorphisms.
