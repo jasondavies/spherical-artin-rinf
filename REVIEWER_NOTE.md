@@ -1,11 +1,11 @@
 # Note for an external reviewer (geometric group theory)
 
-**Provenance.** This is AI-assisted work (Anthropic's Claude): the argument, code, Lean formalisation and manuscript.
+**Provenance.** This is AI-assisted work (Anthropic's Claude and OpenAI's Codex): the argument, code, Lean formalisation and manuscript.
 It has been reviewed only by AI systems:
 - an internal audit;
 - two internal AI "cold referee" rounds;
-- two external AI reviews. The first read only the manuscript. The second read the manuscript, the Python code and
-  the Lean sources.
+- external AI reviews, including manuscript-only reviews, a review of the Python and Lean sources, and the latest
+  quotient-focused review.
 
 The tables in AUDIT.md list every review point, whether it was confirmed or refuted, and how it was handled. None of
 this is journal peer review, and no human expert has checked the work. We are asking you to be that check.
@@ -22,8 +22,12 @@ rank ≥ 2 then has R∞.
 
 Our method gives an independent proof (Prop 5.2). Please check the attribution.
 
-**Also proved.** A corollary of Appendix B (Cor. B.3): A/[P,P] has R∞ for the same seven types. This uses the full
-Aut(W/Z) statements of Appendix B, not only Franzsen–Howlett. A brief search found no prior result.
+**Theorem B.** A/[P,P] has R∞ for the same seven types. The proof is now in §6.2 and uses the full
+Aut(W/Z) statements of Appendix B, not only Franzsen–Howlett.
+
+**Proposition C.** A(I₂(5))/[P,P] admits an automorphism with **R = 18**. This confirms failure of R∞ for the quotient while correcting the exploratory claim R = 14. The script behind that claim used the Bieberbach determinant average on a group with torsion. Section 6.5 gives the matrix, translation, extension check, ten nonzero determinants, and a direct class count. The independent exact checker `code/indep/dihedral_quotient.py` confirms the count by both centralizer orbits and enumeration of all 140 translation-twisted classes. The general-m exploratory script has not been certified.
+
+**Alternative proof.** Section 6.3 verifies the odd-dimensional route for D5, E6, E7, E8 and H4, using unique good constituents of dimensions 5, 15, 27, 35 and 25. It proves the required normalisers are finite and uses the determinant criterion for crystallographic groups with torsion. This avoids applying a flat-manifold theorem outside its hypotheses. The explicit witnesses also cover F4 and H3, where this particular route does not apply. Dekimpe–Gonçalves–Ocampo (2024), Theorems 28 and 31, is now cited for the distinct virtual-braid quotients with three and four strings.
 
 **Novelty and precedents.**
 - New:
@@ -54,12 +58,12 @@ Aut(W/Z) statements of Appendix B, not only Franzsen–Howlett. A brief search f
    - End(V) in the icosian model for H4.
 
 **What to check (in order).**
-1. Thm 3.3, case (ii).
-2. Prop 2.4.
-3. Lemma 4.1, and the quotation of Franzsen–Howlett.
-4. Props 4.2–4.6 and Lemma 4.5, including the finite certificates they depend on (Appendix A).
-5. Prop 5.2 and Remark 5.3 (D5).
-6. Cor. B.3.
+1. Proposition C (§6.5): the actual extension and the torsion-sensitive class count.
+2. Theorem B (§6.2), including the full holonomy-automorphism certificates in Appendix B.
+3. The odd-dimensional alternative (§6.3) and extension-compatibility criterion (§6.4).
+4. Thm 3.3, case (ii), and Prop 2.4.
+5. Lemma 4.1, the quotation of Franzsen–Howlett, and Props 4.2–4.6 with their finite certificates.
+6. Prop 5.2 and Remark 5.3 (D5).
 
 **Literature questions.**
 - Is R∞ for E6–E8, F4, H3 or H4, or for A/[P,P], known or announced?
@@ -68,6 +72,7 @@ Aut(W/Z) statements of Appendix B, not only Franzsen–Howlett. A brief search f
 - What are the exact section numbers for the cited textbook facts (Humphreys, Orlik–Terao)?
 
 **Formal verification** (`lean/`, as of commit 296176a).
+- The new quotient results and Proposition C are not Lean-formalised.
 - The kernel checks the criterion and the finite certificates for **all seven types** D5, E6, E7, E8, F4, H3 and H4.
 - No `sorry`, no `axiom`, no `native_decide`.
 - Each final theorem `artin_X_R_infty_FH` has exactly four hypotheses: `hW` (W finite), `hCP` (Cohen–Paris),
@@ -80,6 +85,7 @@ Aut(W/Z) statements of Appendix B, not only Franzsen–Howlett. A brief search f
 if an expected value fails:
 ```
 cd code/indep
+python3 dihedral_quotient.py          # actual I2(5) extension, determinants, torsion, two exact R = 18 counts
 python3 explicit_constituents.py      # proof certificates for §4.2, Lemma 4.5, Prop 4.6, §5 (exact; asserts)
 python3 referee_v3_E.py               # E types (exact ranks; asserts)
 python3 indep_check.py H3 F4 H4 E6 E7 && python3 out_check.py H3 F4 H4 D5 E6 E7 && python3 out_check_stab.py E7 E8

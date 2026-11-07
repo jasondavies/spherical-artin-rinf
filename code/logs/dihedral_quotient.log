@@ -1,0 +1,8 @@
+Artin relation, actual extension, lattice and affine automorphism: verified
+det(I - gD): rotations [2, 22, 22, 22, 22]; reflections [-10, -10, -10, -10, -10]
+An element of order 5 in the actual quotient: verified
+Centralizer orbit counts over 1, C, C^2, S: [1, 6, 6, 5]; R = 18
+Full 140-class enumeration: 13 orbits of size 10 and 5 of size 2
+Burnside check: (140 + 4*10 + 5*0)/10 = 18 (also for the scratch translation)
+Determinant average = 14; it is not the Reidemeister number
+ALL CHECKS PASSED

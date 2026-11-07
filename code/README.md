@@ -1,6 +1,6 @@
 # Code for "Twisted conjugacy in irreducible spherical Artin groups"
 
-**Paper numbering.** All references below are to the current paper (v3.2). Version 3 of the paper (after the external review, updated after the v3 referee round) renumbered everything. The table below
+**Paper numbering.** The v4 revision preserves the numbering in §§2–5 and Appendices A–B, except that former Cor. B.3 is now Theorem 6.2 (Theorem B). Section 6 adds the quotient criteria and Proposition C. Version 3 of the paper (after the external review, updated after the v3 referee round) renumbered everything. The table below
 uses the old numbering (v2) where it says so. Correspondence:
 
 | old (v2) | new (v3) |
@@ -13,6 +13,21 @@ uses the old numbering (v2) where it says so. Correspondence:
 | §5 (A_n, B_n ≤ 7, D_n ≤ 7) | §5 (A_n, B_n, D_n by hand: Props. 5.1, 5.2, 5.4; D5 now claimed as new, Rem. 5.3; dihedral Rem. 5.5) |
 
 Requirements: Python 3 (tested with 3.12), numpy (2.5.1), sympy (1.14.0). No GAP or Sage needed.
+
+## Dihedral quotient (v4)
+
+Run `python3 code/indep/dihedral_quotient.py` from the repository root (SymPy only).
+This exact checker independently reconstructs the quotient from the Artin-generator images and verifies:
+
+- the braid relation, translation lattice 2ℤ⁵, and preservation of the actual extension by the affine map and its inverse;
+- determinants `[2, 22, 22, 22, 22]` for rotations and `[-10, -10, -10, -10, -10]` for reflections;
+- an element of order five in the quotient;
+- the four cyclic quotient/centralizer computations, giving `1 + 6 + 6 + 5 = 18` twisted classes;
+- a separate enumeration of all 140 translation-twisted classes, giving 13 orbits of size ten and five of size two, also for the translation vector used in the original scratch script.
+
+The determinant average is 14, but the Reidemeister number is **18**. The torsion-free averaging theorem does not apply. The script uses no floating point and imports none of the other project modules. Expected final output: `ALL CHECKS PASSED`. Log: `logs/dihedral_quotient.log`.
+
+The general-m exploratory search `i2m.py` was not imported or promoted to a proof; its printed `R` values use the same unjustified averaging formula.
 
 All runs below were single-threaded (`OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1`) on a shared, heavily loaded
 16-core machine on 2026-11-07. Logs are in `logs/`. The logs of the original exploratory runs are kept,

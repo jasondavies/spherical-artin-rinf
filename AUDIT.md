@@ -1,6 +1,33 @@
 # AUDIT: Twisted conjugacy in irreducible spherical Artin groups (R∞ for D5, E6, E7, E8, F4, H3, H4)
 
-Auditor: AI (Claude). No human expert has checked this. Newest section first.
+Auditors: AI (Claude; v4 revision checked by Codex). No human expert has checked this. Newest section first.
+
+## v4: quotient results promoted; dihedral counterexample verified and exact count corrected
+
+The latest review proposed Theorems A/B and Proposition C. The cited exploratory files were outside this repository, in the user-supplied scratch directory `pa-crystquot/scripts/i25.py` and `i2m.py`. They were inspected; the original files were not modified or imported as proof certificates.
+
+| Review point | Verification | Change |
+|---|---|---|
+| Does the I₂(5) affine map preserve the actual quotient? | **Yes.** With C e_j = e_{j+1}, S e_j = e_{−j}, D = I−C−C⁻¹ and d = e₀+e₁, the two generator corrections are −2e₄ and −2e₂. D⁻¹ = I−C²−C⁻² preserves L = 2ℤ⁵. The induced holonomy map is the identity, so preservation is onto. | Proposition C includes the extension and lattice calculation. The exact checker also verifies inverse membership for all ten parity cosets. |
+| Are all holonomy-adjusted determinants nonzero? | **Yes, exactly:** rotations give 2,22,22,22,22 and reflections give −10 five times. | Finite R follows without needing an exact counting formula. |
+| Is R = 14? | **No for the supplied automorphism.** The scratch scripts use the torsion-free determinant average. The actual quotient contains ((−1,0,−1,1,1),C), of order five. Direct counting gives **R = 18**. The scratch translation (0,0,1,1,1) differs from our choice by a central translation and an inner translation, and was checked separately. | Corrected headline to R = 18. The paper proves the count via four centralizer actions: 1+6+6+5. A separate enumeration gives 13 orbits of size ten and five of size two among 140 translation-twisted classes. |
+| Is a unit in the commutant sufficient? | **No.** The unit must preserve the extension as well as the lattice, and all adjusted determinants must be nonzero. | Proposition 6.3 records the standard affine compatibility test and cites DKT Algorithm 1. The example verifies this condition explicitly. No general negative-dihedral classification is claimed. |
+| Does DDP + Hiss–Lutowski apply to five cases? | **Yes, with an explicit torsion-safe reduction.** Unique good constituents have dimensions 5,15,27,35,25 for D5,E6,E7,E8,H4. Their integral normalisers have finite image in Aut(G|U) and kernel ±I. Hiss–Lutowski then gives a fixed vector, and DKT Thm 3.3 applies with torsion. | Section 6.3 proves the reduction, checks the constituents, and includes the comparison table. The flat-manifold theorem itself is not applied to a group with torsion. |
+| Promote the quotient result. | The old Cor. B.3 already treated all quotient automorphisms, using the full Aut(W/Z) inputs. | Theorem B is now a headline and Theorem 6.2 in the main text. Appendix B calculations are explicitly labelled proof inputs for this result. |
+| Cite the virtual-braid precedent. | Read DGO arXiv:2403.12528, Thms 28 and 31 and Cor. 32: the quotients VB_n/[VP_n,VP_n] have R∞ for n = 3,4. | Prominent introductory citation, distinguishing their modules/extensions from spherical Artin quotients. |
+| Scope and novelty. | Five quotient cases also follow from the general odd-dimensional theorem; F4/H3 use the explicit witnesses here. | Avoids a blanket elementary-proof claim, adds the quotient classification question, and expressly excludes §6 from the existing Lean coverage. |
+
+Sources read for this revision:
+
+- [Dekimpe–Kaiser–Tertooy, Theorem 3.3, Theorem 3.4 and Algorithms 1/3](https://arxiv.org/pdf/1709.07649): the determinant criterion permits torsion; the averaging formula does not in general.
+- [Hiss–Lutowski I, Definition 1.1.3, Theorem 1.1.5 and Corollary 1.1.6](https://arxiv.org/pdf/2504.04978), with [Part II](https://arxiv.org/pdf/2601.09622) completing the theorem. The cited DDP criterion is also reproduced in Part I, Theorem 1.1.1.
+- [Dekimpe–Gonçalves–Ocampo (2024)](https://arxiv.org/pdf/2403.12528), the virtual-braid results above.
+
+Reproduction: `python3 code/indep/dihedral_quotient.py` (SymPy, exact arithmetic, under one second here); output is in `code/logs/dihedral_quotient.log`. The general-m scratch search is exploratory only, and its printed `R` values remain unverified. No new Lean theorem is claimed. Author names and the contribution statement still need author completion before submission.
+
+Validation in this revision: the new dihedral checker, `explicit_constituents.py`, `out_check.py H3 F4 H4 D5 E6 E7`, `out_check_stab.py E7 E8`, and `indep_check.py H4 D5` all passed. The PDF was rebuilt with resolved references. The existing Lean sources were unchanged and the Lean build was not rerun.
+
+---
 
 ## v3.2: second external AI review (it read the paper, the Python and the Lean sources) → verified? → how handled
 
