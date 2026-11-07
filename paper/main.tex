@@ -146,15 +146,18 @@ no \texttt{sorry}, no \texttt{axiom} and no \texttt{native\_decide}. The Lean ke
 \begin{itemize}
 \item the Reidemeister lemmas and the criterion (both cases);
 \item the Artin group as a presented group, the map $f$, and the equivariant surjection $P^{ab}\to\Z^\T$;
-\item for each exceptional type, finite certificates (commutant-scalar constituents and $\pm1$ witnesses);
+\item for each exceptional type and for $D_5$, finite certificates (commutant-scalar constituents and $\pm1$
+witnesses);
 \item the finite part of Lemma~\ref{lem:induced}: by a search-tree (orbit--stabiliser) certificate, every
-reflection-preserving automorphism of $\rho(W)$ lies in $\rho(W)\langle\pi_0\rangle$, for all six types.
+reflection-preserving automorphism of $\rho(W)$ lies in $\rho(W)\langle\pi_0\rangle$, for all seven types
+($\pi_0=1$ for $D_5$, $E_6$, $E_7$, $E_8$).
 \end{itemize}
-For each of the six types the final theorem has exactly four hypotheses, the cited inputs:
+For each of the seven types the final theorem has exactly four hypotheses, the cited inputs:
 $W$ is finite; $P$ is characteristic \cite{CP03}; $P^{ab}\cong\Z^N$ as groups, with $N=|\T|$ (Brieskorn); and
 the Franzsen--Howlett decomposition $\Aut(W)=R(W)\mathcal A(W)$ \cite[Thm.~31]{FH03}. The formalisation uses
 computer-found constituents rather than the hand constructions of Section~\ref{sec:exceptional}. Type $D_5$ is
-not formalised.
+formalised with the same four hypotheses (for $D_5$ the Franzsen--Howlett input is \cite[Thm.~31(3)]{FH03});
+its certificate uses the constituent $U^-$ of Proposition~\ref{prop:BD}.
 
 \section{The characteristic reflection lattice}\label{sec:lattice}
 

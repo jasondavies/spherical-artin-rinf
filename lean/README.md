@@ -1,6 +1,6 @@
 # Lean 4 / Mathlib formalisation of the R∞ criterion for exceptional spherical Artin groups
 
-This directory formalises the argument of `../paper/main.tex` (version v3) in Lean 4 with Mathlib.
+This directory formalises the argument of `../paper/main.tex` (version v3.1) in Lean 4 with Mathlib.
 Theorem numbers below refer to v3. The old v2 → v3 table is in `../code/README.md`. The
 formalisation covers:
 
@@ -9,10 +9,10 @@ formalisation covers:
   F4 swap variant;
 * the Artin group as a presented group, the homomorphism `f : A → ℤ^T ⋊ Perm T` (Lemma 2.3), and
   `P^ab` as a permutation module (Proposition 2.4, apart from the cited rank statement);
-* the finite certificates for **all six types H3, F4, H4, E6, E7 and E8**, checked by the Lean
-  kernel with `decide +kernel`. These are commutant-scalar constituents (Lemma 3.2(i)) and the ±1
+* the finite certificates for **all seven types D5, E6, E7, E8, F4, H3 and H4**, checked by the
+  Lean kernel with `decide +kernel`. These are commutant-scalar constituents (Lemma 3.2(i)) and the ±1
   witnesses;
-* **Lemma 4.1 (via Franzsen–Howlett), for all six types.** Given the cited theorem
+* **Lemma 4.1 (via Franzsen–Howlett), for all seven types.** Given the cited theorem
   `FranzsenHowlett M` (`Aut(W) = R(W)·A(W)`), every automorphism of `A` induces on `ρ(W) = W/Z` a
   conjugation by an element of `ρ(W)` or of `ρ(W)π₀`. The Coxeter-group bridge is proved in Lean.
   The finite part is a kernel-checked search-tree certificate. This yields theorems
@@ -33,9 +33,10 @@ lake exe cache get          # Mathlib oleans (fast if ~/.cache/mathlib is popula
 LEAN_NUM_THREADS=4 lake build
 ```
 
-Measured build time (v3), from a clean `.lake/build` with the Mathlib oleans already present:
-**12 min 0 s wall clock, 43 min CPU**. This was with `LEAN_NUM_THREADS=4`, on a shared 16-core
-machine, 2026-11-07. The slowest modules:
+Measured build time (v3.1, with D5), from a clean `.lake/build` with the Mathlib oleans already
+present: **12 min 38 s wall clock, 46 min CPU**. This was with `LEAN_NUM_THREADS=4`, on a shared
+16-core machine, 2026-11-07. The D5 modules (`Types/D5`, `Types/D5FH`) take about 10 s each. The
+slowest modules:
 
 | module | time | what |
 |---|---|---|
@@ -63,17 +64,17 @@ base is therefore the kernel only, not the compiler. The `#print axioms` output 
 
 Common notation:
 
-* `M = CoxeterMatrix.X` is **Mathlib's** Coxeter matrix.
+* `M = CoxeterMatrix.X` is **Mathlib's** Coxeter matrix, except for D5 (see below).
 * `ArtinGroup M` is the presented group `⟨S | Π(s,t;m) = Π(t,s;m)⟩`.
 * `M.Group` is Mathlib's Coxeter group `W`.
 * `pure M = ker (ArtinGroup M → M.Group)`.
-* `N` is the number of reflections: 15, 24, 60, 36, 63, 120.
+* `N` is the number of reflections: 15, 24, 60, 36, 63, 120, and 20 for D5.
 * `reidemeisterAut φ : ℕ∞` is the number of `φ`-twisted conjugacy classes, with `⊤` meaning
   infinitely many.
 
 All main theorems conclude `∀ φ : ArtinGroup M ≃* ArtinGroup M, reidemeisterAut φ = ⊤`.
 
-**Recommended form (v3): `ArtinRinf.X.artin_X_R_infty_FH`, in `Types/XFH.lean`, for all six types.**
+**Recommended form (v3): `ArtinRinf.X.artin_X_R_infty_FH`, in `Types/XFH.lean`, for all seven types.**
 
 ```lean
 theorem ArtinRinf.E8.artin_E8_R_infty_FH
@@ -92,6 +93,16 @@ theorem ArtinRinf.E8.artin_E8_R_infty_FH
 This is [FH03, Thm. 31], the input to the paper's Lemma 4.1. It is a statement about Mathlib's
 Coxeter group alone and does not mention the exported data.
 
+**Type D5** (paper v3.1, Prop. 5.2 with `n = 5`, Remark 5.3).
+
+* **Coxeter matrix.** Mathlib v4.35.0's `CoxeterMatrix.D 5` is **not** the `D₅` matrix: it has
+  `m₃₄ = 3` besides `m₂₃ = m₂₄ = 3`, a triangle, so its Coxeter group is infinite. This is
+  documented by the lemma `mathlib_D5_differs`. `CoxD5.lean` therefore defines `ArtinRinf.D₅`
+  explicitly: the chain `0–1–2–3` with node 4 attached to 2, as in `rootsys.py`.
+* **Constituent.** The good constituent is the unique 10-dimensional one. This is the paper's
+  `U⁻ = span{e_[ei+ej] − e_[ei−ej]}`.
+* **Outer case.** `Z(W) = 1` and every automorphism is inner, so `π₀ = 1`.
+
 **Per-theorem hypotheses**
 
 | type | theorem | hypotheses | outer case |
@@ -104,7 +115,8 @@ Coxeter group alone and does not mention the exported data.
 | E6 | `E6.artin_E6_R_infty_FH` | `hW`, `hCP`, `hBr`, `hFH` | all inner |
 | E7 | `E7.artin_E7_R_infty_FH` | `hW`, `hCP`, `hBr`, `hFH` | all inner |
 | E8 | `E8.artin_E8_R_infty_FH` | `hW`, `hCP`, `hBr`, `hFH` | all inner |
-| all six | `X.artin_X_R_infty` (v2 form, kept for compatibility) | `hW`, `hCP`, `hBr`, `hOut` | — |
+| **D5** | `D5.artin_D5_R_infty_FH` | `hW`, `hCP`, `hBr` (`P^ab ≅ ℤ^20`), `hFH` | all inner (Franzsen–Howlett Thm 31(3): `Aut(W) = R(W) ≅ W`) |
+| all seven | `X.artin_X_R_infty` (v2 form, kept for compatibility; for D5 `hOut` says every automorphism of `W` is inner) | `hW`, `hCP`, `hBr`, `hOut` | — |
 
 `hOut : OutGeneratedBy D.ρ.range π₀` says that every automorphism of the permutation group
 `ρ(W) ≤ Perm T` is conjugation by an element of `ρ(W)` or of `ρ(W)π₀`. It is the v2-style
@@ -130,7 +142,7 @@ theorems avoid Franzsen–Howlett altogether by enumerating `Aut(ρ(W))`.
 | Lemma 2.3: `f : A → ℤ^T ⋊ Perm T`, `σ_i ↦ (e_{s_i}, ρ(s_i))` | `ReflData.f` (braid relations checked per type) | `Pure.lean`, `Aff.lean` |
 | Prop. 2.4: `f(P) ⊆ 2ℤ^T`; equivariant surjection `P^ab → ℤ^T`; isomorphism given `hBr` (Hopfian argument) | `f_pure`, `ebar_equivariant`, `ebar_surjective`, `permModuleIso` | `Pure.lean` |
 | Lemma 3.2(i): orbital certificate ⇒ every matrix commuting with `ρ(W)` is scalar on `U` | `OrbitalCert`, `commScalar_of_cert` | `Certificate.lean` |
-| §4.2 (Props. 4.2–4.6), Appendix A: good constituents and ±1 witnesses, all six types | `commScalar_U0` (and `U1` for F4), `witness_inner`, `witness_outer` | `Types/X.lean` |
+| §4.2 (Props. 4.2–4.6), Prop. 5.2 (`D₅`, `U⁻`), Appendix A: good constituents and ±1 witnesses, all seven types | `commScalar_U0` (and `U1` for F4), `witness_inner`, `witness_outer` | `Types/X.lean` |
 | **Lemma 4.1, Coxeter part:** `φ ∈ Aut(A)` induces `φ_W ∈ Aut(W)` (needs `hCP`). With `hFH`, `ρ(φ(σ_i))` is a reflection permutation, using `Z(ρ(W)) = 1`. | `ArtinGroup.coxAut`, `RpData.image_refl`, `RpData.center_trivial` | `FH.lean` |
 | **Lemma 4.1, finite part:** every tuple of reflections with the Coxeter orders of the simple reflections is conjugate to the simple tuple by `ρ(W)` or `ρ(W)π₀` (search-tree soundness) | `TreeCert.conj` | `FH.lean` |
 | **Lemma 4.1, the per-type trees** | `TC`, `tree_ext_ok`, `tree_leaf_ok` | `Types/XFH.lean` |
@@ -158,6 +170,7 @@ theorems avoid Franzsen–Howlett altogether by enumerating `Aut(ρ(W))`.
   | H4 | 6 | 88 | 2 |
   | E7 | 8 | 123 | 1 |
   | E8 | 9 | 241 | 1 |
+  | D5 | 7 | 40 | 1 |
 
   Words have length ≤ 119. They are found by lifting to `W` and running the descent algorithm in
   `scripts/export_tree.py`.
@@ -192,7 +205,7 @@ The exported data live in `ArtinRinf/Data/*.lean` and are produced by the follow
 * **Large tables.** For E8 and F4-Out, tables are balanced binary trees (`BT.lean`), so kernel
   lookups are logarithmic.
 * **Generated Lean files.** `scripts/gen_types.py` and `scripts/split_e8.py` generate
-  `Types/{H4,E6,E7,E8}.lean` and `Types/E8/*.lean`. `scripts/gen_fh.py` generates
+  `Types/{H4,E6,E7,E8,D5}.lean` and `Types/E8/*.lean`. `scripts/gen_fh.py` generates
   `Types/XFH.lean`.
 * **Hand-written Lean files.** `Types/H3.lean`, `Types/F4.lean`, `Types/H3Out.lean` and
   `Types/F4Out.lean`.
@@ -257,6 +270,8 @@ $ lake env lean scripts/print_axioms.lean
 'ArtinRinf.E6.artin_E6_R_infty_FH' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ArtinRinf.E7.artin_E7_R_infty_FH' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ArtinRinf.E8.artin_E8_R_infty_FH' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ArtinRinf.D5.artin_D5_R_infty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ArtinRinf.D5.artin_D5_R_infty_FH' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ArtinRinf.ReflData.rinf_FH' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ArtinRinf.ReflData.TreeCert.conj' depends on axioms: [propext, Classical.choice, Quot.sound]
 ArtinRinf.H3.artin_H3_R_infty' : Finite ArtinRinf.H3.M.Group →
@@ -285,6 +300,15 @@ def ArtinRinf.FranzsenHowlett.{u_1} : {B : Type u_1} → CoxeterMatrix B → Pro
 fun {B} M =>
   ∀ (α : M.Group ≃* M.Group),
     ∃ β γ, ArtinRinf.IsReflPres β ∧ ArtinRinf.IsCentralTwist γ ∧ ∀ (w : M.Group), α w = β (γ w)
+ArtinRinf.D5.artin_D5_R_infty_FH : Finite ArtinRinf.D5.M.Group →
+  (ArtinRinf.ArtinGroup.pure ArtinRinf.D5.M).Characteristic →
+    Nonempty (Abelianization ↥(ArtinRinf.ArtinGroup.pure ArtinRinf.D5.M) ≃* Multiplicative (Fin 20 → ℤ)) →
+      ArtinRinf.FranzsenHowlett ArtinRinf.D5.M →
+        ∀ (φ : ArtinRinf.ArtinGroup ArtinRinf.D5.M ≃* ArtinRinf.ArtinGroup ArtinRinf.D5.M),
+          ArtinRinf.reidemeisterAut φ = ⊤
+def ArtinRinf.D₅ : CoxeterMatrix (Fin 5) :=
+{ M := !![1, 3, 2, 2, 2; 3, 1, 3, 2, 2; 2, 3, 1, 3, 3; 2, 2, 3, 1, 2; 2, 2, 3, 2, 1], isSymm := ArtinRinf.D₅._proof_1,
+  diagonal := ArtinRinf.D₅._proof_2, off_diagonal := ArtinRinf.D₅._proof_3 }
 ```
 
 ## Files
@@ -312,6 +336,9 @@ ArtinRinf/Types/{H3,F4}Out.lean              Out(ρ(W)) verified; theorems with 
 ArtinRinf/Types/{H4,E6,E7,E8}.lean           certificates and hOut-theorems (generated)
 ArtinRinf/Types/E8/*.lean                    E8 certificate checks, split for parallelism (generated)
 ArtinRinf/Types/{H3,F4,H4,E6,E7,E8}FH.lean   Franzsen–Howlett theorems artin_X_R_infty_FH (generated)
+ArtinRinf/CoxD5.lean                         the D₅ Coxeter matrix (Mathlib's `CoxeterMatrix.D 5` is wrong)
+ArtinRinf/Data/D5.lean, Data/D5Tree.lean     D5 data (generated)
+ArtinRinf/Types/D5.lean, Types/D5FH.lean     D5 certificates and theorems (generated)
 scripts/export_data.py, export_out.py, export_tree.py,
         gen_types.py, split_e8.py, gen_fh.py      data / file generation (untrusted)
 scripts/print_axioms.lean                    #print axioms and statements of the main theorems

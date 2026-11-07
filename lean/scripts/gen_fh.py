@@ -5,7 +5,8 @@ import os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 INFO = {'H3': ('H₃', 3, 15, True), 'F4': ('F₄', 4, 24, True), 'H4': ('H₄', 4, 60, True),
-        'E6': ('E₆', 6, 36, False), 'E7': ('E₇', 7, 63, False), 'E8': ('E₈', 8, 120, False)}
+        'E6': ('E₆', 6, 36, False), 'E7': ('E₇', 7, 63, False), 'E8': ('E₈', 8, 120, False),
+        'D5': ('D₅', 5, 20, False)}
 
 
 def gen(name):

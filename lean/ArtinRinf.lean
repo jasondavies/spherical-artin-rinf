@@ -28,3 +28,7 @@ import ArtinRinf.Types.H4FH
 import ArtinRinf.Types.E6FH
 import ArtinRinf.Types.E7FH
 import ArtinRinf.Types.E8FH
+-- Type D₅ (paper v3.1, Prop. 5.2 with n = 5, Remark 5.3)
+import ArtinRinf.CoxD5
+import ArtinRinf.Types.D5
+import ArtinRinf.Types.D5FH

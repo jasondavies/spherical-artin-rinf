@@ -28,6 +28,7 @@ import rootsys as rsm
 from rootsys import RootSystem
 
 SPEC = {  # chosen constituent dimensions
+    'D5': [10],   # U^- = span{e_[ei+ej] - e_[ei-ej]} (paper Prop 5.2)
     'H3': [4], 'F4': [2, 2], 'H4': [16], 'E6': [15], 'E7': [27], 'E8': [35],
 }
 OUTER = {'H3': 'stable', 'H4': 'stable', 'F4': 'swap'}
