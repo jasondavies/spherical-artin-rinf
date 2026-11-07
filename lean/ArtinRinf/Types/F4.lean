@@ -34,7 +34,7 @@ def D : ReflData M (Fin 24) where
 theorem pi0Fun_invol : ∀ x, pi0Fun (pi0Fun x) = x := by decide +kernel
 
 /-- The outer permutation `π₀` of the reflections induced by the similarity
-`L(x) = (x₁+x₂, x₁-x₂, x₃+x₄, x₃-x₄)`, exchanging long and short roots; paper, Proposition 4.1(b)). -/
+`L(x) = (x₁+x₂, x₁-x₂, x₃+x₄, x₃-x₄)`, exchanging long and short roots; paper, Appendix B). -/
 def pi0 : Equiv.Perm (Fin 24) := ⟨pi0Fun, pi0Fun, pi0Fun_invol, pi0Fun_invol⟩
 
 /-- Sanity check: `π₀` normalises `ρ(W)`, i.e. `π₀ ρ(s_i) π₀⁻¹ ∈ ρ(W)` with explicit words.
@@ -83,7 +83,7 @@ many twisted conjugacy classes, assuming
 * `hCP`: the pure Artin group is characteristic (Cohen–Paris, Thm 1.4; computer-assisted);
 * `hBr`: `H₁(P;ℤ) ≅ ℤ^24` (Brieskorn; Orlik–Terao; 24 = number of reflections);
 * `hOut`: every automorphism of `ρ(W) ≅ W/Z(W)` is conjugation by an element of `ρ(W)` or of
-  `ρ(W)π₀` (computed: `|Out(W/Z)| = 2`, paper Proposition 4.1(b)). -/
+  `ρ(W)π₀` (computed: `|Out(W/Z)| = 2`, paper Appendix B). -/
 theorem artin_F4_R_infty (hW : Finite M.Group) (hCP : (pure M).Characteristic)
     (hBr : Nonempty (Abelianization (pure M) ≃* Multiplicative (Fin 24 → ℤ)))
     (hOut : OutGeneratedBy D.ρ.range pi0) :

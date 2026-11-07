@@ -403,7 +403,7 @@ theorem witness_inner : Witness D.ρ 1 :=
 * `hW`: `W(E₈)` is finite (classical);
 * `hCP`: the pure Artin group is characteristic (Cohen–Paris, Thm 1.4; computer-assisted);
 * `hBr`: `H₁(P;ℤ) ≅ ℤ^120` (Brieskorn; Orlik–Terao; 120 = number of reflections);
-* `hOut`: every automorphism of `ρ(W) ≅ W/Z(W)` is inner (proved by hand in paper Proposition 4.2),
+* `hOut`: every automorphism of `ρ(W) ≅ W/Z(W)` is inner (proved by hand in paper Proposition B.2),
 every automorphism of `A(E₈)` has infinite Reidemeister number. -/
 theorem artin_E8_R_infty (hW : Finite M.Group) (hCP : (pure M).Characteristic)
     (hBr : Nonempty (Abelianization (pure M) ≃* Multiplicative (Fin 120 → ℤ)))

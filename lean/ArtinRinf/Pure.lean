@@ -1,13 +1,13 @@
 /-
-# The abelianised pure Artin group as a permutation module (paper, Lemma 2.4 and Proposition 2.6)
+# The abelianised pure Artin group as a permutation module (paper, Lemma 2.3 and Proposition 2.4)
 
 Given explicit data — the permutations `gens i` of a finite set `T` (the reflections), induced by
 the simple reflections, and the positions `sidx i ∈ T` of the simple reflections — satisfying
 finitely many decidable conditions, we construct
 
-* the homomorphism `f : A → ℤ^T ⋊ Perm T`, `σ_i ↦ (e_{s_i}, ρ(s_i))` (Lemma 2.4);
+* the homomorphism `f : A → ℤ^T ⋊ Perm T`, `σ_i ↦ (e_{s_i}, ρ(s_i))` (Lemma 2.3);
 * `ρ : A → Perm T`, its permutation part;
-* an equivariant surjection `P^ab → ℤ^T`, `[p] ↦ f(p)/2` (Proposition 2.6, surjectivity and
+* an equivariant surjection `P^ab → ℤ^T`, `[p] ↦ f(p)/2` (Proposition 2.4, surjectivity and
   equivariance);
 
 and, **assuming** that `P^ab` is free abelian of rank `|T|` (Brieskorn; Orlik–Terao), we conclude
@@ -28,7 +28,7 @@ def affGen (R : Type*) [CommRing R] (gens : B → Equiv.Perm T) (sidx : B → T)
   ⟨Pi.single (sidx i) 1, gens i⟩
 
 /-- Explicit data describing the conjugation action of `W(M)` on its reflections, together with
-the finite certificates needed for Lemma 2.4 and Proposition 2.6. All fields are decidable for
+the finite certificates needed for Lemma 2.3 and Proposition 2.4. All fields are decidable for
 concrete data. -/
 structure ReflData (M : CoxeterMatrix B) (T : Type*) [Fintype T] [DecidableEq T] where
   /-- the permutation of the reflections induced by conjugation with `s_i` -/
@@ -37,7 +37,7 @@ structure ReflData (M : CoxeterMatrix B) (T : Type*) [Fintype T] [DecidableEq T]
   sidx : B → T
   gens_sq : ∀ i, gens i * gens i = 1
   gens_fix : ∀ i, gens i (sidx i) = sidx i
-  /-- Lemma 2.4: the braid relations hold in `ℤ^T ⋊ Perm T` -/
+  /-- Lemma 2.3: the braid relations hold in `ℤ^T ⋊ Perm T` -/
   braid : ∀ i j, i ≠ j → braidWord (affGen ℤ gens sidx i) (affGen ℤ gens sidx j) (M i j) =
     braidWord (affGen ℤ gens sidx j) (affGen ℤ gens sidx i) (M i j)
   /-- the Coxeter relations hold in `(ℤ/2)^T ⋊ Perm T` (used to show `f(P) ⊆ 2ℤ^T`) -/
@@ -52,7 +52,7 @@ variable {M : CoxeterMatrix B} (D : ReflData M T)
 
 open ArtinGroup
 
-/-- The homomorphism `f : A → ℤ^T ⋊ Perm T` of Lemma 2.4. -/
+/-- The homomorphism `f : A → ℤ^T ⋊ Perm T` of Lemma 2.3. -/
 def f : ArtinGroup M →* Aff ℤ T := ArtinGroup.lift (affGen ℤ D.gens D.sidx) D.braid
 
 /-- The permutation representation `ρ : A → Perm T` (conjugation action of `W` on reflections). -/
@@ -124,7 +124,7 @@ lemma ebar_of (p : pure M) :
     (D.ebar (Abelianization.of p)).toAdd = fun t => (D.f p).v t / 2 := by
   simp [ebar, half]
 
-/-- Equivariance (Proposition 2.6). -/
+/-- Equivariance (Proposition 2.4). -/
 lemma ebar_equivariant (a : ArtinGroup M) (p : pure M) :
     (D.ebar (Abelianization.of (conjP (pure M) a p))).toAdd =
       pact (D.ρ a) (D.ebar (Abelianization.of p)).toAdd := by
@@ -134,7 +134,7 @@ lemma ebar_equivariant (a : ArtinGroup M) (p : pure M) :
   rw [Aff.conj_v _ _ (D.f_pure p p.2).1]
   rfl
 
-/-- Surjectivity (Proposition 2.6): `f(P) = 2ℤ^T`. -/
+/-- Surjectivity (Proposition 2.4): `f(P) = 2ℤ^T`. -/
 lemma ebar_surjective : Surjective D.ebar := by
   -- the basis vectors are in the range
   have hbasis : ∀ t, Multiplicative.ofAdd (Pi.single t (1 : ℤ)) ∈ D.ebar.range := by
@@ -183,7 +183,7 @@ lemma ebar_surjective : Surjective D.ebar := by
   rw [this]
   exact Subgroup.zpow_mem _ (hbasis t) _
 
-/-- **Proposition 2.6** (modulo the cited rank statement): if `P^ab ≅ ℤ^T` abstractly
+/-- **Proposition 2.4** (modulo the cited rank statement): if `P^ab ≅ ℤ^T` abstractly
 (Brieskorn: `P = π₁` of the complement of the reflection arrangement; its `H₁` is free abelian on
 the meridians, one per reflection), then `[p] ↦ f(p)/2` is an `A`-equivariant isomorphism
 `P^ab ≅ ℤ^T`. -/
@@ -209,8 +209,8 @@ noncomputable def permModuleIso (hBr : Nonempty (Abelianization (pure M) ≃* Mu
     exact β.injective (Multiplicative.toAdd.injective this)
   exact ⟨MulEquiv.ofBijective D.ebar ⟨hinj, D.ebar_surjective⟩, fun a p => D.ebar_equivariant a p⟩
 
-/-- **Main theorem for a type given by explicit data** (Theorem 3.1 + Remark 3.2 +
-Proposition 2.6).  The hypotheses `hW`, `hCP`, `hBr` stand for cited theorems; `hOut` for the
+/-- **Main theorem for a type given by explicit data** (Theorem 3.3 + Remark 3.4 +
+Proposition 2.4).  The hypotheses `hW`, `hCP`, `hBr` stand for cited theorems; `hOut` for the
 computation of `Out(W/Z(W))`; `hInner`, `hOuter` are the finite certificates. -/
 theorem rinf (hW : Finite M.Group) (hCP : (pure M).Characteristic)
     (hBr : Nonempty (Abelianization (pure M) ≃* Multiplicative (T → ℤ)))

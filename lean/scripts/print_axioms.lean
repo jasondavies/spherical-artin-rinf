@@ -16,6 +16,16 @@ import ArtinRinf
 #print axioms ArtinRinf.E6.artin_E6_R_infty
 #print axioms ArtinRinf.E7.artin_E7_R_infty
 #print axioms ArtinRinf.E8.artin_E8_R_infty
+#print axioms ArtinRinf.H3.artin_H3_R_infty_FH
+#print axioms ArtinRinf.F4.artin_F4_R_infty_FH
+#print axioms ArtinRinf.H4.artin_H4_R_infty_FH
+#print axioms ArtinRinf.E6.artin_E6_R_infty_FH
+#print axioms ArtinRinf.E7.artin_E7_R_infty_FH
+#print axioms ArtinRinf.E8.artin_E8_R_infty_FH
+#print axioms ArtinRinf.ReflData.rinf_FH
+#print axioms ArtinRinf.ReflData.TreeCert.conj
 #check @ArtinRinf.H3.artin_H3_R_infty'
 #check @ArtinRinf.F4.artin_F4_R_infty'
 #check @ArtinRinf.E8.artin_E8_R_infty
+#check @ArtinRinf.E8.artin_E8_R_infty_FH
+#print ArtinRinf.FranzsenHowlett

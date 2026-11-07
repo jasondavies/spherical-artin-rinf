@@ -25,7 +25,7 @@ def gens (i : Fin 6) : Equiv.Perm (Fin 36) :=
 
 theorem gens_sq : ∀ i, gens i * gens i = 1 := by decide +kernel
 theorem gens_fix : ∀ i, gens i (sidx i) = sidx i := by decide +kernel
-/-- Lemma 2.4 for `E₆`: the braid relations hold in `ℤ^T ⋊ Perm T`. -/
+/-- Lemma 2.3 for `E₆`: the braid relations hold in `ℤ^T ⋊ Perm T`. -/
 theorem braid_ok : ∀ i j, i ≠ j → braidWord (affGen ℤ gens sidx i) (affGen ℤ gens sidx j) (M i j) =
     braidWord (affGen ℤ gens sidx j) (affGen ℤ gens sidx i) (M i j) := by decide +kernel
 theorem cox2_ok : ∀ i j,
@@ -75,7 +75,7 @@ theorem witness_inner : Witness D.ρ 1 :=
 * `hW`: `W(E₆)` is finite (classical);
 * `hCP`: the pure Artin group is characteristic (Cohen–Paris, Thm 1.4; computer-assisted);
 * `hBr`: `H₁(P;ℤ) ≅ ℤ^36` (Brieskorn; Orlik–Terao; 36 = number of reflections);
-* `hOut`: every automorphism of `ρ(W) ≅ W/Z(W)` is inner (computed, paper Proposition 4.1(a)),
+* `hOut`: every automorphism of `ρ(W) ≅ W/Z(W)` is inner (computed, paper Appendix B),
 every automorphism of `A(E₆)` has infinite Reidemeister number. -/
 theorem artin_E6_R_infty (hW : Finite M.Group) (hCP : (pure M).Characteristic)
     (hBr : Nonempty (Abelianization (pure M) ≃* Multiplicative (Fin 36 → ℤ)))

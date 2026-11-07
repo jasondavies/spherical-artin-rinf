@@ -146,15 +146,15 @@ no \texttt{sorry}, no \texttt{axiom} and no \texttt{native\_decide}. The Lean ke
 \begin{itemize}
 \item the Reidemeister lemmas and the criterion (both cases);
 \item the Artin group as a presented group, the map $f$, and the equivariant surjection $P^{ab}\to\Z^\T$;
-\item for each exceptional type, finite certificates (commutant-scalar constituents and $\pm1$ witnesses).
+\item for each exceptional type, finite certificates (commutant-scalar constituents and $\pm1$ witnesses);
+\item the finite part of Lemma~\ref{lem:induced}: by a search-tree (orbit--stabiliser) certificate, every
+reflection-preserving automorphism of $\rho(W)$ lies in $\rho(W)\langle\pi_0\rangle$, for all six types.
 \end{itemize}
-The cited inputs are explicit hypotheses: $W$ is finite; $P$ is characteristic; $P^{ab}\cong\Z^N$ as groups,
-with $N=|\T|$ (Brieskorn);
-and a statement \texttt{hOut} that every automorphism of $W/Z(W)$ is inner, or inner times a given $\pi_0$.
-\texttt{hOut} is proved in Lean for $H_3$ and $F_4$, and is a hypothesis for $H_4,E_6,E_7,E_8$
-(cf.\ Appendix~\ref{app:out}). The formalisation predates the use of \cite{FH03} below and the explicit
-constituents of Section~\ref{sec:exceptional}; it uses computer-found constituents. Type $D_5$ is not
-formalised.
+For each of the six types the final theorem has exactly four hypotheses, the cited inputs:
+$W$ is finite; $P$ is characteristic \cite{CP03}; $P^{ab}\cong\Z^N$ as groups, with $N=|\T|$ (Brieskorn); and
+the Franzsen--Howlett decomposition $\Aut(W)=R(W)\mathcal A(W)$ \cite[Thm.~31]{FH03}. The formalisation uses
+computer-found constituents rather than the hand constructions of Section~\ref{sec:exceptional}. Type $D_5$ is
+not formalised.
 
 \section{The characteristic reflection lattice}\label{sec:lattice}
 
@@ -696,8 +696,9 @@ $D_4$--$D_7$, odd $I_2(m)$ with $m\le21$, and the exceptional types other than $
 
 \section{Corroboration: all automorphisms of $W/Z(W)$}\label{app:out}
 
-The argument above uses only automorphisms of $\rho(W)$ induced from $\Aut(W)$. The Lean formalisation assumes
-the stronger statement \texttt{hOut} about all of $\Aut(\rho(W))$:
+The argument above uses only automorphisms of $\rho(W)$ induced from $\Aut(W)$. As independent corroboration
+of \cite[Thm.~31]{FH03} for the exceptional types (whose proof there is an outline), we record the stronger
+statement about all of $\Aut(\rho(W))$:
 \begin{itemize}
 \item $\Out(\rho(W))=1$ for $E_6$, $E_7$, $E_8$;
 \item $|\Out(\rho(W))|=2$ for $H_3$, $H_4$, $F_4$.

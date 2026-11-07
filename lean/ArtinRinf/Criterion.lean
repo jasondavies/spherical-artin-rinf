@@ -1,12 +1,12 @@
 /-
-# The abstract criterion (paper, Theorem 3.1, Lemma 2.11, Corollary 2.9, Remark 3.2)
+# The abstract criterion (paper, Theorem 3.3, Lemma 3.1, Corollary 2.5, Remark 3.4)
 
 Setting.
 * `A` a group, `P ≤ A` a characteristic subgroup of finite index.
 * `T` a finite set, `ρ : A →* Perm T`.
 * `E : PermModuleIso P ρ`: an isomorphism `P^ab ≃ ℤ^T` under which conjugation by `a ∈ A`
   becomes the permutation `ρ a` of coordinates (no signs).  For Artin groups this is
-  Proposition 2.6 of the paper (Brieskorn).
+  Proposition 2.4 of the paper (Brieskorn).
 * A rational subspace `U ≤ ℚ^T` such that *every* `ℚ`-matrix commuting with all `ρ a` acts on `U`
   by a scalar (`CommScalar ρ U`).  This is exactly what the paper uses of a "good constituent".
 
@@ -87,7 +87,7 @@ lemma exists_of (x : T → ℤ) : ∃ p : P, (E.e (Abelianization.of p)).toAdd =
 lemma mat_ext {M N : Matrix T T ℤ} (h : ∀ x, M *ᵥ x = N *ᵥ x) : M = N :=
   Matrix.ext_of_mulVec_single (fun _ => h _)
 
-/-- Corollary 2.9, first part: `M_φ ρ(a) = ρ(φ a) M_φ`. -/
+/-- Corollary 2.5, first part: `M_φ ρ(a) = ρ(φ a) M_φ`. -/
 lemma Mmat_pmat (φ : A ≃* A) (a : A) :
     Mmat E φ * pmat ℤ (ρ a) = pmat ℤ (ρ (φ a)) * Mmat E φ := by
   apply mat_ext
@@ -99,7 +99,7 @@ lemma Mmat_pmat (φ : A ≃* A) (a : A) :
   apply Subtype.ext
   simp [mul_assoc]
 
-/-- Corollary 2.9, second part: `M_{ι_a ∘ φ} = ρ(a) M_φ`. -/
+/-- Corollary 2.5, second part: `M_{ι_a ∘ φ} = ρ(a) M_φ`. -/
 lemma Mmat_conj (φ : A ≃* A) (a : A) :
     Mmat E (φ.trans (MulAut.conj a)) = pmat ℤ (ρ a) * Mmat E φ := by
   apply mat_ext
@@ -127,7 +127,7 @@ lemma Mmat_symm_mul (φ : A ≃* A) : Mmat E φ.symm * Mmat E φ = 1 := by
   rw [← Mmat_trans, MulEquiv.self_trans_symm, Mmat_refl]
 
 /-- **Reduction to linear algebra.**  If `M_φ` has a nonzero rational fixed vector, then
-`R(φ) = ∞`.  (Lemma 2.1 (b), (a), (d) and Proposition 2.6.) -/
+`R(φ) = ∞`.  (Lemma 2.1 (b), (a), (d) and Proposition 2.4.) -/
 theorem reidemeister_eq_top_of_fixed [P.FiniteIndex] (φ : A ≃* A) (v : T → ℚ) (hv : v ≠ 0)
     (hfix : castQ (Mmat E φ) *ᵥ v = v) : reidemeisterAut φ = ⊤ := by
   -- `R` on `ℤ^T`
@@ -150,7 +150,7 @@ theorem reidemeister_eq_top_of_fixed [P.FiniteIndex] (φ : A ≃* A) (v : T → 
 
 end MPhi
 
-/-! ### The Schur / lattice step (Lemma 2.11) -/
+/-! ### The Schur / lattice step (Lemma 3.1) -/
 
 /-- A rational number `q ≠ 0` such that `q^k x` is an integer for all `k` (for some integer
 `x ≠ 0`) satisfies `1 ≤ |q|`. -/
@@ -218,7 +218,7 @@ lemma castQ_pow (N : Matrix T T ℤ) (k : ℕ) : castQ (N ^ k) = castQ N ^ k := 
   | zero => simp [castQ_one]
   | succ k ih => rw [pow_succ, castQ_mul, ih, pow_succ]
 
-/-- **Lemma 2.11 (lattice step).**  If an integer matrix `N` with an integer left inverse has a
+/-- **Lemma 3.1 (lattice step).**  If an integer matrix `N` with an integer left inverse has a
 rational eigenvector `v ≠ 0` with rational eigenvalue `c`, then `c = ±1`. -/
 theorem eigenvalue_eq_one_or_neg_one (N N' : Matrix T T ℤ) (hNN' : N' * N = 1)
     (v : T → ℚ) (hv : v ≠ 0) (c : ℚ) (hc : castQ N *ᵥ v = c • v) : c = 1 ∨ c = -1 := by
@@ -287,13 +287,13 @@ def CommScalar (ρ : A →* Equiv.Perm T) (U : Submodule ℚ (T → ℚ)) : Prop
   ∀ N : Matrix T T ℚ, (∀ a, N * pmat ℚ (ρ a) = pmat ℚ (ρ a) * N) →
     ∃ c : ℚ, ∀ u ∈ U, N *ᵥ u = c • u
 
-/-- Stable case (i) of Theorem 3.1 for the permutation `π`: for each `ε = ±1` there are `h ∈ ρ(A)`
+/-- Stable case (i) of Theorem 3.3 for the permutation `π`: for each `ε = ±1` there are `h ∈ ρ(A)`
 and `0 ≠ v ∈ U` with `h π v = ε v`. -/
 def StableWitness (ρ : A →* Equiv.Perm T) (U : Submodule ℚ (T → ℚ)) (π : Equiv.Perm T) : Prop :=
   ∀ ε : ℚ, (ε = 1 ∨ ε = -1) →
     ∃ a : A, ∃ v ∈ U, v ≠ 0 ∧ pmat ℚ (ρ a * π) *ᵥ v = ε • v
 
-/-- Swap case (ii) of Theorem 3.1 for the permutation `π`, in the form used by the proof: for each
+/-- Swap case (ii) of Theorem 3.3 for the permutation `π`, in the form used by the proof: for each
 `ε = ±1` there are `h ∈ ρ(A)` and `0 ≠ v ∈ U₁` with `hπ v ∈ U₂`, `(hπ)² v = ε v`, and
 `hπ v ≠ ±v`.  (The last condition replaces the use of `U₁ ∩ U₂ = 0` in the paper.) -/
 def SwapWitness (ρ : A →* Equiv.Perm T) (U₁ U₂ : Submodule ℚ (T → ℚ)) (π : Equiv.Perm T) :
@@ -309,7 +309,7 @@ def Witness (ρ : A →* Equiv.Perm T) (π : Equiv.Perm T) : Prop :=
   (∃ U, CommScalar ρ U ∧ StableWitness ρ U π) ∨
     (∃ U₁ U₂, CommScalar ρ U₁ ∧ CommScalar ρ U₂ ∧ SwapWitness ρ U₁ U₂ π)
 
-/-- Remark 3.2: the witness condition for `π` implies it for `ρ(g) π`. -/
+/-- Remark 3.4: the witness condition for `π` implies it for `ρ(g) π`. -/
 lemma Witness.mul_left {ρ : A →* Equiv.Perm T} {π : Equiv.Perm T} (h : Witness ρ π) (g : A) :
     Witness ρ (ρ g * π) := by
   have key : ∀ a : A, ρ (a * g⁻¹) * (ρ g * π) = ρ a * π := by
@@ -325,7 +325,7 @@ lemma Witness.mul_left {ρ : A →* Equiv.Perm T} {π : Equiv.Perm T} (h : Witne
     exact ⟨a * g⁻¹, v, hvU, hv0, by rw [key]; exact h1, by rw [key]; exact h2,
       by rw [key]; exact h3, by rw [key]; exact h4⟩
 
-/-! ### Theorem 3.1 -/
+/-! ### Theorem 3.3 -/
 
 section Main
 
@@ -341,7 +341,7 @@ lemma reidemeisterAut_conj (φ : A ≃* A) (a : A) :
   rfl
 
 include E in
-/-- **Theorem 3.1** for a single automorphism `φ`: if `π ρ(a) π⁻¹ = ρ(φ a)` for all `a`, and the
+/-- **Theorem 3.3** for a single automorphism `φ`: if `π ρ(a) π⁻¹ = ρ(φ a)` for all `a`, and the
 witness condition holds for `π`, then `R(φ) = ∞`. -/
 theorem reidemeister_eq_top_of_witness (φ : A ≃* A) (π : Equiv.Perm T)
     (hπ : ∀ a, ρ (φ a) = π * ρ a * π⁻¹) (hW : Witness ρ π) : reidemeisterAut φ = ⊤ := by
@@ -435,7 +435,7 @@ lemma rangeRestrict_eq_one_iff' (ρ : A →* Equiv.Perm T) (a : A) :
 
 include E in
 /-- The kernel of `ρ` is invariant under every automorphism (a consequence of the equivariance
-of `P^ab ≅ ℤ^T`, Corollary 2.9). -/
+of `P^ab ≅ ℤ^T`, Corollary 2.5). -/
 lemma rho_map_eq_one (φ : A ≃* A) {a : A} (ha : ρ a = 1) : ρ (φ a) = 1 := by
   have h := Mmat_pmat E φ a
   rw [ha, pmat_one, mul_one] at h
@@ -481,7 +481,7 @@ lemma inducedHom_bijective (φ : A ≃* A) : Bijective (inducedHom E φ) := by
     rw [inducedHom_apply]; simp
 
 /-- The automorphism `θ_φ` of the finite group `ρ(A)` induced by `φ ∈ Aut A`:
-`θ_φ (ρ a) = ρ (φ a)` (Lemma 2.2 / Corollary 2.9). -/
+`θ_φ (ρ a) = ρ (φ a)` (§2 (definition of θ_α) / Corollary 2.5). -/
 noncomputable def inducedAut (φ : A ≃* A) : ρ.range ≃* ρ.range :=
   MulEquiv.ofBijective (inducedHom E φ) (inducedHom_bijective E φ)
 
@@ -499,7 +499,7 @@ def OutGeneratedBy (G : Subgroup (Equiv.Perm T)) (π₀ : Equiv.Perm T) : Prop :
     (∀ x : G, (θ x : Equiv.Perm T) = (g * π₀) * x * (g * π₀)⁻¹)
 
 include E in
-/-- **Theorem 3.1, packaged with Remark 3.2.**  Suppose every automorphism of `ρ(A)` is conjugation
+/-- **Theorem 3.3, packaged with Remark 3.4.**  Suppose every automorphism of `ρ(A)` is conjugation
 by an element of `ρ(A)` or of `ρ(A) π₀`, and the witness condition holds for `π = 1` and for
 `π = π₀`.  Then every automorphism of `A` has infinite Reidemeister number. -/
 theorem rinf_of_outGeneratedBy [P.FiniteIndex] (π₀ : Equiv.Perm T)
@@ -518,7 +518,7 @@ theorem rinf_of_outGeneratedBy [P.FiniteIndex] (π₀ : Equiv.Perm T)
     · exact hOuter.mul_left b
 
 include E in
-/-- Corollary 3.3: if every automorphism of `ρ(A)` is inner and the witness condition holds for
+/-- Remark 3.4: if every automorphism of `ρ(A)` is inner and the witness condition holds for
 `π = 1`, then every automorphism of `A` has infinite Reidemeister number. -/
 theorem rinf_of_allInner [P.FiniteIndex] (hOut : OutGeneratedBy ρ.range 1)
     (hInner : Witness ρ 1) : ∀ φ : A ≃* A, reidemeisterAut φ = ⊤ :=

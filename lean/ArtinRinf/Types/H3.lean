@@ -34,7 +34,7 @@ def D : ReflData M (Fin 15) where
 theorem pi0Fun_invol : ∀ x, pi0Fun (pi0Fun x) = x := by decide +kernel
 
 /-- The outer permutation `π₀` of the reflections (Galois conjugation `√5 ↦ -√5` followed by a
-coordinate permutation; paper, Proposition 4.1(b)). -/
+coordinate permutation; paper, Appendix B). -/
 def pi0 : Equiv.Perm (Fin 15) := ⟨pi0Fun, pi0Fun, pi0Fun_invol, pi0Fun_invol⟩
 
 /-- Sanity check: `π₀` normalises `ρ(W)`, i.e. `π₀ ρ(s_i) π₀⁻¹ ∈ ρ(W)` with explicit words.
@@ -76,7 +76,7 @@ many twisted conjugacy classes, assuming
 * `hCP`: the pure Artin group is characteristic (Cohen–Paris, Thm 1.4; computer-assisted);
 * `hBr`: `H₁(P;ℤ) ≅ ℤ^15` (Brieskorn; Orlik–Terao; 15 = number of reflections);
 * `hOut`: every automorphism of `ρ(W) ≅ W/Z(W)` is conjugation by an element of `ρ(W)` or of
-  `ρ(W)π₀` (computed: `|Out(W/Z)| = 2`, paper Proposition 4.1(b)). -/
+  `ρ(W)π₀` (computed: `|Out(W/Z)| = 2`, paper Appendix B). -/
 theorem artin_H3_R_infty (hW : Finite M.Group) (hCP : (pure M).Characteristic)
     (hBr : Nonempty (Abelianization (pure M) ≃* Multiplicative (Fin 15 → ℤ)))
     (hOut : OutGeneratedBy D.ρ.range pi0) :

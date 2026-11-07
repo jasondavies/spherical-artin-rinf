@@ -30,7 +30,7 @@ def write(name, imports, parts, doc):
          ''.join(f'import {i}\n' for i in imports) + '\n' + body_opts + '\n'.join(parts) + '\n\nend\n\nend ArtinRinf.E8\n')
     open(os.path.join(T, 'E8', f'{name}.lean'), 'w').write(s)
 
-write('Gens', ['ArtinRinf.Certificate', 'ArtinRinf.Data.E8'], [gens_part], 'generators, Lemma 2.4 data')
+write('Gens', ['ArtinRinf.Certificate', 'ArtinRinf.Data.E8'], [gens_part], 'generators, Lemma 2.3 data')
 nrow = 4
 per = (len(rows) + nrow - 1) // nrow
 for r in range(nrow):

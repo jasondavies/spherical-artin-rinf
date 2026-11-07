@@ -20,3 +20,11 @@ import ArtinRinf.Types.H4
 import ArtinRinf.Types.E6
 import ArtinRinf.Types.E7
 import ArtinRinf.Types.E8
+-- Franzsen–Howlett route (paper v3, Lemma 4.1): theorems without `hOut`
+import ArtinRinf.FH
+import ArtinRinf.Types.H3FH
+import ArtinRinf.Types.F4FH
+import ArtinRinf.Types.H4FH
+import ArtinRinf.Types.E6FH
+import ArtinRinf.Types.E7FH
+import ArtinRinf.Types.E8FH

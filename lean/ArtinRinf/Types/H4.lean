@@ -25,7 +25,7 @@ def gens (i : Fin 4) : Equiv.Perm (Fin 60) :=
 
 theorem gens_sq : ∀ i, gens i * gens i = 1 := by decide +kernel
 theorem gens_fix : ∀ i, gens i (sidx i) = sidx i := by decide +kernel
-/-- Lemma 2.4 for `H₄`: the braid relations hold in `ℤ^T ⋊ Perm T`. -/
+/-- Lemma 2.3 for `H₄`: the braid relations hold in `ℤ^T ⋊ Perm T`. -/
 theorem braid_ok : ∀ i j, i ≠ j → braidWord (affGen ℤ gens sidx i) (affGen ℤ gens sidx j) (M i j) =
     braidWord (affGen ℤ gens sidx j) (affGen ℤ gens sidx i) (M i j) := by decide +kernel
 theorem cox2_ok : ∀ i j,
@@ -74,7 +74,7 @@ theorem witness_inner : Witness D.ρ 1 :=
 theorem pi0Fun_invol : ∀ x, pi0Fun (pi0Fun x) = x := by decide +kernel
 
 /-- The outer permutation `π₀` (Galois conjugation `√5 ↦ -√5` followed by a coordinate
-permutation; paper, Proposition 4.1(b)). -/
+permutation; paper, Appendix B). -/
 def pi0 : Equiv.Perm (Fin 60) := ⟨pi0Fun, pi0Fun, pi0Fun_invol, pi0Fun_invol⟩
 
 /-- Sanity check: `π₀` normalises `ρ(W)` (explicit words). -/
@@ -91,7 +91,7 @@ theorem witness_outer : Witness D.ρ pi0 :=
 * `hCP`: the pure Artin group is characteristic (Cohen–Paris, Thm 1.4; computer-assisted);
 * `hBr`: `H₁(P;ℤ) ≅ ℤ^60` (Brieskorn; Orlik–Terao; 60 = number of reflections);
 * `hOut`: every automorphism of `ρ(W) ≅ W/Z(W)` is conjugation by an element of `ρ(W)` or of
-  `ρ(W)π₀` (computed: `|Out(W/Z)| = 2`, paper Proposition 4.1(b)),
+  `ρ(W)π₀` (computed: `|Out(W/Z)| = 2`, paper Appendix B),
 every automorphism of `A(H₄)` has infinite Reidemeister number. -/
 theorem artin_H4_R_infty (hW : Finite M.Group) (hCP : (pure M).Characteristic)
     (hBr : Nonempty (Abelianization (pure M) ≃* Multiplicative (Fin 60 → ℤ)))
