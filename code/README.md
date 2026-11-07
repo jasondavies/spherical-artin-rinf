@@ -1,16 +1,16 @@
 # Code for "Twisted conjugacy in irreducible spherical Artin groups"
 
-**Paper numbering.** Version 3 of the paper (after the external review) renumbered everything. The table below
+**Paper numbering.** Version 3 of the paper (after the external review, updated after the v3 referee round) renumbered everything. The table below
 uses the old numbering (v2) where it says so. Correspondence:
 
 | old (v2) | new (v3) |
 |---|---|
 | Lemma 2.4 / Prop. 2.6 / Cor. 2.9 | Lemma 2.3 / Prop. 2.4 / Cor. 2.5 |
 | Lemma 2.11 / Lemma 2.12 | Lemma 3.1 / Lemma 3.2 |
-| Thm. 3.1 / Rem. 3.2 | Thm. 3.3 / Rem. 3.4 |
+| Thm. 3.1 / Rem. 3.2 | Thm. 3.3 / Rem. 3.5 (new Rem. 3.4: relation to crystallographic criteria) |
 | Lemma 3.5 / Prop. 4.1 / Prop. 4.2 (E8) | Lemma B.1 / Appendix B / Prop. B.2 |
 | Prop. 4.4 + Table 1 (certificates) | §4.2 (Props. 4.2–4.6), Appendix A |
-| §5 (A_n, B_n ≤ 7, D_n ≤ 7) | §5 (A_n, B_n, D_n by hand; Props. 5.1–5.3) |
+| §5 (A_n, B_n ≤ 7, D_n ≤ 7) | §5 (A_n, B_n, D_n by hand: Props. 5.1, 5.2, 5.4; D5 now claimed as new, Rem. 5.3; dihedral Rem. 5.5) |
 
 Requirements: Python 3 (tested with 3.12), numpy (2.5.1), sympy (1.14.0). No GAP or Sage needed.
 
@@ -39,6 +39,9 @@ unchanged, in `original_logs/`.
 | `indep/referee_own_check.py` | **written by the cold referee**, independent | Aut(G) count without assuming reflection preservation; commutant and character certificates; witnesses (H3, F4) |
 | `indep/referee_e8_involutions.py` | **referee** | all involution classes of W(E8)/±1; confirms Prop. 4.2, step 2 |
 | `indep/referee_f4_blocks.py` | **referee** | orbital counts per reflection class for F4 (Table 1 remainder) |
+| `indep/referee_v3_E.py` | **internal v3 AI referee**, independent | E6/E7/E8: orbitals, SRG parameters, exact spectra, integer eigenbases, perpendicular counts and ranks (Prop. 4.2) |
+| `indep/referee_v3_H4.py` (+ `referee_v3_q5.py`, exact Q(√5) arithmetic) | **internal v3 AI referee** | H4 icosian model, matrix-coefficient constituent, Ψ outer, (10,6) witness (Lemma 4.5, Prop. 4.6) |
+| `indep/referee_v3_DFH3.py` (+ `referee_v3_q5.py`) | **internal v3 AI referee** | D4 (J, frames, graph automorphisms), D5/D6 (U⁻, negate e_n), B3–B5, F4 frames and swap, H3 frames and π_Σ |
 | `indep/explicit_constituents.py` | new (v3) | **exact checks of the explicit constituents of the v3 paper**: E-type SRG parameters, 3 orbitals, spectra, perpendicular subsystems (Prop. 4.2); H3 frames (Prop. 4.3); F4 frames and swap witnesses (Prop. 4.4); H4 icosian model, matrix coefficients, outer Ψ (Lemma 4.5, Prop. 4.6); D4 reducibility of U⁻ and frame module (Prop. 5.3); B_n/D_n weight argument (Prop. 5.2); Bourbaki indexing |
 
 The `indep/` programs do not import any of the original modules.
@@ -65,7 +68,10 @@ python3 uniform_check.py E7                    # 7 s, 1.8 GB -> logs/uniform_E7.
 python3 referee_own_check.py H3 F4             # 2 s     -> logs/referee_own_check.log
 python3 referee_e8_involutions.py              # 1.3 s   -> logs/referee_e8_involutions.log
 python3 referee_f4_blocks.py                   # <1 s    -> logs/referee_f4_blocks.log
-python3 explicit_constituents.py               # 22 s, 260 MB -> logs/explicit_constituents.log
+python3 explicit_constituents.py               # 20 s, 260 MB -> logs/explicit_constituents.log (regenerated after v3 referee)
+python3 referee_v3_E.py                        # 1 s  -> logs/referee_v3_E.log
+python3 referee_v3_H4.py                       # 7 s  -> logs/referee_v3_H4.log
+python3 referee_v3_DFH3.py                     # <1 s -> logs/referee_v3_DFH3.log
 python3 uniform_check.py "I2(3)" "I2(11)" "I2(13)" "I2(17)" "I2(21)"   # 2 s -> logs/uniform_dihedral_odd.log
 ```
 

@@ -1,6 +1,54 @@
-# AUDIT: Twisted conjugacy in irreducible spherical Artin groups (R∞ for E6, E7, E8, F4, H3, H4)
+# AUDIT: Twisted conjugacy in irreducible spherical Artin groups (R∞ for D5, E6, E7, E8, F4, H3, H4)
 
-Auditor: AI (Claude). No human expert has checked this. The newest section comes first: the **v3 revision after
+Auditor: AI (Claude). No human expert has checked this. Newest section first.
+
+## v3.1: internal v3 AI cold referee (minor revision) → how handled
+
+The referee found no mathematical error and confirmed every explicit constituent and witness with their own code.
+That code is now in `code/indep/referee_v3_*.py`, with logs in `code/logs/referee_v3_*.log`.
+
+### The main finding: D5 is not in the literature
+
+I checked the referee's reading myself, in the arXiv texts.
+
+* **SV24 = arXiv:2409.18123v2** (7 Feb 2026). §1, Theorem 1: "Let n ⩾ 6. Then the Artin group A[Dn] and its central quotient A[Dn]/Z(A[Dn]) have property R∞." A little later: "The only remaining case in the family A[Dn] is A[D5]. At present we do not have a description of Aut(A[D5]), which is the key input in our approach; we conjecture though that both A[D5] and A[D5]/Z(A[D5]) have property R∞ as well." **Confirmed: n ≥ 6 only, and D5 is conjectured.**
+* **PS26 = arXiv:2606.26082v2.** Theorem 1: "Let A = A[D5] and C2 = Z/2Z. Then Aut(A) = Inn(A) ⋊ ⟨χ⟩ ≃ A/Z(A) ⋊ C2. In particular, Out(A) ≃ C2", where χ is the inversion t_i ↦ t_i⁻¹. A full-text search for "R∞", "twisted" and "Reidemeister" finds **no occurrence**. **Confirmed: Aut is computed, R∞ is never stated.**
+* **Sor26 = arXiv:2610.13904v1, §1.** It lists "spherical groups of type Dn, n ⩾ 5, in [SV24]". This **misattributes** D5, given the two items above. Its own theorems concern non-spherical groups only (abstract: "every length-preserving automorphism of a nonspherical Artin or Coxeter group").
+
+**How it is handled.** D5 is now claimed as part of the Main Theorem: in the abstract, the introduction, the Main Theorem statement, the Corollary proof, §5 and the new Remark 5.3. Two routes are given:
+
+1. Prop 5.2 with n = 5. This uses Cohen–Paris, Franzsen–Howlett Thm 31(3) (Aut(W(D5)) = R(W) ≅ W), and the weight argument. The exact checks (D5: U⁻ good, negating e_5 gives dimensions (6,4)) are in `explicit_constituents.log` and `referee_v3_DFH3.log`.
+2. PS26 Thm 1 + the inversion remark (Remark 5.6(b)) + R(id) = ∞ (A^ab ≅ ℤ) + Lemma 2.1(c). This is presented honestly as a near-immediate deduction that, as far as we can tell, nobody has written down.
+
+Sor26 is no longer cited for any spherical case. Its misattribution is noted politely in the introduction.
+
+### Minor items
+
+| # | Referee point | How handled |
+|---|---|---|
+| 1 | Main Theorem proof: treat the F4 inner class explicitly; say how H3 and H4 inner are covered | Done. F4 inner uses π = 1, U = U_long, with witnesses h = 1 and a long reflection (Prop 4.4(b)). H3/H4 inner use Remark 3.5 (reflections conjugate, U nontrivial). D5 is added as a bullet. |
+| 2 | Lemma 3.2(i): rule out U meeting two isotypic components; U stable under the orbital matrices | Done. The proof now uses central idempotents, then U_ℂ = V_i ⊗ L, then m_i = 1. |
+| 3 | Prop 4.6(c): spell out the steps | Done, in three steps: π ∈ ρ(W)π_Ψ; π_Ψ = ψ is outer in Aut(K); Aut(A5) = S5, so composing with an inner conjugation gives conjugation by a transposition δ. Notation: λ_V for the representation of V, Ω for the rotation. |
+| 4 | Prop B.2: 6-root line; Carter Lemma 5 numbering | Done. **Carter's numbering verified** in the Numdam scan of Compositio Math. 25 (1972) 1–59: "LEMMA 5. Every involution w in W can be expressed as a product of l(w) reflections corresponding to mutually orthogonal roots." |
+| 5 | Lemma B.1: Φ irreducible; Aut(Φ) = W⋊Gr; orders of products in W/Z | Done. |
+| 6 | Lemma 4.1: circular last sentence | Replaced by "θ_r(ρ(T)) = ρ(T) for r ∈ R(W), by definition of R(W)". |
+| 7 | Prop 4.2: reference for the perpendicular subsystems | Not done as asked: I could not verify a specific table reference. The paper instead proves the identification. Each (number of roots, rank) pair in the table occurs for exactly one simply-laced root system of that rank, and the counts and ranks are machine-checked. It also notes that these are the classical centraliser facts. |
+| 8 | FH03: outline, typo, published theorem number | Done. The paper says the proof of Thm 31 is an outline based on involution class sizes, and points to Appendix B for corroboration. It notes the typo α_χ → α_ζ in item (9). **The published theorem number could not be verified**: the journal PDF was not accessible. The bibliography says we cite the preprint numbering and gives its URL. |
+| 9 | Position Thm 3.3 relative to DP11/DKT19/DDP09; f(A) is not strictly crystallographic when Z(W) ≠ 1 | Done. New Remark 3.4. DP11 is added to the bibliography (JFPTA 9 (2011) 257–283, as cited in DKT19). The DDP09 summary now includes its uniqueness-of-image hypothesis, which implies multiplicity one. |
+| 10 | Lean paragraph: hBr is P^ab ≅ ℤ^N | Done. The paper also says D5 is not formalised. |
+| 11 | Notation clashes (P, f, ρ, φ) | Done: rotation P → Ω; central-twist homomorphism f → c; ρ_V → λ_V; DDP's ρ_0 → η_0; golden ratio φ → τ, with the H3 coordinate swap renamed ς and the H4 transposition δ; Euler φ(d) → \|(ℤ/d)^×\|. |
+| 12 | Prop 4.3: display ℚ^T = 1 + 4 + 5 + 5 | Done, with proof via dim χ^{V4} = 1, 0, 0, 1, 2. |
+| 13 | References | DKT19: J. Algebra 533 (2019) 353–375 (arXiv journal-ref). CP03: arXiv:math/0204242 added; the theorem numbering matches the arXiv text. FH03: preprint URL. Kourovka 19.28: "as cited in [SV24, §6]", since the notebook itself was not consulted. AimPL 8.6: checked against the local copy of the problem list (`aimpl/geometric-group-theory/geomartingp/08-algebraic-properties/12-…`). |
+| 14 | Remark 5.4 (now 5.5): ρ injective on T for odd m | Done (Z(W) = 1 for odd m). |
+| 15 | Prop 4.4: redundant non-isomorphism remark | Removed. Distinct good constituents are automatically non-isomorphic. |
+| 16 | explicit_constituents.log is stale | Regenerated; it now contains the "(rank r)" fields and matches `code/README.md`. |
+| 17 | lean/README.md uses the v2 numbering | Not touched, per instructions (another agent is handling `lean/`). |
+
+---
+
+## v3 (earlier round)
+
+The section below is the **v3 revision after
 an external AI review**, written 2026-11-07. The older sections below it (the v1 audit and the v2 response to the
 cold referee) use the **old theorem numbering**; the old-to-new correspondence is in `code/README.md`.
 

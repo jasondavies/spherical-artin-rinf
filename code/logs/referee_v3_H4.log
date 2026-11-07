@@ -1,0 +1,28 @@
+number of H4 roots (paper coordinates): 120
+halved roots closed under quaternion multiplication: True
+all unit: True
+root set closed under its reflections: True
+reflection formula s_r(x) = -r xbar r: True
+|K| = 60
+|rho(W)| = 7200 (expect 7200)
+rho(W) == {x -> a x^(+-1) b}: True
+points fixed by Stab(1): 1 => centraliser trivial: True
+involutions in K: 15
+Klein four-subgroups: 5
+rank of span of delta_ab: 17
+dim U = 16
+number of orbitals of rho(W) on K x K: 5
+every orbital matrix acts on U as a scalar (exact): True
+isotypic dims of C^T (from commutant): [1, 9, 9, 16, 25]
+<chi_U,chi_U> = 1.0  <chi_U,chi_T> = 1.0
+sigma alone preserves I: False
+number of rotations c (of 24) with c o sigma preserving I: 12
+paper's Psi = P o sigma preserves I: True
+Psi multiplicative on I: True
+pi_Psi normalises rho(W): True
+pi_Psi in rho(W) (would mean inner, as centraliser trivial): False
+elements with real part +-phi/2: 12  Psi real part of one: (1/4+-1/4r5)
+(dim +1, dim -1) of h*pi_Psi on U over all h in rho(W): [(np.int64(2), np.int64(2)), (np.int64(4), np.int64(2)), (np.int64(4), np.int64(4)), (np.int64(10), np.int64(6))]
+exact: order of h*pi on U is 2: True  dims: 10 6
+  h*pi fixes identity of K: True  is automorphism of K: False
+h = 1 gives dims: [(np.int64(4), np.int64(4))]
