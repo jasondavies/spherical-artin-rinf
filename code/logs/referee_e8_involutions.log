@@ -5,4 +5,3 @@ class of the w^2=-1 involution: size 7560 , fixed lines 0 , disjoint from w^2=1 
 sizes equal to 120: [(120, 1, 64)] 
 |G| / class size = centralizer orders: [(2903040, 1), (221184, 4), (92160, 2), (9216, 3), (6144, 4)] 46080
 |G| (sympy Schreier-Sims): 348364800
-1.27 s

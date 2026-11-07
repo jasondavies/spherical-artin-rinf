@@ -13,3 +13,4 @@
   T-eigenspace lam=12: dim 4, all orbital matrices scalar on it: False, simple reflections acting nontrivially: [0, 1, 2, 3]
   T-eigenspace lam=24: dim 2, all orbital matrices scalar on it: False, simple reflections acting nontrivially: []
   [F4 commutant check done in 0.0s]
+ALL CHECKS PASSED

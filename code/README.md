@@ -1,6 +1,6 @@
 # Code for "Twisted conjugacy in irreducible spherical Artin groups"
 
-**Paper numbering.** Version 3 of the paper (after the external review, updated after the v3 referee round) renumbered everything. The table below
+**Paper numbering.** All references below are to the current paper (v3.2). Version 3 of the paper (after the external review, updated after the v3 referee round) renumbered everything. The table below
 uses the old numbering (v2) where it says so. Correspondence:
 
 | old (v2) | new (v3) |
@@ -18,31 +18,49 @@ All runs below were single-threaded (`OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1`)
 16-core machine on 2026-11-07. Logs are in `logs/`. The logs of the original exploratory runs are kept,
 unchanged, in `original_logs/`.
 
+## Exactness and assertions (v3.2)
+
+**Proof certificates.** These are the finite computations the written proofs rely on:
+- `explicit_constituents.py`, `referee_v3_E.py`, `certify.py`, `certify_outer.py`, `indep_check.py`, `out_check.py`,
+  `out_check_stab.py` and `uniform_check.py`;
+- they use exact arithmetic (Fractions, ℚ(√5), sympy `DomainMatrix` over QQ), including exact rational row reduction
+  for every rank that is reported;
+- each script **asserts** its expected counts, ranks, multiplicities and witnesses, and exits with status 1 on a
+  discrepancy (it prints `ALL CHECKS PASSED` or `FAILED CHECKS: ...`);
+- floating point is used only to *locate* candidate eigenvalues or witnesses, which are then confirmed exactly.
+
+**Intentional negative results** are labelled in the output:
+- D4: U⁻ is reducible and the weights χ_ij are not distinct;
+- odd dihedral I2(m) with 3 ∤ m: the criterion fails;
+- even m: informational only.
+
+**Numerical corroboration only:** `referee_v3_DFH3.py`, parts of `referee_v3_H4.py`, `check.py`, `eig.py` and `analyze.py`.
+
 ## Layout
 
 | file | origin | purpose |
 |---|---|---|
 | `roots.py` | original | floating-point root systems (rounded keys), permutations of reflections `C.rp` |
 | `analyze.py` | original | orbital matrices (basis of the commutant of the permutation module) |
-| `certify.py` | original | **exact** certificate of good constituents (commutant criterion, Lemma 2.12(i)) |
+| `certify.py` | original | **exact** certificate of good constituents (commutant criterion, paper Lemma 3.2(i)) |
 | `pgrp.py` | original | permutation group enumeration, brute-force Aut count (`aut_count`) |
 | `fastaut.py` | original | vectorised brute-force count of Aut(ρ(W)) (used for E6) |
-| `eig.py` | original | numerical constituents; outer automorphism and the permutation π (Remark 3.4) |
+| `eig.py` | original | numerical constituents; outer automorphism and the permutation π (paper Remark 3.5) |
 | `certify_outer.py` | original | **exact** certificate of outer-case witnesses (H3, F4, H4) |
 | `check.py` | original | numerical sanity checks: braid relations for f, f(Δ²)=2Σe_r, inversion invariant |
 | `indep/rootsys.py` | new, independent | **exact** root systems over Q(√5) |
 | `indep/permgroup.py` | new | group enumeration (numpy uint8 rows) |
-| `indep/indep_check.py` | new, independent | character-theoretic certificate (Lemma 2.12(ii)), explicit outer π₀, exact witnesses; `commutant:<type>` mode for E8 |
+| `indep/indep_check.py` | new, independent | character-theoretic certificate (paper Lemma 3.2(ii)), explicit outer π₀, exact witnesses; `commutant:<type>` mode for E8 |
 | `indep/out_check.py` | new, independent | Out(ρ(W)) via involution classes plus Inn-orbits of Coxeter tuples (H3, F4, H4, D5, E6, E7) |
 | `indep/out_check_stab.py` | new | Schreier–Sims version of step (2) only (E7, E8) |
 | `indep/uniform_check.py` | new (revision) | criterion with weakened hypothesis (θ induced by Aut(A) ⇒ preserves χ_T) for A_n, B_n, D_n, I2(m) and exceptional types |
 | `indep/referee_own_check.py` | **written by the cold referee**, independent | Aut(G) count without assuming reflection preservation; commutant and character certificates; witnesses (H3, F4) |
-| `indep/referee_e8_involutions.py` | **referee** | all involution classes of W(E8)/±1; confirms Prop. 4.2, step 2 |
-| `indep/referee_f4_blocks.py` | **referee** | orbital counts per reflection class for F4 (Table 1 remainder) |
-| `indep/referee_v3_E.py` | **internal v3 AI referee**, independent | E6/E7/E8: orbitals, SRG parameters, exact spectra, integer eigenbases, perpendicular counts and ranks (Prop. 4.2) |
-| `indep/referee_v3_H4.py` (+ `referee_v3_q5.py`, exact Q(√5) arithmetic) | **internal v3 AI referee** | H4 icosian model, matrix-coefficient constituent, Ψ outer, (10,6) witness (Lemma 4.5, Prop. 4.6) |
-| `indep/referee_v3_DFH3.py` (+ `referee_v3_q5.py`) | **internal v3 AI referee** | D4 (J, frames, graph automorphisms), D5/D6 (U⁻, negate e_n), B3–B5, F4 frames and swap, H3 frames and π_Σ |
-| `indep/explicit_constituents.py` | new (v3) | **exact checks of the explicit constituents of the v3 paper**: E-type SRG parameters, 3 orbitals, spectra, perpendicular subsystems (Prop. 4.2); H3 frames (Prop. 4.3); F4 frames and swap witnesses (Prop. 4.4); H4 icosian model, matrix coefficients, outer Ψ (Lemma 4.5, Prop. 4.6); D4 reducibility of U⁻ and frame module (Prop. 5.3); B_n/D_n weight argument (Prop. 5.2); Bourbaki indexing |
+| `indep/referee_e8_involutions.py` | **referee** | all involution classes of W(E8)/±1; confirms paper Prop. B.2, step 2 |
+| `indep/referee_f4_blocks.py` | **referee** | orbital counts per reflection class for F4 (F4 orbital count, §4.2) |
+| `indep/referee_v3_E.py` | **internal v3 AI referee**, independent; ranks changed to EXACT rational row reduction and assertions added in v3.2 | E6/E7/E8: orbitals, SRG parameters, exact spectra, integer eigenbases, perpendicular counts and ranks (Prop. 4.2) |
+| `indep/referee_v3_H4.py` (+ `referee_v3_q5.py`, exact Q(√5) arithmetic) | **internal v3 AI referee**; partly NUMERICAL (rank, QR, pinv): corroboration only, exact companion is `explicit_constituents.py h4` | H4 icosian model, matrix-coefficient constituent, Ψ outer, (10,6) witness (Lemma 4.5, Prop. 4.6) |
+| `indep/referee_v3_DFH3.py` (+ `referee_v3_q5.py`) | **internal v3 AI referee**; NUMERICAL (QR, pinv, rounded characters): corroboration only, exact companions are `explicit_constituents.py` (h3, f4, d4, bd) and `indep_check.py` | D4 (J, frames, graph automorphisms), D5/D6 (U⁻, negate e_n), B3–B5, F4 frames and swap, H3 frames and π_Σ |
+| `indep/explicit_constituents.py` | new (v3) | **exact checks of the explicit constituents of the v3 paper**: E-type SRG parameters, 3 orbitals, spectra, perpendicular subsystems (Prop. 4.2); H3 frames (Prop. 4.3); F4 frames and swap witnesses (Prop. 4.4); H4 icosian model, matrix coefficients, outer Ψ (Lemma 4.5, Prop. 4.6); D4 reducibility of U⁻ and frame module (Prop. 5.4); B_n/D_n weight argument (Prop. 5.2); Bourbaki indexing |
 
 The `indep/` programs do not import any of the original modules.
 
@@ -75,7 +93,11 @@ python3 referee_v3_DFH3.py                     # <1 s -> logs/referee_v3_DFH3.lo
 python3 uniform_check.py "I2(3)" "I2(11)" "I2(13)" "I2(17)" "I2(21)"   # 2 s -> logs/uniform_dihedral_odd.log
 ```
 
-Expected key lines of `explicit_constituents.log` (v3 paper):
+Every certificate script ends with `ALL CHECKS PASSED` (exit 0); any discrepancy prints `FAILED CHECKS: ...` and
+exits with status 1. Status after the v3.2 re-run (2026-11-07): all scripts exit 0. See `logs/*.time` (`exit=0`).
+
+Expected key lines of `explicit_constituents.log` (v3 paper; v3.2 adds the K ≅ A5 certificate, Z(K) = 1, Ψ(I) = I
+and the real-part check, the H3 decomposition 1+4+5+5, and exact ranks):
 * Bourbaki: `alpha_k = e_(k-1) - e_(k-2) for 3<=k<=8 (1-based coordinates e_1..e_8): True`.
 * E6/E7/E8: SRG parameters `(36,15,6,6)`, `(63,30,13,15)`, `(120,63,30,36)` all `True`; `orbitals ... 3`;
   spectra `15^1, 3^15, -3^20`; `30^1, 3^35, -5^27`; `63^1, 3^84, -9^35`. Perpendicular counts (ranks):
@@ -131,5 +153,5 @@ Expected key lines:
   are exact (SymPy `DomainMatrix` over QQ).
 * `certify_outer.py` checks the image π(U₁) = U₂ (F4) only numerically, in `eig.py`. The exact check is in
   `indep/indep_check.py` (`pi_0 maps constituent 0 (dim 2) exactly onto constituent 1`).
-* Out(W(E8)/Z) = 1 is now proved by hand in the paper (Prop. 4.2), with no ATLAS input. `referee_e8_involutions.py`
+* Out(W(E8)/Z) = 1 is now proved by hand in the paper (Prop. B.2), with no ATLAS input. `referee_e8_involutions.py`
   and `out_check_stab.py` are computational confirmations only.

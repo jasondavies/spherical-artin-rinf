@@ -5,7 +5,7 @@ Theorem numbers below refer to v3. The old v2 → v3 table is in `../code/README
 formalisation covers:
 
 * the Reidemeister-number lemmas (Lemma 2.1);
-* the abstract criterion: Theorem 3.3, Lemma 3.1, Corollary 2.5 and Remark 3.4, including the
+* the abstract criterion: Theorem 3.3, Lemma 3.1, Corollary 2.5 and Remark 3.5, including the
   F4 swap variant;
 * the Artin group as a presented group, the homomorphism `f : A → ℤ^T ⋊ Perm T` (Lemma 2.3), and
   `P^ab` as a permutation module (Proposition 2.4, apart from the cited rank statement);
@@ -33,7 +33,7 @@ lake exe cache get          # Mathlib oleans (fast if ~/.cache/mathlib is popula
 LEAN_NUM_THREADS=4 lake build
 ```
 
-Measured build time (v3.1, with D5), from a clean `.lake/build` with the Mathlib oleans already
+Measured build time (v3.1, with D5; **as of commit 296176a**), from a clean `.lake/build` with the Mathlib oleans already
 present: **12 min 38 s wall clock, 46 min CPU**. This was with `LEAN_NUM_THREADS=4`, on a shared
 16-core machine, 2026-11-07. The D5 modules (`Types/D5`, `Types/D5FH`) take about 10 s each. The
 slowest modules:
@@ -49,11 +49,12 @@ slowest modules:
 | `Types/H4` | 2.5 min | certificates |
 | `Types/E8/Orb*` | 2.7 min each | run in parallel |
 
-Peak memory: individual Lean processes reached about 25 GB RSS in the v2 build (`Types/E7`,
-`Types/H4`), so the build needs a machine with ample RAM. The new `*FH` modules used about 11 GB
-each when run separately.
+Peak memory: the certificate modules `Types/E7` and `Types/H4` reached about **25 GB** RSS each (measured in the
+v2 build), so the build needs a machine with ample RAM. The newer `*FH` (search-tree) modules need less: about
+**11 GB** each when run separately.
 
-After `lake build`, `lake env lean scripts/print_axioms.lean` prints the axioms and statements.
+After `lake build`, `lake env lean scripts/print_axioms.lean` prints the axioms and statements. The output quoted
+below is as of commit 296176a.
 
 There is **no `sorry`**, **no `native_decide`** and **no `axiom`** anywhere in `ArtinRinf/`.
 All finite computations use `decide +kernel`, so they are evaluated by the Lean kernel. The trusted
@@ -235,7 +236,7 @@ Checked per type by `decide +kernel`:
 
   The formalisation instead uses computer-found constituents, re-checked by the kernel through the
   commutant certificate. This covers the same mathematical statement: for the E types, the three
-  orbitals are certified, so the commutant is span{I, J, A_⊥}. The C² identity of Prop. 4.2 is
+  orbitals are certified, so the commutant is span{I, J, A_⊥}. The strongly-regular-graph identity behind Prop. 4.2 is
   not formalised separately.
 * Lemma 3.2(ii) (character certificate), §5 (A_n, B_n, D_n, including the new uniform B_n/D_n
   argument) and the dihedral discussion are not formalised.
@@ -319,7 +320,7 @@ ArtinRinf.lean                 root module (imports everything below)
 ArtinRinf/Reidemeister.lean    twisted classes, R(φ) ∈ ℕ∞, Lemma 2.1 (a), (c), (d)
 ArtinRinf/FreeAbelian.lean     Lemma 2.1 (b) (eigenvalue 1 on ℤ^T ⇒ R = ∞)
 ArtinRinf/PermMatrix.lean      permutation action and permutation matrices
-ArtinRinf/Criterion.lean       M_φ, Cor. 2.5, Lemma 3.1, Theorem 3.3, Remark 3.4, θ_φ
+ArtinRinf/Criterion.lean       M_φ, Cor. 2.5, Lemma 3.1, Theorem 3.3, Remark 3.5, θ_φ
 ArtinRinf/ArtinGroup.lean      Artin groups as presented groups, A → W, P = ker
 ArtinRinf/Aff.lean             R^T ⋊ Perm T with decidable equality
 ArtinRinf/Pure.lean            ReflData, f (Lemma 2.3), P^ab ≅ ℤ^T (Prop. 2.4), generic main theorem

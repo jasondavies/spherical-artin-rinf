@@ -115,7 +115,7 @@ def run(name):
         if d == 0: continue
         Bi = int_basis(B)
         # W-invariance (automatic for a central element, but check)
-        inv_ok = all(np.linalg.matrix_rank(np.hstack([Bi, permmat(g) @ Bi]).astype(float)) == d for g in rs.gens)
+        inv_ok = all(dm(np.hstack([Bi, permmat(g) @ Bi]).T.tolist()).rank() == d for g in rs.gens)   # exact
         chi = character(Bi, E)
         n1 = Fr(int((chi * chi).sum()), order_G); n2 = Fr(int((chi * fix).sum()), order_G)
         moved = [i for i in range(n) if chi[index[np.asarray(rs.gens[i], dtype=E.dtype).tobytes()]] != d]
@@ -124,6 +124,9 @@ def run(name):
               f'chi(1) = {chi[0]}, simple reflections acting nontrivially: {moved} {tag}', flush=True)
         if tag: good.append((lam, Bi, chi))
     res = {'rs': rs, 'E': E, 'index': index, 'good': good}
+    EXP_GOOD = {'H3': [4], 'F4': [2, 2], 'H4': [16, 25], 'E6': [15, 20], 'E7': [27, 35], 'D5': [4, 5, 10]}
+    if name in EXP_GOOD and sorted(B.shape[1] for _, B, _ in good) != sorted(EXP_GOOD[name]):
+        FAIL.append(f'{name}: good constituent dims')
     if name in ('H3', 'H4', 'F4'):
         outer_witnesses(name, rs, E, index, good, Y)
     print(f'  [{name} done in {time.time() - t0:.1f}s]', flush=True)
@@ -190,6 +193,7 @@ def outer_witnesses(name, rs, E, index, good, Y):
             kind = '(h pi0)|U' if stable else '(h pi0)^2|U'
             print(f'  constituent {a} ({"stable" if stable else "swapped"}): exists h with {kind} having eigenvalue {eps:+d}: '
                   f'{found is not None}' + (f' (element #{found[0]}, exact eigenspace dim {found[1]})' if found else ''), flush=True)
+            if found is None: FAIL.append(f'{name}: witness constituent {a} eps {eps}')
 
 
 # ---------------------------------------------------------------------------------------------
@@ -232,9 +236,13 @@ def commutant_check(name):
         moved = [i for i in range(rs.n) if not np.array_equal(permmat(np.array(rs.gens[i])) @ B, B)]
         print(f'  T-eigenspace lam={lam}: dim {d}, all orbital matrices scalar on it: {scal}, '
               f'simple reflections acting nontrivially: {moved}', flush=True)
+        if name == 'E8' and d in (35, 84) and not (scal and len(moved) == rs.n): FAIL.append(f'E8 commutant dim {d}')
     print(f'  [{name} commutant check done in {time.time() - t0:.1f}s]', flush=True)
 
+FAIL = []
 if __name__ == '__main__':
     for nm in sys.argv[1:]:
         if nm.startswith('commutant:'): commutant_check(nm.split(':')[1])
         else: run(nm)
+    if FAIL: print('FAILED CHECKS:', FAIL); sys.exit(1)
+    print('ALL CHECKS PASSED')

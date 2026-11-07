@@ -4,7 +4,12 @@ This repository proves property R∞ for the Artin groups of types D5, E6, E7, E
 
 Together with earlier work, this shows that every irreducible spherical Artin group of rank at least 2 has R∞. That settles the spherical case of AIM problem list "Geometry of Artin groups", Problem 8.6. The same method also gives uniform proofs in types A_n, B_n and D_n.
 
-These cases were already known except D5. Soroko–Vaskou (arXiv:2409.18123v2) prove D_n only for n ≥ 6 and conjecture D5, and Paris–Soroko compute Aut(A[D5]) without stating R∞. Two proofs of D5 are given: paper Prop 5.2, and a short deduction from Paris–Soroko's Thm 1 (Remark 5.3).
+On D5:
+- Soroko–Vaskou (arXiv:2409.18123v2) leave D5 open.
+- Paris–Soroko compute Aut(A[D5]). R∞ follows from this by a short argument (Remark 5.3), which they do not state.
+- Soroko 2026 lists D5, attributing it to Soroko–Vaskou.
+
+The paper gives a proof by its own method (Prop 5.2).
 
 ## Contents
 
@@ -27,14 +32,15 @@ These cases were already known except D5. Soroko–Vaskou (arXiv:2409.18123v2) p
      - strongly regular graph eigenspaces for E_n;
      - frame modules for H3 and F4;
      - matrix coefficients in the icosian model for H4.
-4. **Classical types** (§5): A_n, B_n, D_n by hand, including the new case D5. For the dihedral types I2(m) the method has a limitation, which §5 explains.
+4. **Classical types** (§5): A_n, B_n, D_n by hand, including D5. For the dihedral types I2(m) the method has a limitation, which §5 explains.
 5. **Appendices.**
-   - Appendix A lists the computational cross-checks.
-   - Appendix B gives the stronger statement about all of Aut(W/Z). In Lean this is the optional hypothesis `hOut` of the older theorems `artin_X_R_infty`, proved there for H3 and F4. The main theorems use Franzsen–Howlett instead. For E8 the paper proves it by hand.
+   - Appendix A separates the proof certificates (exact, asserting scripts) from corroboration (some of it numerical).
+   - Appendix B gives the stronger statement about all of Aut(W/Z): computed for E6, E7, F4, H3, H4 and D5, and proved by hand for E8. It also contains Cor. B.3, which proves R∞ for the crystallographic quotient A/[P,P] in the same seven types.
+   - In Lean, the full Aut(W/Z) statement appears only as the hypothesis `hOut` of the legacy theorems `artin_X_R_infty` (proved there for H3 and F4). The main theorems `artin_X_R_infty_FH` do not need it.
 
 ## Lean formalisation
 
-To build: `cd lean && lake build`. A clean build takes about 12 minutes with 4 threads and the Mathlib v4.35.0 cache. The development contains no `sorry`, no `native_decide` and no `axiom`; it depends only on `propext`, `Classical.choice` and `Quot.sound`. See `lean/README.md`.
+To build: `cd lean && lake build`. A clean build takes about 12 minutes with 4 threads and the Mathlib v4.35.0 cache (as of commit 296176a). Peak memory is about 25 GB for the largest certificate modules and about 11 GB for the Franzsen–Howlett search-tree modules. The development contains no `sorry`, no `native_decide` and no `axiom`; it depends only on `propext`, `Classical.choice` and `Quot.sound`. See `lean/README.md`.
 
 The Lean kernel checks:
 - Reidemeister numbers and the basic lemmas;
@@ -59,6 +65,6 @@ Mathlib's `CoxeterMatrix.D 5` is not the D5 matrix in this Mathlib version: it c
 The proofs, code, Lean development and manuscript were developed with substantial AI assistance. So far they have been reviewed only by AI systems:
 - an internal audit;
 - two rounds of an AI "cold referee";
-- an external AI review of the manuscript.
+- two external AI reviews (the second also read the code and the Lean sources).
 
 None of this is journal peer review, and no human expert has verified the work yet.

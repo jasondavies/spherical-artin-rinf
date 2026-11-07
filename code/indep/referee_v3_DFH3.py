@@ -1,4 +1,7 @@
 # Referee's independent check for D4, D5 (and B_n), F4, H3. Imports nothing from the package.
+# NOTE (package revision): this checker uses NUMERICAL linear algebra (QR, pseudoinverse, rounded characters).
+# It is numerical corroboration only. The exact companion checks are explicit_constituents.py (h3, f4, d4, bd)
+# and indep_check.py.
 import itertools, sys
 from fractions import Fraction as F
 import numpy as np

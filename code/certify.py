@@ -53,4 +53,9 @@ def main(name,dims):
     return C,out
 if __name__=='__main__':
     spec={'E6':[15,20],'E7':[27,35],'E8':[35,84],'H3':[4],'H4':[16,25],'F4':[2],'D5':[4,5,10]}
-    for nm in sys.argv[1:]: main(nm,spec[nm])
+    bad=[]
+    for nm in sys.argv[1:]:
+        C,out=main(nm,spec[nm])
+        if sorted(out)!=sorted(set(spec[nm])): bad.append(nm)   # every requested dimension must be certified
+    if bad: print('FAILED CHECKS: missing certified constituents for',bad); sys.exit(1)
+    print('ALL CHECKS PASSED')

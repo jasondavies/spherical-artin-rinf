@@ -1,4 +1,6 @@
 # Referee's independent check of Lemma 4.5 / Prop 4.6 (H4). Imports nothing from the package.
+# NOTE (package revision): parts of this checker are numerical (matrix_rank, QR, pinv, float characters).
+# Treat it as corroboration; the exact companion is explicit_constituents.py h4 (exact Q(sqrt5) arithmetic).
 import itertools, sys
 from fractions import Fraction as F
 import numpy as np

@@ -25,7 +25,7 @@ EXACT H3: stable constituent 0 (dim 4, X-eigenvalue 32), eps=-1: dim ker(X-lam) 
 F4 |rho(W)|= 576 |Z(rho(W))|= 1
   h1 class rep 1 class size 12 #autos with s1->rep: 48
   h1 class rep 3 class size 12 #autos with s1->rep: 48
-  |Aut(rho(W))| = 1152  |Inn| = 576  |Out| = 2 time 0.2
+  |Aut(rho(W))| = 1152  |Inn| = 576  |Out| = 2 time 0.0
  outer automorphism images of simple gens (indices): [3, np.int64(4), np.int64(90), np.int64(1)]
  permutation pi of R realizing outer theta found, check: True
    pi maps constituent 0 (dim 2) onto constituent 1
@@ -46,7 +46,7 @@ EXACT F4: swap constituent 1 (dim 2, X-eigenvalue 90), eps=-1: dim ker(X-lam) = 
    U dim 25 : simple generators acting nontrivially on U: [0, 1, 2, 3]
 H4 |rho(W)|= 7200 |Z(rho(W))|= 1
   h1 class rep 1 class size 60 #autos with s1->rep: 240
-  |Aut(rho(W))| = 14400  |Inn| = 7200  |Out| = 2 time 7.4
+  |Aut(rho(W))| = 14400  |Inn| = 7200  |Out| = 2 time 3.1
  outer automorphism images of simple gens (indices): [1, np.int64(2), np.int64(3), np.int64(3037)]
  permutation pi of R realizing outer theta found, check: True
    pi maps constituent 0 (dim 16) onto constituent 0
@@ -57,3 +57,4 @@ EXACT H4: stable constituent 0 (dim 16, X-eigenvalue -34), eps=1: dim ker(X-lam)
 EXACT H4: stable constituent 0 (dim 16, X-eigenvalue -34), eps=-1: dim ker(X-lam) = 16, common kernel dim = 6
 EXACT H4: stable constituent 1 (dim 25, X-eigenvalue 50), eps=1: dim ker(X-lam) = 25, common kernel dim = 15
 EXACT H4: stable constituent 1 (dim 25, X-eigenvalue 50), eps=-1: dim ker(X-lam) = 25, common kernel dim = 10
+ALL CHECKS PASSED

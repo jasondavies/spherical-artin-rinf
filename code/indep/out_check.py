@@ -91,6 +91,12 @@ def run(name):
     print(f'  search nodes {nodes[0]}; Inn-orbits of generating Coxeter tuples of reflections: {len(leaves)}  => |Out(rho(W))| = {len(leaves)}',
           flush=True)
     print(f'  [{name} done in {time.time() - t0:.1f}s]', flush=True)
+    exp = {'H3': 2, 'H4': 2, 'F4': 2, 'D5': 1, 'E6': 1, 'E7': 1}
+    if name in exp and (len(leaves) != exp[name] or others_same_size or len(set(refl_idx)) != N):
+        FAIL.append(name)
 
+FAIL = []
 if __name__ == '__main__':
     for nm in sys.argv[1:]: run(nm)
+    if FAIL: print('FAILED CHECKS:', FAIL); sys.exit(1)
+    print('ALL CHECKS PASSED')

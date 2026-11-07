@@ -45,7 +45,11 @@ def run(name):
         search([r], G.stabilizer(r))
     print(f'  search nodes {nodes[0]}; Inn-orbits of generating Coxeter tuples of reflections: {len(leaves)}', flush=True)
     print(f'  => every automorphism of rho(W) preserving rho(R) is inner: {len(leaves) == 1}', flush=True)
+    if len(leaves) != 1: FAIL.append(name)
     print(f'  [{name} done in {time.time() - t0:.1f}s]', flush=True)
 
+FAIL = []
 if __name__ == '__main__':
     for nm in sys.argv[1:]: run(nm)
+    if FAIL: print('FAILED CHECKS:', FAIL); sys.exit(1)
+    print('ALL CHECKS PASSED')

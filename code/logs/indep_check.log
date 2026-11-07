@@ -45,7 +45,7 @@
   constituent 0 (stable): exists h with (h pi0)|U having eigenvalue -1: True (element #0, exact eigenspace dim 10)
   constituent 1 (stable): exists h with (h pi0)|U having eigenvalue +1: True (element #0, exact eigenspace dim 10)
   constituent 1 (stable): exists h with (h pi0)|U having eigenvalue -1: True (element #0, exact eigenspace dim 6)
-  [H4 done in 0.4s]
+  [H4 done in 0.5s]
 ===== E6: rank 6, |Phi| = 72, |R| = 36, Coxeter matrix [[1, 2, 3, 2, 2, 2], [2, 1, 2, 3, 2, 2], [3, 2, 1, 3, 2, 2], [2, 3, 3, 1, 3, 2], [2, 2, 2, 3, 1, 3], [2, 2, 2, 2, 3, 1]]
   |rho(W)| = 51840  (expected |W|/|Z(W)| = 51840/1 = 51840)  -> True
   centre of rho(W) has order 1
@@ -63,4 +63,5 @@
   eigenspace lam=27: dim 35, W-invariant True, <chi,chi> = 1, <chi,perm> = 1, chi(1) = 35, simple reflections acting nontrivially: [0, 1, 2, 3, 4, 5, 6] GOOD
   eigenspace lam=35: dim 27, W-invariant True, <chi,chi> = 1, <chi,perm> = 1, chi(1) = 27, simple reflections acting nontrivially: [0, 1, 2, 3, 4, 5, 6] GOOD
   eigenspace lam=63: dim 1, W-invariant True, <chi,chi> = 1, <chi,perm> = 1, chi(1) = 1, simple reflections acting nontrivially: [] 
-  [E7 done in 7.6s]
+  [E7 done in 9.4s]
+ALL CHECKS PASSED

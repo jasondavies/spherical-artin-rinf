@@ -8,3 +8,4 @@
   eigenspace lam=10: dim 4, W-invariant True, <chi,chi> = 1, <chi,perm> = 1, chi(1) = 4, simple reflections acting nontrivially: [0, 1, 2, 3, 4] GOOD
   eigenspace lam=20: dim 1, W-invariant True, <chi,chi> = 1, <chi,perm> = 1, chi(1) = 1, simple reflections acting nontrivially: [] 
   [D5 done in 0.1s]
+ALL CHECKS PASSED

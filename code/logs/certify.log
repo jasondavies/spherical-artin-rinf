@@ -12,3 +12,4 @@ E8: exact constituent dim 84 (eigenvalue 8), commutant scalar: True, simple gens
 D5: exact constituent dim 4 (eigenvalue 34), commutant scalar: True, simple gens acting nontrivially: [0, 1, 2, 3, 4]
 D5: exact constituent dim 5 (eigenvalue 70), commutant scalar: True, simple gens acting nontrivially: [0, 1, 2, 3, 4]
 D5: exact constituent dim 10 (eigenvalue 6), commutant scalar: True, simple gens acting nontrivially: [0, 1, 2, 3, 4]
+ALL CHECKS PASSED

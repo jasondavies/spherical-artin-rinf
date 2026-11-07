@@ -13,6 +13,7 @@ def nullity(Mi):
     return D.nullspace().shape[0]
 def pm(p):
     N=len(p); P=np.zeros((N,N),dtype=np.int64); P[p,np.arange(N)]=1; return P
+BAD=[]
 for name in sys.argv[1:]:
     C,G,good,res=outer_check(name)
     lab,k=orbitals(C); A=[(lab==i).astype(np.int64) for i in range(k)]
@@ -28,3 +29,6 @@ for name in sys.argv[1:]:
         Mi=np.vstack([X-lam_of[a]*I, pm(Q)-eps*I])
         print(f'EXACT {name}: {kind} constituent {a} (dim {good[a].shape[1]}, X-eigenvalue {lam_of[a]}), eps={eps}: '
               f'dim ker(X-lam) = {nullity(X-lam_of[a]*I)}, common kernel dim = {nullity(Mi)}',flush=True)
+        if nullity(Mi)==0 or nullity(X-lam_of[a]*I)!=good[a].shape[1]: BAD.append((name,kind,a,eps))
+if BAD: print('FAILED CHECKS:',BAD); sys.exit(1)
+print('ALL CHECKS PASSED')

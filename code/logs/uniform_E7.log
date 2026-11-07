@@ -3,5 +3,5 @@
   reflection-preserving automorphisms modulo Inn: 1
   good constituents (dim) moved by a simple reflection: [35, 27];  other eigenspaces (dim,<chi,chi>,<chi,perm>): [(1, Fraction(1, 1), Fraction(1, 1))]
   class 0: identity; pi realises theta: True; criterion: ('(i)', 35)
-  [E7 6.5s]
-6.74 s 1815240 KB
+  [E7 7.9s]
+ALL CHECKS PASSED

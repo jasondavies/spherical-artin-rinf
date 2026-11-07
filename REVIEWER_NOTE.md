@@ -1,77 +1,87 @@
 # Note for an external reviewer (geometric group theory)
 
-**Provenance.** AI-assisted work (Anthropic's Claude): argument, code, Lean formalisation and manuscript. It has been
-reviewed only by AI systems:
+**Provenance.** This is AI-assisted work (Anthropic's Claude): the argument, code, Lean formalisation and manuscript.
+It has been reviewed only by AI systems:
 - an internal audit;
-- an AI "cold referee" (minor revision, no errors found);
-- an external AI review of the manuscript, which found two genuine errors (both fixed);
-- a second internal AI cold referee round (minor revision), which found that **D5 is not in the literature**.
+- two internal AI "cold referee" rounds;
+- two external AI reviews. The first read only the manuscript. The second read the manuscript, the Python code and
+  the Lean sources.
 
-See the tables in AUDIT.md.
+The tables in AUDIT.md list every review point, whether it was confirmed or refuted, and how it was handled. None of
+this is journal peer review, and no human expert has checked the work. We are asking you to be that check.
 
-None of this is journal peer review, and no human expert has checked it. We are asking you to be that check.
+**Claim.** The Artin groups of spherical types D5, E6, E7, E8, F4, H3 and H4 have property R∞. Combined with
+Calvez–Soroko (A_n, B_n, D4, I2(m)) and Soroko–Vaskou (D_n, n ≥ 6), every irreducible spherical Artin group of
+rank ≥ 2 then has R∞.
 
-**Claim.** The Artin groups of spherical types **D5**, E6, E7, E8, F4, H3 and H4 have property R∞. With Calvez–Soroko
-(A_n, B_n, D4, I2(m)) and Soroko–Vaskou (D_n, n ≥ 6), every irreducible spherical Artin group of rank ≥ 2 then has R∞.
+**About D5.**
+- Soroko–Vaskou (arXiv:2409.18123v2) leave D5 open as a conjecture.
+- Paris–Soroko (arXiv:2606.26082) compute Aut(A[D5]) = Inn ⋊ ⟨inversion⟩. R∞ follows from this in a few lines
+  (Remark 5.3), but they do not state it.
+- Soroko (arXiv:2610.13904, §1) lists D5, attributing it to Soroko–Vaskou.
 
-**D5.** Soroko–Vaskou (arXiv:2409.18123v2) prove only n ≥ 6 and conjecture D5. Paris–Soroko (arXiv:2606.26082)
-compute Aut(A[D5]) = Inn ⋊ ⟨inversion⟩ but never state R∞. Soroko (arXiv:2610.13904, §1) lists D_n, n ≥ 5, as
-proved in Soroko–Vaskou, which we believe is a misattribution. We give two proofs:
-- our Prop 5.2;
-- a near-immediate deduction from Paris–Soroko Thm 1, Remark 5.6(b) and Lemma 2.1(c), which we did not find written
-  down.
+Our method gives an independent proof (Prop 5.2). Please check the attribution.
 
-Please check this attribution question in particular.
+**Also proved.** A corollary of Appendix B (Cor. B.3): A/[P,P] has R∞ for the same seven types. This uses the full
+Aut(W/Z) statements of Appendix B, not only Franzsen–Howlett. A brief search found no prior result.
 
-**Novelty.**
-- New: the D5 case; the Artin-group application through the characteristic reflection lattice H₁(P) ≅ ℤ^T, the use of Aut(W)
-  (Franzsen–Howlett) instead of Aut(A), the explicit sign and swap witnesses, and the exceptional cases.
-- Precedents for "eigenvalue one via representation theory": Dekimpe–Gonçalves–Ocampo (pure braids),
-  Dekimpe–De Rock–Penninckx Thm 4.7 (flat manifolds), the determinant criterion of Dekimpe–Kaiser–Tertooy Thm 3.3,
-  and Hiss–Lutowski.
-- A_n, B_n and D_n are re-proved uniformly as a demonstration. Apart from D5, these cases are known.
+**Novelty and precedents.**
+- New:
+  - the Artin-group application via the characteristic reflection lattice H₁(P) ≅ ℤ^T;
+  - controlling the finite symmetry by Aut(W) (Franzsen–Howlett) instead of Aut(A);
+  - explicit sign and swap witnesses;
+  - the exceptional cases.
+- Precedents for "eigenvalue one via representation theory":
+  - Dekimpe–Gonçalves–Ocampo;
+  - Dekimpe–De Rock–Penninckx, Thm 4.7;
+  - Dekimpe–Penninckx / Dekimpe–Kaiser–Tertooy, Thm 3.3;
+  - Hiss–Lutowski, Parts I and II (arXiv:2504.04978, 2601.09622).
+- A/[P,P] is crystallographic with holonomy W/Z(W), by Marin, Thm 2.1.
 
-**Argument (paper v3).**
-1. P = ker(A → W) is characteristic (Cohen–Paris Thm 1.4). For our types, Cohen–Paris is GAP-assisted (their §5);
-   we have not re-run those computations.
+**Argument.**
+1. P = ker(A → W) is characteristic (Cohen–Paris Thm 1.4). For these types that proof is GAP-assisted, and we have
+   not re-run it.
 2. f: A → ℤ^T ⋊ W gives H₁(P) ≅ ℤ^T as a permutation module.
-3. Thm 3.3: φ acts as πN, where N commutes with W, and N = ±1 on a good constituent. A stable or swap witness then
-   gives a fixed vector for some inner twist φ′. Hence R(φ′|_P) = ∞, so R(φ′) = ∞, and R(φ) = R(φ′).
-4. Lemma 4.1 (Franzsen–Howlett Thm 31): modulo inner automorphisms, the induced automorphisms of W/Z are:
+3. Thm 3.3: φ acts as πN, and N = ±1 on a good constituent. Witnesses then give a fixed vector for φ′ = ι_a∘φ.
+4. Lemma 4.1 (Franzsen–Howlett, Adv. Geom. 3 (2003), Thm 31, pp. 329–330; its proof there is an outline).
+   Modulo inner automorphisms, the induced automorphisms of W/Z are:
    - trivial for E_n and B_n;
    - graph automorphisms for D_n and F4;
    - one extra class for H3 and H4.
 5. Explicit good constituents:
-   - SRG eigenspaces for E_n, with a hand proof of the three orbitals via perpendicular subsystems;
+   - SRG eigenspaces for E_n;
    - frame modules for H3 and F4;
-   - End(V) matrix coefficients in the icosian model for H4.
+   - End(V) in the icosian model for H4.
 
 **What to check (in order).**
-1. Thm 3.3 (case ii).
+1. Thm 3.3, case (ii).
 2. Prop 2.4.
-3. Lemma 4.1, and whether Franzsen–Howlett Thm 31 is correctly quoted. We read both the preprint and the published version (Adv. Geom. 3 (2003), Thm 31, pp. 329–330; same numbering); in both, its proof
-   there is an outline. For the exceptional types Appendix B gives independent control.
-4. Props 4.2–4.6 and Lemma 4.5.
-5. Prop 5.2 and Remark 5.3 (D5); Prop 5.4 (the D4 correction).
-6. Remark 5.5 (dihedral types: odd m only).
+3. Lemma 4.1, and the quotation of Franzsen–Howlett.
+4. Props 4.2–4.6 and Lemma 4.5, including the finite certificates they depend on (Appendix A).
+5. Prop 5.2 and Remark 5.3 (D5).
+6. Cor. B.3.
 
 **Literature questions.**
-- Is R∞ for E6–E8, F4, H3 or H4 known or announced?
-- Is there a complete published proof of Franzsen–Howlett Thm 31? Both the preprint and the journal version give only an outline.
-  published proof?
-- Has D5 been proved anywhere (perhaps in a journal version of Soroko–Vaskou)?
-- Exact section numbers for the textbook facts we cite (Humphreys, Orlik–Terao).
+- Is R∞ for E6–E8, F4, H3 or H4, or for A/[P,P], known or announced?
+- Is there a complete published proof of Franzsen–Howlett Thm 31?
+- Has D5 been proved anywhere?
+- What are the exact section numbers for the cited textbook facts (Humphreys, Orlik–Terao)?
 
-**Formal verification.** `lean/` checks the criterion and the finite certificates in the Lean kernel, with no sorry,
-no axiom and no native_decide. Its hypotheses are W finite, Cohen–Paris, Brieskorn (`hBr`: P^ab ≅ ℤ^N as groups, N = |T|), and `hOut`.
-D5 is not formalised. `hOut` is proved
-in Lean for H3 and F4 and remains a hypothesis for H4, E6, E7 and E8. The Lean development uses the v2 numbering.
+**Formal verification** (`lean/`, as of commit 296176a).
+- The kernel checks the criterion and the finite certificates for **all seven types** D5, E6, E7, E8, F4, H3 and H4.
+- No `sorry`, no `axiom`, no `native_decide`.
+- Each final theorem `artin_X_R_infty_FH` has exactly four hypotheses: `hW` (W finite), `hCP` (Cohen–Paris),
+  `hBr` (P^ab ≅ ℤ^N as groups, N = |T|) and `hFH` (Franzsen–Howlett Thm 31).
+- The older `hOut` hypothesis is **no longer needed**. It survives only in legacy theorems, and is proved there for
+  H3 and F4.
+- The Lean development uses computer-found constituents, not the hand constructions of §4.
 
-**Reproduce** (Python 3 + numpy + sympy; see `code/README.md`):
+**Reproduce** (Python 3 + numpy + sympy; see `code/README.md`). Every certificate script exits with a nonzero status
+if an expected value fails:
 ```
 cd code/indep
-python3 explicit_constituents.py                  # all explicit constructions of paper v3 (~22 s)
-python3 referee_v3_E.py && python3 referee_v3_H4.py && python3 referee_v3_DFH3.py   # internal v3 AI referee's checkers
-python3 indep_check.py H3 F4 H4 E6 E7 && python3 out_check.py H3 F4 H4 E6 E7
-cd .. && python3 certify.py H3 F4 H4 E6 E7 E8 && python3 certify_outer.py H3 F4 H4
+python3 explicit_constituents.py      # proof certificates for §4.2, Lemma 4.5, Prop 4.6, §5 (exact; asserts)
+python3 referee_v3_E.py               # E types (exact ranks; asserts)
+python3 indep_check.py H3 F4 H4 E6 E7 && python3 out_check.py H3 F4 H4 D5 E6 E7 && python3 out_check_stab.py E7 E8
+cd .. && python3 certify.py H3 F4 H4 E6 E7 E8 D5 && python3 certify_outer.py H3 F4 H4
 ```

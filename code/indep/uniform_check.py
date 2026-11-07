@@ -131,7 +131,8 @@ def analyze(name, verbose=True):
         # images of good constituents
         Pp = permmat(pi)
         def proj_eq(Ba, Bb):
-            return np.linalg.matrix_rank(np.hstack([Bb, Pp @ Ba]).astype(float)) == Bb.shape[1]
+            from indep_check import dm
+            return dm(np.hstack([Bb, Pp @ Ba]).T.tolist()).rank() == Bb.shape[1]   # exact
         for a, (d, Ba, _) in enumerate(good):
             Q, _ = np.linalg.qr(Ba.astype(float))
             img = [b for b, (db, Bb, _) in enumerate(good) if db == d and proj_eq(Ba, Bb)]
@@ -163,5 +164,19 @@ def analyze(name, verbose=True):
         print(f'  [{name} {time.time() - t0:.1f}s]', flush=True)
     return out
 
+# Expected outcomes (the paper's claims).  Odd dihedral m with 3 \nmid m are INTENDED NEGATIVE results.
+POSITIVE = {'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'B3', 'B4', 'B5', 'B6', 'B7', 'D4', 'D5', 'D6', 'D7',
+            'E6', 'E7', 'F4', 'H3', 'H4', 'I2(3)', 'I2(9)', 'I2(15)', 'I2(21)'}
+NEGATIVE = {'I2(5)', 'I2(7)', 'I2(11)', 'I2(13)', 'I2(17)', 'I2(19)'}
 if __name__ == '__main__':
-    for nm in sys.argv[1:]: analyze(nm)
+    FAIL = []
+    for nm in sys.argv[1:]:
+        o = analyze(nm)
+        allok = all(ok and v for _, ok, v in o['results']) and not o['clash']
+        if nm in POSITIVE and not allok: FAIL.append(nm)
+        if nm in NEGATIVE:
+            print(f'  [{nm}: INTENDED NEGATIVE RESULT -- the criterion is expected to fail here]')
+            if any(v for _, _, v in o['results']) or o['good']: FAIL.append(nm + ' (expected failure did not occur)')
+        if nm not in POSITIVE | NEGATIVE: print(f'  [{nm}: informational only (even m: rho not injective on T)]')
+    if FAIL: print('FAILED CHECKS:', FAIL); sys.exit(1)
+    print('ALL CHECKS PASSED')

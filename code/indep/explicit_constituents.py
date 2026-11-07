@@ -19,6 +19,23 @@ from indep_check import nullspace_basis, int_basis, character, nullity, permmat,
 
 def say(*a): print(*a, flush=True)
 
+FAILURES = []
+def CHK(cond, msg):
+    """assert an expected value; failures are collected and give a nonzero exit status at the end"""
+    if not cond:
+        FAILURES.append(msg); say(f'  *** CHECK FAILED: {msg}')
+    return cond
+
+def exact_rank(vectors):
+    """exact rank over Q(sqrt5) of a list of vectors with Q(phi)-entries (pairs of Fractions) -- here only
+    rational vectors occur (E types), so we row-reduce over Q and assert that all entries are rational"""
+    if not vectors: return 0
+    assert all(c[1] == 0 for v in vectors for c in v), 'non-rational entry'
+    from sympy import QQ
+    from sympy.polys.matrices import DomainMatrix
+    rows = [[QQ(c[0].numerator, c[0].denominator) for c in v] for v in vectors]
+    return DomainMatrix(rows, (len(rows), len(rows[0])), QQ).rank()
+
 def lines_dot(rs):
     """matrix of inner products between the canonical roots of the lines (exact, as tuples)"""
     N = rs.N
@@ -74,9 +91,12 @@ def part_bourbaki():
     ok = all(tuple(x[0] for x in S[k - 1]) == tuple((1 if t == k - 2 else -1 if t == k - 3 else 0) for t in range(8))
              for k in range(3, 9))
     say(f'  alpha_k = e_(k-1) - e_(k-2) for 3<=k<=8 (1-based coordinates e_1..e_8): {ok}')
+    CHK(ok, 'Bourbaki indexing')
     say('  E7 uses alpha_1..alpha_7 and E6 uses alpha_1..alpha_6, all inside R^8.')
 
 def part_srg():
+    EXPECT = {'E6': ((15, 20), (30, 5, 12, 3, 12, 4, 20)), 'E7': ((35, 27), (60, 6, 26, 5, 30, 5, 32)),
+              'E8': ((84, 35), (126, 7, 60, 6, 72, 6, 56))}
     for name, exp in [('E6', (36, 15, 6, 6)), ('E7', (63, 30, 13, 15)), ('E8', (120, 63, 30, 36))]:
         t0 = time.time(); rs = RootSystem(name); N = rs.N; D = lines_dot(rs)
         A = np.array([[1 if (a != b and is_zero(D[a][b])) else 0 for b in range(N)] for a in range(N)], dtype=np.int64)
@@ -111,16 +131,21 @@ def part_srg():
         nonorth1 = sum(1 for x in roots if dot(x, a0) == num(1))
         say(f'===== {name}: SRG parameters {params} (expected {exp}): {params == exp}; orbitals on lines x lines: {norb}')
         say(f'  eigenvalues of the orthogonality graph: {kk}^{mk}, {r}^{mr}, {s}^{ms}  (dims sum {mk + mr + ms} = {N})')
-        def rk(L): return int(np.linalg.matrix_rank(np.array([[R.tofloat(c) for c in x] for x in L]))) if L else 0
+        rk = exact_rank   # exact rational row reduction
+        counts = (len(perp1), rk(perp1), len(perp2), rk(perp2), len(perpA2), rk(perpA2), nonorth1)
         say(f'  roots: |Phi| = {len(roots)}, perp to a root: {len(perp1)} (rank {rk(perp1)}), perp to two orthogonal roots: '
             f'{len(perp2)} (rank {rk(perp2)}), perp to an A2: {len(perpA2)} (rank {rk(perpA2)}), roots with (alpha,beta)=1: {nonorth1}'
-            f'   [{time.time() - t0:.1f}s]')
+            f'  [ranks exact over Q]   [{time.time() - t0:.1f}s]')
+        CHK(params == exp, f'{name} SRG parameters'); CHK(norb == 3, f'{name} three orbitals')
+        CHK((mk, mr, ms) == (1,) + EXPECT[name][0], f'{name} spectrum multiplicities')
+        CHK(counts == EXPECT[name][1], f'{name} perpendicular counts/ranks')
         # good constituents: commutant = span{I, A, J}; eigenspaces of A for r, s are commutant-scalar
         Br = int_basis(nullspace_basis(A - r * I)); Bs = int_basis(nullspace_basis(A - s * I))
         J = np.ones((N, N), dtype=np.int64)
         scal = all(np.all(J @ B == 0) for B in (Br, Bs))
         moved = [all(not np.array_equal(permmat(np.array(g)) @ B, B) for g in rs.gens) for B in (Br, Bs)]
         say(f'  J kills both eigenspaces (so span{{I,A,J}} acts by scalars): {scal}; every simple reflection moves them: {moved}')
+        CHK(scal and all(moved), f'{name} eigenspaces good and moved')
 
 def part_h3():
     rs = RootSystem('H3'); N = rs.N; D = lines_dot(rs)
@@ -135,7 +160,17 @@ def part_h3():
     say(f'===== H3: {len(frs)} frames (orthogonal triples) of sizes {[len(F) for F in frs]} partition the 15 lines')
     say(f'  frame module: dim {B.shape[1]}, W permutes frames: {inv}, <chi,chi> = {n1}, <chi,perm> = {n2}; '
         f'image of W on the 5 frames has order {generated_order([action_on_blocks(g, frs) for g in rs.gens])}')
-    say(f'  pi_0 acts on the 5 frames with cycle type {cyc}; eigenspace dims of pi_0 on U (+1,-1): {eig_dims(permmat(pi0), B)}')
+    ed = eig_dims(permmat(pi0), B)
+    say(f'  pi_0 acts on the 5 frames with cycle type {cyc}; eigenspace dims of pi_0 on U (+1,-1): {ed}')
+    CHK(len(frs) == 5 and all(len(F) == 3 for F in frs), 'H3 frames'); CHK(inv and (n1, n2) == (1, 1), 'H3 frame module good')
+    CHK(generated_order([action_on_blocks(g, frs) for g in rs.gens]) == 60, 'H3 image A5 on frames')
+    CHK(cyc == [1, 1, 1, 2] and ed == (3, 1), 'H3 outer witness')
+    # Q^T = 1 + 4 + 5 + 5: the 10-dimensional complement of 1+U has <chi,chi> = 4 (two copies of the 5)
+    ones = np.ones((N, 1), dtype=np.int64)
+    Cm = int_basis(nullspace_basis(np.hstack([ones, B]).T))
+    c1, c2, _ = good_by_characters(Cm, E, fixv)
+    say(f'  complement of 1+U: dim {Cm.shape[1]}, <chi,chi> = {c1}, <chi,perm> = {c2} (= 5+5 by the A5 degrees)')
+    CHK(Cm.shape[1] == 10 and (c1, c2) == (4, 4), 'H3 decomposition 1+4+5+5')
 
 def cycles(p):
     seen = set(); out = []
@@ -160,6 +195,8 @@ def part_f4():
         imgord = generated_order([action_on_blocks(g, Fx) for g in rs.gens])
         say(f'  {nm}: dim {Bx.shape[1]}, <chi,chi> = {n1}, <chi,perm> = {n2}, simple reflections acting nontrivially: {moved} '
             f'(alpha_1, alpha_2 long), image of W on its 3 frames has order {imgord}')
+        CHK(Bx.shape[1] == 2 and (n1, n2) == (1, 1) and imgord == 6, f'F4 {nm} good')
+        CHK(moved == ([0, 1] if nm == 'U_long' else [2, 3]), f'F4 {nm} moved set')
     pi0, _ = explicit_pi0('F4', rs); pi0 = pi0.astype(np.int64); P0 = permmat(pi0)
     sw = span_contains(BS, P0 @ BL) and span_contains(BL, P0 @ BS)
     say(f'  pi_0 maps U_long onto U_short and back: {sw}; pi_0^2 = 1: {np.array_equal(pi0[pi0], np.arange(N))}')
@@ -167,6 +204,8 @@ def part_f4():
     q = s1[pi0]; q2 = q[q]
     say(f'  (s_1 pi_0)^2 = s_1 * (pi_0 s_1 pi_0): eigenspace dims (+1,-1) on U_short: {eig_dims(permmat(q2), BS)}; '
         f'pi_0^2 on U_short: {eig_dims(permmat(pi0[pi0]), BS)}')
+    CHK(sw and np.array_equal(pi0[pi0], np.arange(N)), 'F4 pi_0 swaps, involution')
+    CHK(eig_dims(permmat(q2), BS) == (1, 1) and eig_dims(permmat(pi0[pi0]), BS) == (2, 0), 'F4 swap witnesses')
 
 def qmul(a, b):
     a0, a1, a2, a3 = a; b0, b1, b2, b3 = b; m = mul
@@ -218,6 +257,17 @@ def part_h4():
     say(f'  K has {len(invols)} involutions in {len(V4)} Klein four-subgroups (sizes {[len(S) for S in V4]})')
     def act(x, S): return sorted(Lmul(Lmul(x, s), Linv(x)) for s in S)
     perm5 = [tuple(V4.index(act(x, S)) for S in V4) for x in range(N)]
+    # PROOF CERTIFICATE for K = A5: conjugation on the five Klein subgroups is an injective homomorphism into A5
+    from rootsys import parity
+    homo = all(perm5[Lmul(x, y)] == tuple(perm5[x][perm5[y][i]] for i in range(5)) for x in range(N) for y in range(N))
+    inj = len(set(perm5)) == N; even = all(parity(p_) == 0 for p_ in perm5)
+    say(f'  K = A5 certificate: |K| = {N}; x -> (conjugation on the 5 Klein subgroups) is a homomorphism: {homo}, '
+        f'injective: {inj}, image consists of even permutations: {even}  => K = A5')
+    CHK(N == 60 and len(invols) == 15 and len(V4) == 5 and homo and inj and even, 'H4: K = A5 certificate')
+    # trivial centraliser: a permutation commuting with all left and right translations is the identity
+    zk = [x for x in range(N) if all(Lmul(x, y) == Lmul(y, x) for y in range(N))]
+    say(f'  Z(K) = {zk} (only the identity line {e}) => centraliser of rho(W) in Sym(K) is trivial')
+    CHK(zk == [e], 'H4: Z(K) trivial')
     # matrix coefficients c_ab(x) = [x V_b x^-1 = V_a]; U = span{c_ab - 1/5}
     cols = []
     for a in range(5):
@@ -232,6 +282,8 @@ def part_h4():
     invU = all(span_contains(B, permmat(np.array(g)) @ B) for g in rs.gens)
     say(f'  matrix-coefficient space of the 4-dim representation: dim {B.shape[1]}, W-invariant {invU}, '
         f'<chi,chi> = {n1}, <chi,perm> = {n2}')
+    CHK(closed and ok and o2 == len(E) == 7200 and contained, 'H4 icosian model')
+    CHK(B.shape[1] == 16 and invU and (n1, n2) == (1, 1), 'H4 matrix-coefficient constituent good')
     # outer: semilinear ring automorphism Psi = P o sigma, P a rotation of (i,j,k) by a signed permutation
     found = None
     for p in itertools.permutations(range(3)):
@@ -258,6 +310,13 @@ def part_h4():
         if all(np.array_equal(h[g][hi], c) for g, c in zip(gens, conj)): inner = True; break
     say(f'  Psi = (signed permutation {p},{sg} of i,j,k) o Galois: ring automorphism of the icosians: {mult}; '
         f'induced permutation normalises rho(W): {norm_ok}; outer: {not inner}')
+    # PROOF CERTIFICATE: Psi(I) = I (checked above in the search), and the real-part argument
+    tau_half = (Fr(0), Fr(1, 2))                     # tau/2 = phi/2 in the (a + b phi) encoding
+    x5 = next(x for x in I_ if x[0] == tau_half)
+    say(f'  Psi(I) = I: {all(Psi(x) in Iset for x in I_)}; an element with real part tau/2 maps to real part '
+        f'{Psi(x5)[0]} (= -1/(2 tau) in the a + b*phi encoding: (1/2, -1/2))')
+    CHK(all(Psi(x) in Iset for x in I_) and mult and norm_ok and not inner, 'H4 Psi certificate')
+    CHK(Psi(x5)[0] == (Fr(1, 2), Fr(-1, 2)), 'H4 real part tau/2 -> -tau^-1/2')
     # compose with an inner automorphism x -> a x a^-1 (an element of rho(W)) so that the result acts on the
     # five Klein four-subgroups as a transposition; it is then an involution
     best = None
@@ -269,9 +328,12 @@ def part_h4():
     conj_in_W = np.asarray([Lmul(Lmul(a, x), Linv(a)) for x in range(N)], dtype=E.dtype).tobytes() in index
     say(f'  pi_Psi itself has order {order(piP)}; x -> a Psi(x) a^-1 (a = line {a}; conjugation by a lies in rho(W): {conj_in_W}) '
         f'acts on the 5 Klein subgroups as {on5}, has order {order(q)}, eigenspace dims (+1,-1) on U: {eig_dims(permmat(q), B)}')
+    CHK(order(q) == 2 and eig_dims(permmat(q), B) == (10, 6), 'H4 witness (10,6)')
     pi0, _ = explicit_pi0('H4', rs); pi0 = pi0.astype(np.int64)
     q = pi0[inverse(piP)]
-    say(f'  pi_0 pi_Psi^(-1) lies in rho(W) (same outer class): {q.astype(E.dtype).tobytes() in index}   [{time.time() - t0:.1f}s]')
+    same = q.astype(E.dtype).tobytes() in index
+    say(f'  pi_0 pi_Psi^(-1) lies in rho(W) (same outer class): {same}   [{time.time() - t0:.1f}s]')
+    CHK(conj_in_W and same, 'H4 inner composition and outer class')
 
 def lin_perm(rs, M):
     """permutation of lines induced by an integer matrix M (rational root system)"""
@@ -303,17 +365,19 @@ def part_d4():
         assert np.array_equal(Um @ Xr, PU)
         if not np.array_equal(Xr @ Jm, Jm @ Xr): commute = False
     Vp = np.array([u(*p) + u(*comp[p]) for p in pairs[:3]]).T; Vm = np.array([u(*p) - u(*comp[p]) for p in pairs[:3]]).T
-    say(f'===== D4: U^- = span(u_ij) has dim {np.linalg.matrix_rank(Um.astype(float))}; '
-        f'J: u_ij -> u_kl commutes with W(D4) on U^-: {commute}  (review point 1a)')
+    say(f'===== D4: U^- = span(u_ij) has dim {dm(Um.T.tolist()).rank()}; '
+        f'J: u_ij -> u_kl commutes with W(D4) on U^-: {commute}  [INTENDED: shows U^- is reducible for D4]')
+    CHK(commute, 'D4: J commutes (reducibility of U^-)')
     for nm, V in (('J=+1', Vp), ('J=-1', Vm)):
         n1, n2, _ = good_by_characters(V, E, fixv)
-        say(f'  {nm} eigenspace of J in U^-: dim {np.linalg.matrix_rank(V.astype(float))}, <chi,chi> = {n1}, <chi,perm> = {n2}')
+        say(f'  {nm} eigenspace of J in U^-: dim {dm(V.T.tolist()).rank()}, <chi,chi> = {n1}, <chi,perm> = {n2} (not used in the paper)')
     FR = frames(rs, D, range(N))
     Bf = frame_module(N, FR)
     n1, n2, _ = good_by_characters(Bf, E, fixv)
     img = generated_order([action_on_blocks(g, FR) for g in rs.gens])
     say(f'  frames: {len(FR)} of sizes {[len(F) for F in FR]}; frame module dim {Bf.shape[1]}, <chi,chi> = {n1}, '
         f'<chi,perm> = {n2}; image of W on frames has order {img}')
+    CHK(len(FR) == 3 and Bf.shape[1] == 2 and (n1, n2) == (1, 1) and img == 6, 'D4 frame module good, S3 on frames')
     # diagram automorphisms (S3) as isometries permuting the simple roots; witnesses on frame module
     S = [[int(x[0]) for x in a] for a in R.simple_roots('D4')]   # alpha_1..alpha_4; alpha_2 is the centre
     Sm = np.array(S, dtype=float).T
@@ -324,6 +388,8 @@ def part_d4():
         Mi = np.rint(Tm * 2) / 2
         def T(v, Mi=Mi): return tuple(num(Fr(sum(Fr(Mi[i][j]).limit_denominator(4) * v[j][0] for j in range(4)))) for i in range(4))
         pi = np.array(rs.perm_of_map(T), dtype=np.int64)
+        pinv_ = inverse(pi)
+        CHK(all(pi[np.asarray(g)][pinv_].astype(E.dtype).tobytes() in index for g in rs.gens), f'D4 graph aut {gam} normalises')
         found = {}
         for x in range(len(E)):
             q = E[x].astype(np.int64)[pi]
@@ -333,6 +399,7 @@ def part_d4():
         ok_all &= len(found) == 2
         say(f'  diagram automorphism {gam}: pi permutes frames {action_on_blocks(pi, FR)}; witnesses for +1,-1 on frame module: {sorted(found)}')
     say(f'  all six triality classes have both witnesses: {ok_all}')
+    CHK(ok_all, 'D4 witnesses for all graph automorphisms')
 
 def part_bd():
     for name in ['B3', 'B4', 'B5', 'B6', 'D4', 'D5', 'D6', 'D7']:
@@ -372,8 +439,19 @@ def part_bd():
             neg_n = np.eye(n, dtype=int); neg_n[n - 1, n - 1] = -1
             extra = f'; negate-e_n eigenspace dims on U^- (+1,-1): {eig_dims(permmat(lin_perm(rs, neg_n)), Um)}'
         say(f'===== {name}: U^- dim {Um.shape[1]}; weights chi_ij pairwise distinct: {distinct}, nontrivial: {nontriv}; '
-            f'sign-fixed vectors fixed: {fixed_ok}; <chi,chi> = {n1}, <chi,perm> = {n2}{extra}   [{time.time() - t0:.1f}s]')
+            f'sign-fixed vectors fixed: {fixed_ok}; <chi,chi> = {n1}, <chi,perm> = {n2}{extra}'
+            + ('  [INTENDED NEGATIVE RESULT for D4]' if name == 'D4' else '') + f'   [{time.time() - t0:.1f}s]')
+        if name == 'D4':
+            CHK((not distinct) and (n1, n2) == (2, 2), 'D4: weights not distinct, U^- reducible (intended negative)')
+        else:
+            CHK(distinct and nontriv and fixed_ok and (n1, n2) == (1, 1), f'{name}: U^- good')
+            if name[0] == 'D':
+                dd = eig_dims(permmat(lin_perm(rs, neg_n)), Um)
+                CHK(dd[0] > 0 and dd[1] > 0 and sum(dd) == Um.shape[1], f'{name}: negate e_n witnesses')
 
 PARTS = {'bourbaki': part_bourbaki, 'srg': part_srg, 'h3': part_h3, 'f4': part_f4, 'h4': part_h4, 'd4': part_d4, 'bd': part_bd}
 if __name__ == '__main__':
     for p in (sys.argv[1:] or list(PARTS)): PARTS[p]()
+    if FAILURES:
+        say(f'FAILED CHECKS ({len(FAILURES)}): {FAILURES}'); sys.exit(1)
+    say('ALL CHECKS PASSED')
