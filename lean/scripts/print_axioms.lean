@@ -1,0 +1,21 @@
+-- Run with: lake env lean scripts/print_axioms.lean   (after lake build)
+import ArtinRinf
+#print axioms ArtinRinf.reidemeister_quotient_le
+#print axioms ArtinRinf.reidemeister_inner_comp
+#print axioms ArtinRinf.reidemeister_restrict_le
+#print axioms ArtinRinf.reidemeister_matEnd_eq_top
+#print axioms ArtinRinf.eigenvalue_eq_one_or_neg_one
+#print axioms ArtinRinf.reidemeister_eq_top_of_witness
+#print axioms ArtinRinf.rinf_of_outGeneratedBy
+#print axioms ArtinRinf.ReflData.rinf
+#print axioms ArtinRinf.H3.artin_H3_R_infty
+#print axioms ArtinRinf.H3.artin_H3_R_infty'
+#print axioms ArtinRinf.F4.artin_F4_R_infty
+#print axioms ArtinRinf.F4.artin_F4_R_infty'
+#print axioms ArtinRinf.H4.artin_H4_R_infty
+#print axioms ArtinRinf.E6.artin_E6_R_infty
+#print axioms ArtinRinf.E7.artin_E7_R_infty
+#print axioms ArtinRinf.E8.artin_E8_R_infty
+#check @ArtinRinf.H3.artin_H3_R_infty'
+#check @ArtinRinf.F4.artin_F4_R_infty'
+#check @ArtinRinf.E8.artin_E8_R_infty
