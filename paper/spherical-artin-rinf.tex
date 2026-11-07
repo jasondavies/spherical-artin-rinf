@@ -3,7 +3,7 @@
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{booktabs}
 \usepackage{enumitem}
-\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[pdfusetitle,colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -31,7 +31,8 @@
 \newcommand{\Rinf}{R_\infty}
 
 \title[Twisted conjugacy in spherical Artin groups]{Twisted conjugacy in spherical Artin groups and their crystallographic quotients}
-\author{[Author names]}
+\author{Jason Davies}
+\email{jason@jasondavies.com}
 \date{Draft, November 2026}
 
 \begin{document}
@@ -56,6 +57,10 @@ An alternative proof for seven Artin groups has a conditional Lean formalisation
 
 \maketitle
 
+\noindent\textbf{AI transparency statement.} The mathematical arguments, programs, Lean formalisation
+and manuscript were developed by AI systems under the author's direction. The scope of the formal
+verification is stated in Appendix~\ref{app:artin}; details of AI use are given at the end of the paper.
+
 \section{Introduction}
 
 Let $G$ be a group and $\varphi\in\Aut(G)$. Elements $x,y\in G$ are \emph{$\varphi$-twisted conjugate} if
@@ -63,7 +68,7 @@ $y=zx\varphi(z)^{-1}$ for some $z\in G$. The number $R(\varphi)\in\{1,2,\dots,\i
 \emph{Reidemeister number}, and $G$ has \emph{property $\Rinf$} if $R(\varphi)=\infty$ for every
 $\varphi\in\Aut(G)$ \cite{FT15,FN16}.
 
-For an Artin group $A=A(\Gamma)$ with Coxeter group $W=W(\Gamma)$, the question ``which Artin groups have $\Rinf$?''
+For an Artin group $A=A(X)$ with Coxeter group $W=W(X)$, the question ``which Artin groups have $\Rinf$?''
 is Problem~8.6 of the AIM problem list on Artin groups \cite{AIMPL}. Known cases include:
 \begin{itemize}
 \item braid groups \cite{FG10} and pure braid groups \cite{DGO21};
@@ -109,7 +114,7 @@ imply $\Rinf$ for the corresponding Artin groups. Together with the known dihedr
 The next result makes the failure of preservation concrete.
 
 \begin{counterprop}
-The crystallographic quotient $A(I_2(5))/[P,P]$ admits an automorphism $\Phi$ with $R(\Phi)=18$.
+The crystallographic quotient $A(I_2(5))/[P,P]$ admits an automorphism $\varphi$ with $R(\varphi)=18$.
 In particular, it does not have property $\Rinf$.
 \end{counterprop}
 
@@ -229,8 +234,10 @@ conjugation by $a$ acts as the permutation $\rho(\bar a)$.
 \end{proposition}
 \begin{proof}
 We have $f(as^2a^{-1})=(2e_{\bar as\bar a^{-1}},1)$, and these elements generate $f(P)$. Moreover $P\cong\pi_1$ of
-the complexified reflection-arrangement complement \cite{Bri71}, whose $H_1$ is free on one meridian per hyperplane. Indeed, a transverse disk spanning a loop
-in the ambient complex vector space expresses its homology class as a sum of meridians;
+the complexified reflection-arrangement complement \cite{Bri71}, whose integral $H_1$ is free on one
+meridian per hyperplane \cite[\S2.3]{Suc14}. Indeed, choose a spanning disk in the ambient complex vector
+space transverse to the hyperplanes and disjoint from their pairwise intersections. Removing small disks
+around the intersection points expresses the loop's homology class as a sum of meridians;
 winding numbers of defining linear forms show that these meridians are independent.
 Thus $H_1(P;\Z)$ has rank $|\T|$, and the surjection onto $2\Z^\T$ is an isomorphism.
 \end{proof}
@@ -294,8 +301,8 @@ representatives of the $\rho(W)$-orbits on $\T$ (Frobenius reciprocity).
 $\C^\T=\bigoplus_iV_i\otimes\C^{m_i}$. By hypothesis $\mathcal C$ maps $U_\C=U\otimes\C$ into itself and acts on it
 by scalars. The central idempotents $e_i\in\mathcal C$ act on $U_\C$ by $0$ or $1$ and sum to $1$, so exactly one
 $e_i$ acts as $1$. Hence $U_\C\subseteq V_i\otimes\C^{m_i}$ meets only one isotypic component. Being
-$W$-invariant, $U_\C=V_i\otimes L$ for some $0\ne L\subseteq\C^{m_i}$, and $M_{m_i}(\C)$ preserves $L$ and acts on it
-by scalars. This forces $m_i=1$ and $L=\C$. (ii) and (iii) are standard.
+$W$-invariant, $U_\C=V_i\otimes E$ for some $0\ne E\subseteq\C^{m_i}$, and $M_{m_i}(\C)$ preserves $E$ and acts on it
+by scalars. This forces $m_i=1$ and $E=\C$. (ii) and (iii) are standard.
 \end{proof}
 
 \begin{theorem}[Fixed-vector criterion]\label{thm:crit}\label{prop:lattice-criterion}
@@ -311,7 +318,7 @@ such that, for each $\varepsilon=\pm1$, some $(g\pi)^2$ has an eigenvector in $U
 Then $\Gamma$ has property $\Rinf$.
 \end{theorem}
 \begin{proof}
-Fix $\Phi\in\Aut(\Gamma)$, and let $D=\Phi|_L$.
+Fix $\varphi\in\Aut(\Gamma)$, and let $D=\varphi|_L$.
 The operator $N=\pi^{-1}D$ centralises $G$, so Lemma~\ref{lem:schur} applies.
 In case (i), write $N|_U=c\in\{\pm1\}$ and choose $g\pi v=cv$ with $v\ne0$.
 Then $gDv=v$.
@@ -319,15 +326,15 @@ In case (ii), write $N|_{U_i}=c_i\in\{\pm1\}$ and choose $(g\pi)^2v=c_1c_2v$ wit
 $0\ne v\in U_1$. Since $g\pi$ exchanges the two constituents, $(gD)^2v=v$.
 The vector $v+gDv$ is nonzero, because its two terms lie in distinct isotypic components, and is fixed by $gD$.
 
-Lift $g$ to $\gamma\in\Gamma$. The restriction of $\iota_\gamma\Phi$ to the characteristic
+Lift $g$ to $\gamma\in\Gamma$. The restriction of $\iota_\gamma\varphi$ to the characteristic
 finite-index subgroup $L$ has a nonzero rational fixed vector, hence an integral one.
-Lemma~\ref{lem:reid}(b),(d),(c) gives $R(\Phi)=\infty$.
+Lemma~\ref{lem:reid}(b),(d),(c) gives $R(\varphi)=\infty$.
 \end{proof}
 
 \begin{remark}[Relation to the crystallographic criteria]\label{rem:crystal}
 The stable case uses the multiplicity-one device of \cite[Thm.~4.7]{DDP09}.
 The determinant criterion \cite[Cor.~3.10]{DP11}, stated in \cite[Thm.~3.3]{DKT19}, applies also
-with torsion: $R(\Phi)=\infty$ exactly when $\det(I-gD)=0$ for some $g\in G$.
+with torsion: $R(\varphi)=\infty$ exactly when $\det(I-gD)=0$ for some $g\in G$.
 The swap case covers exchanged constituents excluded by the non-conjugacy hypothesis of the stable criterion.
 Only holonomy automorphisms induced by the actual extension need be considered. Their image satisfies
 \[
@@ -888,7 +895,7 @@ $A_2=I_2(3)$ and $B_2=I_2(4)$.
 \subsection{A dihedral counterexample}\label{sec:dihedral-counterexample}
 
 \begin{proposition}[Proposition C]\label{prop:dihedral-counterexample}
-The group $\Gamma=A(I_2(5))/[P,P]$ has an automorphism $\Phi$ with $R(\Phi)=18$.
+The group $\Gamma=A(I_2(5))/[P,P]$ has an automorphism $\varphi$ with $R(\varphi)=18$.
 \end{proposition}
 \begin{proof}
 Index the reflections by $j\in\Z/5\Z$, with the two simple reflections indexed by $0,1$.
@@ -904,7 +911,7 @@ The two simple reflections act as $S$ and $C^2S$. By Proposition~\ref{prop:H1}, 
 Here $Z(W)=1$, so $L$ is the full translation lattice. Put
 \[
  D=I-C-C^{-1},\qquad d=e_0+e_1,\qquad
- \Phi(v,g)=(Dv+(I-g)d,g).
+ \varphi(v,g)=(Dv+(I-g)d,g).
 \]
 We have $D^{-1}=I-C^2-C^{-2}$ and $D$ commutes with $G$, so $DL=L$. For the two generators,
 \[
@@ -921,9 +928,9 @@ The characteristic polynomial of $D$ is $(x+1)(x^2-3x+1)^2$, and direct integer 
  \det(I-gD)&2&22&-10.
 \end{array}
 \]
-In particular all determinants are nonzero, which already proves $R(\Phi)<\infty$.
+In particular all determinants are nonzero, which already proves $R(\varphi)<\infty$.
 
-For completeness we count the classes without a torsion-free assumption. Since $\Phi$ induces the identity
+For completeness we count the classes without a torsion-free assumption. Since $\varphi$ induces the identity
 on $G$, twisted classes project to ordinary conjugacy classes of $G$, represented by $1,C,C^2,S$.
 Choose lifts $(a_g,g)\in\Gamma$. Twisted conjugation by translations identifies the fibre above $g$ with
 \[
@@ -963,7 +970,7 @@ indicated cyclic group. Substitution in \eqref{eq:centralizer-action} gives the 
 Each order-five action on $\Z/22$ has two fixed points and four orbits of length five; the involution
 $k\mapsto1-k$ on $\Z/10$ has no fixed points. Consequently
 \[
- R(\Phi)=1+6+6+5=18.
+ R(\varphi)=1+6+6+5=18.
 \]
 \end{proof}
 
@@ -971,12 +978,12 @@ $k\mapsto1-k$ on $\Z/10$ has no fixed points. Consequently
 The element $((-1,0,-1,1,1),C)$ belongs to $\Gamma$ and has order five: its translation vector differs
 from $a_C$ by an element of $2\Z^5$, and its five translates sum to zero. Thus the Bieberbach averaging
 formula \cite[Thm.~3.4]{DKT19} cannot be invoked here. In fact its determinant average is
-$(2+4\cdot22+5\cdot10)/10=14$, whereas $R(\Phi)=18$.
+$(2+4\cdot22+5\cdot10)/10=14$, whereas $R(\varphi)=18$.
 The exact checker \texttt{code/indep/dihedral\_quotient.py} verifies the preceding calculation and independently
 enumerates all $140$ translation-twisted classes: there are $13$ holonomy orbits of size $10$ and $5$ of size $2$.
 Equivalently, the identity fixes all $140$ classes, each nonidentity rotation fixes $10$, and each
 reflection fixes none. Burnside's lemma gives
-\[R(\Phi)=\frac{140+4\cdot10+5\cdot0}{10}=18.\]
+\[R(\varphi)=\frac{140+4\cdot10+5\cdot0}{10}=18.\]
 The holonomy action is not free, which explains why dividing $140$ by $10$ gives the wrong answer.
 \end{remark}
 
@@ -991,7 +998,7 @@ alone would not establish Proposition~C.
 
 \smallskip\noindent\emph{Further question.} For the negative dihedral cases in Theorem~B, determine the
 Reidemeister spectrum
-$\{R(\Phi):\Phi\in\Aut(\Gamma_{I_2(m)})\}$. Proposition~C shows that $18$ belongs to this spectrum for
+$\{R(\varphi):\varphi\in\Aut(\Gamma_{I_2(m)})\}$. Proposition~C shows that $18$ belongs to this spectrum for
 $m=5$. The extension-compatible integral normaliser and the torsion-sensitive class count both matter
 for this more detailed question.
 
@@ -1152,10 +1159,16 @@ full-holonomy enumerations. The source contains no \texttt{sorry}, custom \textt
 or \texttt{native\_decide}; finite certificates are checked by the Lean kernel.
 The full quotient classification and Proposition~C are not formalised.
 
-\section*{Author contributions}
-[To be finalised by the authors.] The mathematical argument, programs, Lean formalisation and text
-were developed with substantial assistance from Anthropic's Claude and OpenAI's Codex.
-The authors should specify their contributions and verification of the results before submission.
+\section*{Declaration of AI-generated research and authorship}
+This paper was developed through an AI-driven research process directed by Jason Davies.
+Anthropic's Claude and OpenAI's Codex contributed to the mathematical arguments, computational
+verification, Lean formalisation, and preparation and revision of the manuscript.
+
+The Lean kernel checks the seven direct Artin-group results under the external hypotheses stated in
+Appendix~\ref{app:artin}. The full crystallographic quotient classification and Proposition~C are not
+formalised; their written proofs are accompanied by the exact computational checks described in
+Appendix~\ref{app:comp}. These checks do not replace mathematical review of the written arguments.
+The author takes responsibility for the content of the paper and the accuracy of this disclosure.
 
 \begin{thebibliography}{99}
 \bibitem{AIMPL} AIM Problem List, \emph{Geometry and topology of Artin groups}, Problem 8.6, aimpl.org/geomartingp/8.
@@ -1183,6 +1196,7 @@ The authors should specify their contributions and verification of the results b
 \bibitem{Mar15} I. Marin, Crystallographic groups and flat manifolds from complex reflection groups, \emph{Geom.\ Dedicata} 182 (2016), 233--247.
 \bibitem{PS26} L. Paris, I. Soroko, Automorphisms of the Artin group of type $D_5$, arXiv:2606.26082.
 \bibitem{Sor26} I. Soroko, Property $R_\infty$ for Artin and Coxeter groups whose outer automorphisms are length-preserving, arXiv:2610.13904.
+\bibitem{Suc14} A.\,I. Suciu, Hyperplane arrangements and Milnor fibrations, \emph{Ann.\ Fac.\ Sci.\ Toulouse Math.} (6) 23 (2014), no.~2, 417--481, \url{https://doi.org/10.5802/afst.1412}.
 \bibitem{SV24} I. Soroko, N. Vaskou, Property $R_\infty$ for new classes of Artin groups, arXiv:2409.18123.
 \bibitem{Hum90} J.\,E. Humphreys, \emph{Reflection Groups and Coxeter Groups}, Cambridge Univ.\ Press, 1990.
 \end{thebibliography}

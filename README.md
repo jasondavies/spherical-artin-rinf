@@ -12,14 +12,14 @@ Theorem B implies the rank-at-least-three part of Theorem A because [P,P] is cha
 
 ## Read the paper
 
-- [Manuscript](paper/main.pdf) and [LaTeX source](paper/main.tex).
+- [Manuscript](paper/spherical-artin-rinf.pdf) and [LaTeX source](paper/spherical-artin-rinf.tex).
 - [Proof and source audit](AUDIT.md): dependencies, sensitive proof steps, literature attribution and remaining submission work.
 - [Reviewer note](REVIEWER_NOTE.md): a focused review brief.
 - [Computational guide](code/README.md) and [Lean guide](lean/README.md).
 
 ## Reproduce
 
-Use Python 3.12, a TeX installation with `pdflatex` and the packages imported by `paper/main.tex`, and Elan/Lake. Python dependencies, including SymPy's mpmath dependency, and the Lean/Mathlib toolchain are pinned.
+Use Python 3.12, a TeX installation with `pdflatex` and the packages imported by `paper/spherical-artin-rinf.tex`, and Elan/Lake. Python dependencies, including SymPy's mpmath dependency, and the Lean/Mathlib toolchain are pinned.
 
 ```sh
 python3 -m venv .venv
@@ -40,4 +40,4 @@ The exact Python calculations are proof inputs for the exceptional constituents 
 
 Lean verifies the direct Artin-group argument for D5, E6, E7, E8, F4, H3 and H4, conditional on explicitly stated cited results. It does **not** formalise the full quotient classification or the Reidemeister number 18. See the Lean guide for the precise hypotheses.
 
-The argument, code and text were developed with substantial AI assistance. No human expert review has been recorded. Author information and the contribution statement must be completed before submission.
+Jason Davies is the author. The mathematical arguments, programs, Lean development and manuscript were developed by AI systems under his direction; the paper includes an AI transparency statement and a fuller disclosure. No independent human expert review has been recorded.

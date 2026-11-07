@@ -74,12 +74,12 @@ def main():
         if args.only in (None, "paper"):
             if args.clean:
                 for suffix in ["aux", "log", "out", "toc", "fls", "fdb_latexmk", "pdf"]:
-                    (ROOT / "paper" / f"main.{suffix}").unlink(missing_ok=True)
+                    (ROOT / "paper" / f"spherical-artin-rinf.{suffix}").unlink(missing_ok=True)
             for i in range(1, 4):
-                run(f"latex_{i}", ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "main.tex"], ROOT / "paper")
-            latex_log = (ROOT / "paper/main.log").read_text()
+                run(f"latex_{i}", ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "spherical-artin-rinf.tex"], ROOT / "paper")
+            latex_log = (ROOT / "paper/spherical-artin-rinf.log").read_text()
             if re.search(r"undefined|multiply defined|Rerun to get|Overfull \\[hv]box", latex_log):
-                raise RuntimeError("Unresolved LaTeX references or overfull boxes; see paper/main.log")
+                raise RuntimeError("Unresolved LaTeX references or overfull boxes; see paper/spherical-artin-rinf.log")
         if args.only in (None, "lean"):
             lake = shutil.which("lake") or str(Path.home() / ".elan/bin/lake")
             if args.clean:

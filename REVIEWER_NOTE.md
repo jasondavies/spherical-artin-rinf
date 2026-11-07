@@ -24,4 +24,4 @@ After the setup in [README.md](README.md), run `python3 scripts/verify.py --clea
 
 The matching source-and-code archive is produced by `python3 scripts/package_review.py` after a successful full verification run. It includes the PDF, supplementary proof account, checkers, dependency pins, current logs and a checksum manifest, so the implementation and the manuscript can be reviewed together.
 
-The remaining external checks are a human mathematical review and a final priority/bibliography check close to submission. Author names, affiliations and contributions also remain to be supplied.
+The remaining external checks are a human mathematical review and a final priority/bibliography check close to submission. The paper names Jason Davies as author and includes an AI transparency statement and disclosure.
