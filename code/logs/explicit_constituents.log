@@ -1,0 +1,59 @@
+===== Bourbaki indexing of the E-type simple roots (review point 1b)
+  alpha_1 = (1/2,-1/2,-1/2,-1/2,-1/2,-1/2,-1/2,1/2)
+  alpha_2 = (1,1,0,0,0,0,0,0)
+  alpha_3 = (-1,1,0,0,0,0,0,0)
+  alpha_4 = (0,-1,1,0,0,0,0,0)
+  alpha_5 = (0,0,-1,1,0,0,0,0)
+  alpha_6 = (0,0,0,-1,1,0,0,0)
+  alpha_7 = (0,0,0,0,-1,1,0,0)
+  alpha_8 = (0,0,0,0,0,-1,1,0)
+  alpha_k = e_(k-1) - e_(k-2) for 3<=k<=8 (1-based coordinates e_1..e_8): True
+  E7 uses alpha_1..alpha_7 and E6 uses alpha_1..alpha_6, all inside R^8.
+===== E6: SRG parameters (36, 15, 6, 6) (expected (36, 15, 6, 6)): True; orbitals on lines x lines: 3
+  eigenvalues of the orthogonality graph: 15^1, 3^15, -3^20  (dims sum 36 = 36)
+  roots: |Phi| = 72, perp to a root: 30, perp to two orthogonal roots: 12, perp to an A2: 12, roots with (alpha,beta)=1: 20   [0.1s]
+  J kills both eigenspaces (so span{I,A,J} acts by scalars): True; every simple reflection moves them: [True, True]
+===== E7: SRG parameters (63, 30, 13, 15) (expected (63, 30, 13, 15)): True; orbitals on lines x lines: 3
+  eigenvalues of the orthogonality graph: 30^1, 3^35, -5^27  (dims sum 63 = 63)
+  roots: |Phi| = 126, perp to a root: 60, perp to two orthogonal roots: 26, perp to an A2: 30, roots with (alpha,beta)=1: 32   [0.2s]
+  J kills both eigenspaces (so span{I,A,J} acts by scalars): True; every simple reflection moves them: [True, True]
+===== E8: SRG parameters (120, 63, 30, 36) (expected (120, 63, 30, 36)): True; orbitals on lines x lines: 3
+  eigenvalues of the orthogonality graph: 63^1, 3^84, -9^35  (dims sum 120 = 120)
+  roots: |Phi| = 240, perp to a root: 126, perp to two orthogonal roots: 60, perp to an A2: 72, roots with (alpha,beta)=1: 56   [0.9s]
+  J kills both eigenspaces (so span{I,A,J} acts by scalars): True; every simple reflection moves them: [True, True]
+===== H3: 5 frames (orthogonal triples) of sizes [3, 3, 3, 3, 3] partition the 15 lines
+  frame module: dim 4, W permutes frames: True, <chi,chi> = 1, <chi,perm> = 1; image of W on the 5 frames has order 60
+  pi_0 acts on the 5 frames with cycle type [1, 1, 1, 2]; eigenspace dims of pi_0 on U (+1,-1): (3, 1)
+===== F4: long lines 12 -> frames [4, 4, 4]; short lines 12 -> frames [4, 4, 4]
+  U_long: dim 2, <chi,chi> = 1, <chi,perm> = 1, simple reflections acting nontrivially: [0, 1] (alpha_1, alpha_2 long), image of W on its 3 frames has order 6
+  U_short: dim 2, <chi,chi> = 1, <chi,perm> = 1, simple reflections acting nontrivially: [2, 3] (alpha_1, alpha_2 long), image of W on its 3 frames has order 6
+  F4: L maps each root to a root or twice a root: True
+  pi_0 maps U_long onto U_short and back: True; pi_0^2 = 1: True
+  (s_1 pi_0)^2 = s_1 * (pi_0 s_1 pi_0): eigenspace dims (+1,-1) on U_short: (1, 1); pi_0^2 on U_short: (2, 0)
+===== H4: the 120 roots/2 form a group under quaternion multiplication (icosians): True; contains 1: True
+  reflection s_r acts on lines as x -> r x^(-1) r: True
+  <left mult, right mult, inversion> has order 7200; equals rho(W) (|rho(W)| = 7200, contained: True): True
+  K has 15 involutions in 5 Klein four-subgroups (sizes [3, 3, 3, 3, 3])
+  matrix-coefficient space of the 4-dim representation: dim 16, W-invariant True, <chi,chi> = 1, <chi,perm> = 1
+  Psi = (signed permutation (0, 2, 1),(1, 1, -1) of i,j,k) o Galois: ring automorphism of the icosians: True; induced permutation normalises rho(W): True; outer: True
+  pi_Psi itself has order 4; x -> a Psi(x) a^-1 (a = line 2; conjugation by a lies in rho(W): True) acts on the 5 Klein subgroups as (0, 1, 3, 2, 4), has order 2, eigenspace dims (+1,-1) on U: (10, 6)
+  pi_0 pi_Psi^(-1) lies in rho(W) (same outer class): True   [3.9s]
+===== D4: U^- = span(u_ij) has dim 6; J: u_ij -> u_kl commutes with W(D4) on U^-: True  (review point 1a)
+  J=+1 eigenspace of J in U^-: dim 3, <chi,chi> = 1, <chi,perm> = 1
+  J=-1 eigenspace of J in U^-: dim 3, <chi,chi> = 1, <chi,perm> = 1
+  frames: 3 of sizes [4, 4, 4]; frame module dim 2, <chi,chi> = 1, <chi,perm> = 1; image of W on frames has order 6
+  diagram automorphism {1: 1, 0: 0, 2: 2, 3: 3}: pi permutes frames (0, 1, 2); witnesses for +1,-1 on frame module: [-1, 1]
+  diagram automorphism {1: 1, 0: 0, 2: 3, 3: 2}: pi permutes frames (0, 1, 2); witnesses for +1,-1 on frame module: [-1, 1]
+  diagram automorphism {1: 1, 0: 2, 2: 0, 3: 3}: pi permutes frames (0, 1, 2); witnesses for +1,-1 on frame module: [-1, 1]
+  diagram automorphism {1: 1, 0: 2, 2: 3, 3: 0}: pi permutes frames (0, 1, 2); witnesses for +1,-1 on frame module: [-1, 1]
+  diagram automorphism {1: 1, 0: 3, 2: 0, 3: 2}: pi permutes frames (0, 1, 2); witnesses for +1,-1 on frame module: [-1, 1]
+  diagram automorphism {1: 1, 0: 3, 2: 2, 3: 0}: pi permutes frames (0, 1, 2); witnesses for +1,-1 on frame module: [-1, 1]
+  all six triality classes have both witnesses: True
+===== B3: U^- dim 3; weights chi_ij pairwise distinct: True, nontrivial: True; sign-fixed vectors fixed: True; <chi,chi> = 1, <chi,perm> = 1   [0.0s]
+===== B4: U^- dim 6; weights chi_ij pairwise distinct: True, nontrivial: True; sign-fixed vectors fixed: True; <chi,chi> = 1, <chi,perm> = 1   [0.1s]
+===== B5: U^- dim 10; weights chi_ij pairwise distinct: True, nontrivial: True; sign-fixed vectors fixed: True; <chi,chi> = 1, <chi,perm> = 1   [0.8s]
+===== B6: U^- dim 15; weights chi_ij pairwise distinct: True, nontrivial: True; sign-fixed vectors fixed: True; <chi,chi> = 1, <chi,perm> = 1   [4.1s]
+===== D4: U^- dim 6; weights chi_ij pairwise distinct: False, nontrivial: True; sign-fixed vectors fixed: True; <chi,chi> = 2, <chi,perm> = 2; negate-e_n eigenspace dims on U^- (+1,-1): (3, 3)   [0.1s]
+===== D5: U^- dim 10; weights chi_ij pairwise distinct: True, nontrivial: True; sign-fixed vectors fixed: True; <chi,chi> = 1, <chi,perm> = 1; negate-e_n eigenspace dims on U^- (+1,-1): (6, 4)   [0.3s]
+===== D6: U^- dim 15; weights chi_ij pairwise distinct: True, nontrivial: True; sign-fixed vectors fixed: True; <chi,chi> = 1, <chi,perm> = 1; negate-e_n eigenspace dims on U^- (+1,-1): (10, 5)   [1.7s]
+===== D7: U^- dim 21; weights chi_ij pairwise distinct: True, nontrivial: True; sign-fixed vectors fixed: True; <chi,chi> = 1, <chi,perm> = 1; negate-e_n eigenspace dims on U^- (+1,-1): (15, 6)   [9.3s]

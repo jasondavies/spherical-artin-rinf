@@ -1,54 +1,64 @@
 # Note for an external reviewer (geometric group theory)
 
-**Provenance.** This work is AI-assisted. The argument, code and manuscript were produced with an AI system (Claude).
-They were checked by AI review only: an internal audit, plus one AI "cold referee" (recommendation: minor revision,
-no mathematical errors, all computations reproduced). The present version addresses that report; see the table in
-AUDIT.md. No human expert has checked it. We are asking you to be that check.
+**Provenance.** AI-assisted work (Anthropic's Claude): argument, code, Lean formalisation and manuscript. It has been
+reviewed only by AI systems:
+- an internal audit;
+- an AI "cold referee" (minor revision, no errors found);
+- an external AI review of the manuscript, which found two genuine errors. Both are fixed; see the table in
+  AUDIT.md.
 
-**Claim.** The Artin groups of spherical types E6, E7, E8, F4, H3 and H4 have property R∞. Combined with
-Calvez–Soroko (A_n, B_n, D4, I2(m)) and Soroko–Vaskou (D_n, n ≥ 6; D5 as credited in Soroko arXiv:2610.13904), this
-gives R∞ for every irreducible spherical Artin group of rank ≥ 2.
+None of this is journal peer review, and no human expert has checked it. We are asking you to be that check.
 
-**Precise novelty.**
-- New: the six exceptional types. Aut(A) is unknown for them, and the proof never uses it.
-- Not new: A_n (proved here by hand, without Aut), B_n/D_n for n ≤ 7 including D5, and I2(9), I2(15), which are
-  re-proved by the same criterion with exact computation. The uniform inversion result is also not new.
-- Method precedent: Dekimpe–Gonçalves–Ocampo (eigenvalue 1 from reflection-group representations). The map f is
-  equivalent to Cohen–Paris Lemma 3.7.
+**Claim.** The Artin groups of spherical types E6, E7, E8, F4, H3 and H4 have property R∞. With Calvez–Soroko and
+Soroko–Vaskou (and Soroko 2026 for D5), every irreducible spherical Artin group of rank ≥ 2 then has R∞.
 
-**Argument in five lines.**
-1. P = ker(A→W) is characteristic (Cohen–Paris Thm 1.4). **Note:** for these types that proof uses GAP computations
-   ([CP03] §5); we have not re-run them.
-2. H₁(P;ℤ) ≅ ℤ^T as a permutation module, without signs, via f: A → ℤ^T ⋊ W, s ↦ (e_s, s).
-3. φ acts on H₁(P) as πN, where π is a permutation realising the induced automorphism θ_φ of W/Z, and N commutes
-   with W.
-4. N = ±1 on a rational, absolutely irreducible, multiplicity-one constituent U (Schur plus lattice).
-5. Twisting by an inner automorphism gives eigenvalue 1, hence R(φ|_P) = ∞ and R(φ) = ∞. F4 uses a swap variant.
+**Novelty.**
+- New: the Artin-group application through the characteristic reflection lattice H₁(P) ≅ ℤ^T, the use of Aut(W)
+  (Franzsen–Howlett) instead of Aut(A), the explicit sign and swap witnesses, and the exceptional cases.
+- Precedents for "eigenvalue one via representation theory": Dekimpe–Gonçalves–Ocampo (pure braids),
+  Dekimpe–De Rock–Penninckx Thm 4.7 (flat manifolds), the determinant criterion of Dekimpe–Kaiser–Tertooy Thm 3.3,
+  and Hiss–Lutowski.
+- A_n, B_n and D_n are re-proved uniformly as a demonstration; these cases are known.
+
+**Argument (paper v3).**
+1. P = ker(A → W) is characteristic (Cohen–Paris Thm 1.4). For our types, Cohen–Paris is GAP-assisted (their §5);
+   we have not re-run those computations.
+2. f: A → ℤ^T ⋊ W gives H₁(P) ≅ ℤ^T as a permutation module.
+3. Thm 3.3: φ acts as πN, where N commutes with W, and N = ±1 on a good constituent. A stable or swap witness then
+   gives a fixed vector for some inner twist φ′. Hence R(φ′|_P) = ∞, so R(φ′) = ∞, and R(φ) = R(φ′).
+4. Lemma 4.1 (Franzsen–Howlett Thm 31): modulo inner automorphisms, the induced automorphisms of W/Z are:
+   - trivial for E_n and B_n;
+   - graph automorphisms for D_n and F4;
+   - one extra class for H3 and H4.
+5. Explicit good constituents:
+   - SRG eigenspaces for E_n, with a hand proof of the three orbitals via perpendicular subsystems;
+   - frame modules for H3 and F4;
+   - End(V) matrix coefficients in the icosian model for H4.
 
 **What to check (in order).**
-1. Thm 3.1 and its proof, especially case (ii).
-2. Prop 2.6.
-3. Lemma 2.12 (certificates).
-4. Lemma 3.5 and Prop 4.2: the computer-free proof that Out(W(E8)/±1) = 1. It uses the commutator subgroup,
-   involution classes via Steinberg's theorem, and the sign-choice/isometry argument.
-5. Prop 4.1: Out(W/Z) for E6, E7, H3, H4 and F4 is by computer. E7 rests on one enumeration plus cross-checks; see
-   the qualification in the text.
-6. §5: A_n by hand. Remark 5.3 states exactly what is missing for a uniform B_n/D_n proof (reflection preservation
-   for all n). Remark 5.4 explains why the criterion cannot work for I2(m), m prime ≥ 5.
+1. Thm 3.3 (case ii).
+2. Prop 2.4.
+3. Lemma 4.1, and whether Franzsen–Howlett Thm 31 is correctly quoted. We read the authors' preprint, and its proof
+   there is an outline. For the exceptional types Appendix B gives independent control.
+4. Props 4.2–4.6 and Lemma 4.5.
+5. Props 5.2 and 5.3 (the D4 correction).
+6. Remark 5.4 (dihedral types: odd m only).
 
 **Literature questions.**
-- (a) Is R∞ for any of E6–E8, F4, H3, H4 known or announced?
-- (b) Is H₁(P) = ℤ[T] (or A/[P,P]) used in the R∞ literature?
-- (c) What is the correct attribution for D5?
-- (d) Is there a reference showing that automorphisms of W/Z(W) induced from Aut(A) preserve reflections for all
-  B_n and D_n? Franzsen–Howlett–Mühlherr may be relevant. This would complete a uniform, Aut-free proof of the
-  classification, apart from I2(m).
-- (e) Exact section numbers for the standard facts cited from Humphreys and Orlik–Terao.
+- Is R∞ for E6–E8, F4, H3 or H4 known or announced?
+- Is the journal version of Franzsen–Howlett Thm 31 identical to the preprint statement we read? Is there a complete
+  published proof?
+- Is the attribution for D5 correct?
+- Exact section numbers for the textbook facts we cite (Humphreys, Orlik–Terao).
 
-**Reproduce** (Python 3 + numpy + sympy; about 4 minutes in total; see `code/README.md`):
+**Formal verification.** `lean/` checks the criterion and the finite certificates in the Lean kernel, with no sorry,
+no axiom and no native_decide. Its hypotheses are W finite, Cohen–Paris, Brieskorn rank, and `hOut`. `hOut` is proved
+in Lean for H3 and F4 and remains a hypothesis for H4, E6, E7 and E8. The Lean development uses the v2 numbering.
+
+**Reproduce** (Python 3 + numpy + sympy; see `code/README.md`):
 ```
-cd code && python3 certify.py H3 F4 H4 E6 E7 E8 D5 && python3 certify_outer.py H3 F4 H4 && python3 check.py
-cd indep && python3 indep_check.py H3 F4 H4 E6 E7 && python3 indep_check.py commutant:E8
-python3 out_check.py H3 F4 H4 D5 E6 E7 && python3 out_check_stab.py E7 E8
-python3 uniform_check.py A5 B5 D4 D5 D6 "I2(5)" "I2(9)" && python3 referee_e8_involutions.py && python3 referee_own_check.py H3 F4
+cd code/indep
+python3 explicit_constituents.py                  # all explicit constructions of paper v3 (~22 s)
+python3 indep_check.py H3 F4 H4 E6 E7 && python3 out_check.py H3 F4 H4 E6 E7
+cd .. && python3 certify.py H3 F4 H4 E6 E7 E8 && python3 certify_outer.py H3 F4 H4
 ```

@@ -1,0 +1,65 @@
+===== I2(3): |rho(W)| = 6, |R| = 3, r->rho(r) injective: True
+  involution classes with size/chi_R of a reflection class but not reflections: [] -> every Aut(A)-induced automorphism preserves rho(R)
+  reflection-preserving automorphisms modulo Inn: 1
+  good constituents (dim) moved by a simple reflection: [2];  other eigenspaces (dim,<chi,chi>,<chi,perm>): [(1, Fraction(1, 1), Fraction(1, 1))]
+  class 0: non-identity tuple; pi realises theta: True; criterion: ('(i)', 2)
+  [I2(3) 0.0s]
+===== I2(11): |rho(W)| = 22, |R| = 11, r->rho(r) injective: True
+  involution classes with size/chi_R of a reflection class but not reflections: [] -> every Aut(A)-induced automorphism preserves rho(R)
+  reflection-preserving automorphisms modulo Inn: 5
+  good constituents (dim) moved by a simple reflection: [];  other eigenspaces (dim,<chi,chi>,<chi,perm>): [(1, Fraction(1, 1), Fraction(1, 1))]
+  class 0: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 1: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 2: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 3: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 4: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  [I2(11) 0.0s]
+===== I2(13): |rho(W)| = 26, |R| = 13, r->rho(r) injective: True
+  involution classes with size/chi_R of a reflection class but not reflections: [] -> every Aut(A)-induced automorphism preserves rho(R)
+  reflection-preserving automorphisms modulo Inn: 6
+  good constituents (dim) moved by a simple reflection: [];  other eigenspaces (dim,<chi,chi>,<chi,perm>): [(1, Fraction(1, 1), Fraction(1, 1))]
+  class 0: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 1: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 2: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 3: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 4: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 5: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  [I2(13) 0.0s]
+===== I2(17): |rho(W)| = 34, |R| = 17, r->rho(r) injective: True
+  involution classes with size/chi_R of a reflection class but not reflections: [] -> every Aut(A)-induced automorphism preserves rho(R)
+  reflection-preserving automorphisms modulo Inn: 8
+  good constituents (dim) moved by a simple reflection: [];  other eigenspaces (dim,<chi,chi>,<chi,perm>): [(1, Fraction(1, 1), Fraction(1, 1))]
+  class 0: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 1: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 2: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 3: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 4: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 5: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 6: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 7: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  [I2(17) 0.0s]
+===== I2(21): |rho(W)| = 42, |R| = 21, r->rho(r) injective: True
+  involution classes with size/chi_R of a reflection class but not reflections: [] -> every Aut(A)-induced automorphism preserves rho(R)
+  reflection-preserving automorphisms modulo Inn: 6
+  good constituents (dim) moved by a simple reflection: [2];  other eigenspaces (dim,<chi,chi>,<chi,perm>): [(1, Fraction(1, 1), Fraction(1, 1))]
+  class 0: non-identity tuple; pi realises theta: True; criterion: ('(i)', 2)
+  class 1: non-identity tuple; pi realises theta: True; criterion: ('(i)', 2)
+  class 2: non-identity tuple; pi realises theta: True; criterion: ('(i)', 2)
+  class 3: non-identity tuple; pi realises theta: True; criterion: ('(i)', 2)
+  class 4: non-identity tuple; pi realises theta: True; criterion: ('(i)', 2)
+  class 5: non-identity tuple; pi realises theta: True; criterion: ('(i)', 2)
+  [I2(21) 0.0s]
+===== I2(19): |rho(W)| = 38, |R| = 19, r->rho(r) injective: True
+  involution classes with size/chi_R of a reflection class but not reflections: [] -> every Aut(A)-induced automorphism preserves rho(R)
+  reflection-preserving automorphisms modulo Inn: 9
+  good constituents (dim) moved by a simple reflection: [];  other eigenspaces (dim,<chi,chi>,<chi,perm>): [(1, Fraction(1, 1), Fraction(1, 1))]
+  class 0: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 1: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 2: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 3: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 4: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 5: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 6: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 7: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  class 8: non-identity tuple; pi realises theta: True; criterion: FAILS (no good constituent with witnesses)
+  [I2(19) 0.0s]

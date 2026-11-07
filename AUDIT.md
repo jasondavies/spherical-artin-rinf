@@ -1,4 +1,45 @@
-# AUDIT: Property R∞ for A(E6), A(E7), A(E8), A(F4), A(H3), A(H4)
+# AUDIT: Twisted conjugacy in irreducible spherical Artin groups (R∞ for E6, E7, E8, F4, H3, H4)
+
+Auditor: AI (Claude). No human expert has checked this. The newest section comes first: the **v3 revision after
+an external AI review**, written 2026-11-07. The older sections below it (the v1 audit and the v2 response to the
+cold referee) use the **old theorem numbering**; the old-to-new correspondence is in `code/README.md`.
+
+## v3: external review → verified? → how handled
+
+The review came from another AI system that saw only `main.tex`. Every claim in it was treated as a hypothesis. I
+checked each one by exact computation (`code/indep/explicit_constituents.py`, log
+`code/logs/explicit_constituents.log`) and/or by reading the cited source.
+
+| # | Review point | Verified? | How handled |
+|---|---|---|---|
+| 1a | D4: U⁻ = span{u_ij} is reducible, because J(u_ij) = u_kl commutes with W(D4) | **CONFIRMED** (exact): J commutes with all generators on U⁻. Its ±1 eigenspaces are 3-dimensional and each is good (⟨χ,χ⟩ = ⟨χ,perm⟩ = 1). On the even sign group, χ_ij = χ_kl when {i,j} ⊔ {k,l} = {1,2,3,4}. | **This was an error in v2** (Remark 5.3 claimed U⁻ good for D_n, n ≥ 4). Fixed: Prop 5.2 now requires n ≥ 5, and the new Prop 5.3 handles D4 with the frame module. |
+| 1b | E-type simple roots: α_k = e_{k−1} − e_{k−2} (3 ≤ k ≤ 8) in Bourbaki's coordinates | **CONFIRMED.** The v2 text had α_k = e_{k−2} − e_{k−3}, which is wrong. The code always used the correct roots (`rootsys.py`, `roots.py`: α_3 = e_2 − e_1, …, α_8 = e_7 − e_6); `explicit_constituents.py bourbaki` prints them. | **Error in the v2 text, fixed** in Appendix A. The paper now states the ambient space ℝ^8, the 1-based coordinates, and that E7 and E6 use α_1..α_7 and α_1..α_6 inside ℝ^8. |
+| 2 | Use Aut(W) (Franzsen–Howlett Thm 31) instead of Out(W/Z) | **CONFIRMED by reading the source**: the authors' preprint https://www.maths.usyd.edu.au/u/bobh/fh02.pdf, Theorem 31 and the discussion before it (Prop 30, R(W) vs Inn·Gr). Statement: for B_n, D_n, E6, E7, E8, F4, H3, H4, Aut(W) = R(W)·A(W), where A(W) consists of central twists w ↦ w f(w) with f: W → Z(W). R(W) = Inn·Gr except for H3 and H4, where [R : Inn] = 2. The induced actions mod Inn are exactly as the review says. **Caveats:** the journal version (Adv. Geom. 3 (2003) 301–338) could not be downloaded (the EMIS link returned HTML), so I read the preprint. The proof of Thm 31 is labelled "(Outline)" and rests on involution class sizes from Carter. Bannai (1969) and Franzsen's thesis were **not** consulted. | **Adopted** as Lemma 4.1. Prop 4.1 and the Out(W/Z) enumeration moved to Appendix B as corroboration. For the six exceptional types the Main Theorem does **not** depend on FH alone: Appendix B controls all of Aut(W/Z) independently (by computer for E6, E7, H3, H4, F4; by hand for E8). FH is essential only for the uniform B_n/D_n proofs for all n. |
+| 3 | Uniform B_n (n ≥ 3) and D_n (n ≥ 5) via the weights χ_ij; D4 via frames | **CONFIRMED.** Proof written. Exact checks: B3–B6 and D5–D7 (weights distinct and nontrivial, sign-fixed vectors fixed, U⁻ good, negating e_n has eigenvalues ±1). D4: frame module good (dimension 2), W induces S3 on frames, both witnesses exist for all six graph automorphisms. **Minor nuance:** the review says "triality permutes the frames". Our explicit isometries realising the graph automorphisms happen to act trivially on frames. This is harmless, since only the coset modulo W matters and W already induces the full S3. | Props 5.2 and 5.3. Presented as a demonstration of the method (these cases are known). |
+| 4 | Explicit exceptional constituents | **CONFIRMED** (exact): see the details below the table. | Props 4.2–4.6, Lemma 4.5. The computations are kept as Appendix A cross-checks. The Baake–Moody reference suggested by the review was **not** added (not verified); the icosian model is proved directly in Lemma 4.5. |
+| 5a | Outline should conclude R(φ′\|_P) = ∞ and then R(φ) = R(φ′) | Correct | Fixed (Introduction, Overview). |
+| 5b | Delete "hπ need not preserve U"; in the stable case it does | **CONFIRMED**: v ∈ U ∩ hπU, and both are isotypic components, so they are equal. | Sentence deleted. πU = U is now part of hypothesis (i). The swap case states πU₁ = U₂ explicitly. |
+| 5c | Mark the useful constituents; prove or drop the H4 remainder claim | — | The table lists the constituent used in bold. The H4 remainder is now **proved** (Wedderburn: 1 + 9 + 9′ + 16 + 25). |
+| 6 | Related work: DDP09 Thm 4.7, DKT Thm 3.3, Hiss–Lutowski | **CONFIRMED by reading.** DDP09 (TMNA 34 (2009) 353–373), journal PDF, Thm 4.7: the flat-manifold criterion, quoted in the paper. DKT (arXiv:1709.07649v4, J. Algebra 2019), Thm 3.3: R(φ) = ∞ ⇔ det(1 − AD) = 0 for some A ∈ F (citing DP11 Cor 3.10). Hiss–Lutowski (arXiv:2412.10206): an *announcement* (proof in a separate preprint) that every finite group has the E1-property. | Added to the introduction. The novelty claim is sharpened as requested. The D5 attribution is shortened. |
+| 7a | Dihedral: the criterion works iff (m odd and 3\|m) or 4\|m | **Partly confirmed.** For **odd m** I proved it (Remark 5.4): a good constituent exists iff 3\|m, and then U_3 with π ∈ S3 × {±1} gives witnesses. Computation agrees for odd m ≤ 21. The **even-m half (4\|m) is NOT verified**: ρ is not injective on T for even m, and `uniform_check.py` is unreliable there (it reports `pi realises theta: False` for some classes). | Odd case included as a remark. The even case is **not adopted**, and the paper says "we have not analysed even m". |
+| 7b | R∞ for A/[P,P] | — | Not claimed. |
+| 8 | Restructure and shorten; Lean paragraph; wording | — | Done. The new order is introduction / reflection lattice / criterion / exceptional / classical / appendices. Program names and runtimes moved to `code/README.md` (Appendix A only points there). The rate-limit sentence is removed, the (R)/(NA) discussion shortened, and "automorphism-free" removed. The AI reviews are described as AI reviews, not peer review. Added a Lean paragraph per `lean/README.md`. The title and abstract follow the review, adapted to what is proved. |
+
+Details for row 4:
+- **E6/E7/E8.** SRG parameters (36,15,6,6), (63,30,13,15), (120,63,30,36). Three orbitals. Spectra 3^15 (−3)^20; 3^35 (−5)^27; 3^84 (−9)^35. Dimensions match the earlier certificates (15/20, 27/35, 35/84). The perpendicular root counts and ranks are as tabulated in the proof of Prop 4.2. **Correction to the review's suggestion:** root counts alone do not identify the E6 subsystems (A3 and A2×A2 both have 12 roots), so the proof also uses the ranks.
+- **H3.** 5 frames; the frame module is good and 4-dimensional; π₀ acts as a transposition on frames, with eigenspace dimensions (3, 1).
+- **F4.** Frames [4,4,4] in both classes. U_long is moved only by s1, s2, and U_short only by s3, s4. π₀ swaps them; (s1π₀)² has eigenvalue −1 on U_short.
+- **H4.** The icosian group closes; s_r acts on lines by x ↦ r x⁻¹ r; ⟨left, right, inversion⟩ = ρ(W) (order 7200); the matrix-coefficient space is 16-dimensional and good.
+- **Correction (H4):** the natural Galois-type outer representative Ψ (Galois composed with the rotation j ↦ k, k ↦ −j) has **order 4** on lines and is not an involution. Only after composing with a suitable inner element x ↦ a x a⁻¹ does it act as conjugation by a transposition, with dimensions (10, 6). The paper says this. Ψ is in the same outer class as the original π₀.
+
+**New open items (v3).**
+* FH Thm 31 was read in the preprint only. Its proof is an outline. For B_n/D_n with n > 7 the uniform proof rests on it.
+* The Lean development (not modified) uses the v2 numbering and the stronger `hOut` hypothesis. It does not formalise the FH-based argument or the explicit constituents.
+* Textbook section numbers (G2) are still unchecked, and so are the Cohen–Paris GAP computations (G8). Note that for B4, B6, D4 and D6, Cohen–Paris also use GAP (their Lemmas 3.5 and 4.4); this is now disclosed.
+
+---
+
+# (v1/v2) AUDIT: Property R∞ for A(E6), A(E7), A(E8), A(F4), A(H3), A(H4)
 
 Audit date: 2026-11-07. Auditor: AI (Claude). No human expert has checked this yet.
 Inputs audited: `s2-rinf/REPORT.md` (with its prior-art addendum), `s2-rinf/code/*`, `pa-rinf/notes.txt`, and the

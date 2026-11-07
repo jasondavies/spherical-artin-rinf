@@ -1,4 +1,16 @@
-# Code for "Property R∞ for the Artin groups of types E6, E7, E8, F4, H3, H4"
+# Code for "Twisted conjugacy in irreducible spherical Artin groups"
+
+**Paper numbering.** Version 3 of the paper (after the external review) renumbered everything. The table below
+uses the old numbering (v2) where it says so. Correspondence:
+
+| old (v2) | new (v3) |
+|---|---|
+| Lemma 2.4 / Prop. 2.6 / Cor. 2.9 | Lemma 2.3 / Prop. 2.4 / Cor. 2.5 |
+| Lemma 2.11 / Lemma 2.12 | Lemma 3.1 / Lemma 3.2 |
+| Thm. 3.1 / Rem. 3.2 | Thm. 3.3 / Rem. 3.4 |
+| Lemma 3.5 / Prop. 4.1 / Prop. 4.2 (E8) | Lemma B.1 / Appendix B / Prop. B.2 |
+| Prop. 4.4 + Table 1 (certificates) | §4.2 (Props. 4.2–4.6), Appendix A |
+| §5 (A_n, B_n ≤ 7, D_n ≤ 7) | §5 (A_n, B_n, D_n by hand; Props. 5.1–5.3) |
 
 Requirements: Python 3 (tested with 3.12), numpy (2.5.1), sympy (1.14.0). No GAP or Sage needed.
 
@@ -27,6 +39,7 @@ unchanged, in `original_logs/`.
 | `indep/referee_own_check.py` | **written by the cold referee**, independent | Aut(G) count without assuming reflection preservation; commutant and character certificates; witnesses (H3, F4) |
 | `indep/referee_e8_involutions.py` | **referee** | all involution classes of W(E8)/±1; confirms Prop. 4.2, step 2 |
 | `indep/referee_f4_blocks.py` | **referee** | orbital counts per reflection class for F4 (Table 1 remainder) |
+| `indep/explicit_constituents.py` | new (v3) | **exact checks of the explicit constituents of the v3 paper**: E-type SRG parameters, 3 orbitals, spectra, perpendicular subsystems (Prop. 4.2); H3 frames (Prop. 4.3); F4 frames and swap witnesses (Prop. 4.4); H4 icosian model, matrix coefficients, outer Ψ (Lemma 4.5, Prop. 4.6); D4 reducibility of U⁻ and frame module (Prop. 5.3); B_n/D_n weight argument (Prop. 5.2); Bourbaki indexing |
 
 The `indep/` programs do not import any of the original modules.
 
@@ -52,7 +65,26 @@ python3 uniform_check.py E7                    # 7 s, 1.8 GB -> logs/uniform_E7.
 python3 referee_own_check.py H3 F4             # 2 s     -> logs/referee_own_check.log
 python3 referee_e8_involutions.py              # 1.3 s   -> logs/referee_e8_involutions.log
 python3 referee_f4_blocks.py                   # <1 s    -> logs/referee_f4_blocks.log
+python3 explicit_constituents.py               # 22 s, 260 MB -> logs/explicit_constituents.log
+python3 uniform_check.py "I2(3)" "I2(11)" "I2(13)" "I2(17)" "I2(21)"   # 2 s -> logs/uniform_dihedral_odd.log
 ```
+
+Expected key lines of `explicit_constituents.log` (v3 paper):
+* Bourbaki: `alpha_k = e_(k-1) - e_(k-2) for 3<=k<=8 (1-based coordinates e_1..e_8): True`.
+* E6/E7/E8: SRG parameters `(36,15,6,6)`, `(63,30,13,15)`, `(120,63,30,36)` all `True`; `orbitals ... 3`;
+  spectra `15^1, 3^15, -3^20`; `30^1, 3^35, -5^27`; `63^1, 3^84, -9^35`. Perpendicular counts (ranks):
+  30 (5), 12 (3), 12 (4); 60 (6), 26 (5), 30 (5); 126 (7), 60 (6), 72 (6).
+* H3: 5 frames of size 3; frame module dim 4 with `<chi,chi> = 1, <chi,perm> = 1`; `pi_0` acts on frames with
+  cycle type `[1, 1, 1, 2]`; eigenspace dims `(3, 1)`.
+* F4: frames `[4,4,4]` in both classes; `U_long` moved by simple reflections `[0, 1]`, `U_short` by `[2, 3]`;
+  `pi_0` swaps them; `(s_1 pi_0)^2` has dims `(1, 1)` on U_short.
+* H4: icosians closed `True`; reflection formula `True`; `<left, right, inversion>` has order 7200 = ρ(W);
+  15 involutions in 5 Klein subgroups; matrix-coefficient space dim 16, good; Ψ is a ring automorphism, normalises,
+  outer; after composing with an inner element, order 2 and dims `(10, 6)`; same outer class as `pi_0`.
+* D4: `J ... commutes with W(D4) on U^-: True` (U⁻ reducible); two 3-dim eigenspaces, each good; frame module
+  dim 2, good; witnesses for all six graph automorphisms.
+* B3–B6, D5–D7: weights distinct `True`, `<chi,chi> = 1, <chi,perm> = 1`; for D_n the negate-e_n dims
+  `(6,4)`, `(10,5)`, `(15,6)`. D4: weights distinct `False`, `<chi,chi> = 2`.
 
 Expected key lines:
 
