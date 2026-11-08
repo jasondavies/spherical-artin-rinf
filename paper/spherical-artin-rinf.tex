@@ -1,9 +1,14 @@
-\documentclass[11pt]{amsart}
-\usepackage[margin=1in]{geometry}
-\usepackage{amsmath,amssymb,amsthm,mathtools}
-\usepackage{booktabs}
+\pdfoutput=1
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs}
 \usepackage{enumitem}
-\usepackage[pdfusetitle,colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[margin=1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\hypersetup{pdftitle={Twisted conjugacy in spherical Artin groups and their crystallographic quotients},
+ pdfauthor={Jason Davies}}
+\emergencystretch=2em
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -30,12 +35,12 @@
 \newcommand{\Gr}{\operatorname{Gr}}
 \newcommand{\Rinf}{R_\infty}
 
-\title[Twisted conjugacy in spherical Artin groups]{Twisted conjugacy in spherical Artin groups and their crystallographic quotients}
-\author{Jason Davies}
-\email{jason@jasondavies.com}
-\date{Draft, November 2026}
+\title{Twisted conjugacy in spherical Artin groups and their crystallographic quotients}
+\author{Jason Davies\thanks{\href{mailto:jason@jasondavies.com}{\nolinkurl{jason@jasondavies.com}}}}
+\date{November 8, 2026}
 
 \begin{document}
+\maketitle
 
 \begin{abstract}
 Let $A$ be an irreducible spherical Artin group of Coxeter rank at least two, and let $P$ be its pure subgroup.
@@ -54,8 +59,6 @@ Uniform character arguments handle the classical families. The negative dihedral
 integral automorphisms, with compatibility checked against the crystallographic extension.
 An alternative proof for seven Artin groups has a conditional Lean formalisation.
 \end{abstract}
-
-\maketitle
 
 \noindent\textbf{AI transparency statement.} The mathematical arguments, programs, Lean formalisation
 and manuscript were developed by AI systems under the author's direction. The scope of the formal
@@ -1007,7 +1010,7 @@ for this more detailed question.
 \appendix
 \section{Computational certificates and cross-checks}\label{app:comp}
 
-The command \texttt{python3 scripts/verify.py --clean} runs the certificates and builds the paper
+The command \texttt{python3 scripts/verify.py -{}-clean} runs the certificates and builds the paper
 and Lean development. Dependencies are pinned; logs are written to \texttt{verification/}.
 Programs, commands and expected outputs are listed in \texttt{code/README.md} of the accompanying repository. We
 distinguish \emph{proof certificates} from \emph{corroboration}.
@@ -1179,6 +1182,7 @@ the exact computational checks described in Appendix~\ref{app:comp}. These check
 The author takes responsibility for the content of the paper and the accuracy of this disclosure.
 
 \begin{thebibliography}{99}
+\raggedright
 \bibitem{AIMPL} AIM Problem List, \emph{Geometry and topology of Artin groups}, Problem 8.6, aimpl.org/geomartingp/8.
 \bibitem{Bri71} E. Brieskorn, Die Fundamentalgruppe des Raumes der regul\"aren Orbits einer endlichen komplexen Spiegelungsgruppe, \emph{Invent.\ Math.} 12 (1971), 57--61.
 \bibitem{CS22} M. Calvez, I. Soroko, Property $R_\infty$ for some spherical and affine Artin--Tits groups, \emph{J.\ Group Theory} 25 (2022), 1045--1054.
