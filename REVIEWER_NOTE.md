@@ -2,7 +2,7 @@
 
 The main result is a classification of property R∞ for Γ_X = A(X)/[P,P], where X is irreducible spherical of rank at least two. All ranks at least three are positive. For I₂(m), the positive parameters are exactly 4 | m or m odd with 3 | m. This implies the corresponding Artin-group result; the remaining dihedral Artin cases are known. An explicit automorphism for I₂(5) has R = 18.
 
-The paper and supporting code were developed with substantial AI assistance. The current audit is an AI mathematical and computational audit, not independent human peer review. [AUDIT.md](AUDIT.md) records the proof dependencies and source checks.
+The paper and supporting code were developed with substantial AI assistance. The audit is an AI mathematical and computational audit, not independent human peer review. [AUDIT.md](AUDIT.md) records the proof dependencies and source checks.
 
 ## Suggested reading order
 
@@ -24,4 +24,4 @@ After the setup in [README.md](README.md), run `python3 scripts/verify.py --clea
 
 The matching source-and-code archive is produced by `python3 scripts/package_review.py` after a successful full verification run. It includes the PDF, supplementary proof account, checkers, dependency pins, current logs and a checksum manifest, so the implementation and the manuscript can be reviewed together.
 
-The remaining external checks are a human mathematical review and a final priority/bibliography check close to submission. The paper names Jason Davies as author and includes an AI transparency statement and disclosure.
+Independent human mathematical review remains outstanding. Bibliographic metadata and links were checked on 10 November 2026. The paper names Jason Davies as author and includes an AI transparency statement and disclosure.

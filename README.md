@@ -46,3 +46,15 @@ The exact Python calculations are proof inputs for the exceptional constituents 
 Lean verifies the direct Artin-group argument for D5, E6, E7, E8, F4, H3 and H4, conditional on explicitly stated cited results. It also proves Proposition C for the presented quotient A(I₂(5))/[P,P]: the affine map has kernel exactly [P,P], and the transferred automorphism has Reidemeister number 18. This result has no external mathematical hypotheses. The full quotient classification remains outside Lean. See the Lean guide for the precise hypotheses.
 
 Jason Davies is the author. The mathematical arguments, programs, Lean development and manuscript were developed by AI systems under his direction; the paper includes an AI transparency statement and a fuller disclosure. No independent human expert review has been recorded.
+
+## Citation
+
+Jason Davies. *Twisted conjugacy in spherical Artin groups and their crystallographic quotients*. Preprint, 2026.
+
+Machine-readable citation metadata is provided in [CITATION.cff](CITATION.cff). When citing the computational material, also identify the commit used. A preprint identifier or archive DOI will be added when available.
+
+## License
+
+Copyright 2026 Jason Davies.
+
+The original contents of this repository, including the manuscript, documentation, Python code and Lean development, are licensed under the Apache License 2.0; see [LICENSE](LICENSE). Third-party dependencies retain their own licences.

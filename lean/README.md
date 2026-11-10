@@ -76,7 +76,7 @@ The finite reflection tables are linked to the Coxeter group by generator relati
 
 These final theorems have no external mathematical hypotheses and require no supplied group isomorphism. Their axiom reports contain only Lean's standard `propext`, `Classical.choice` and `Quot.sound`. This formalises Proposition C, including the presentation-to-affine-model step; it does not formalise the full quotient classification.
 
-`LatticeCriterion.lean` similarly separates the common linear mechanism from the Artin-specific reduction. It proves the rational scalar restriction to ±1 and the stable/swap fixed-vector argument, with scalar-action and witness hypotheses stated explicitly. It does not automatically establish these hypotheses for every quotient in Theorem B. Existing Artin theorem signatures and their external assumptions are preserved.
+`LatticeCriterion.lean` similarly separates the common linear mechanism from the Artin-specific reduction. It proves the rational scalar restriction to ±1 and the stable/swap fixed-vector argument, with scalar-action and witness hypotheses stated explicitly. It does not automatically establish these hypotheses for every quotient in Theorem B.
 
 Regenerate the I₂(5) certificates with `python3 lean/scripts/export_dihedral5.py` from the repository root, or pass `--check` to compare without writing. The exporter uses exact SymPy arithmetic and the affine matrices in `code/indep/dihedral_quotient.py`; its output is independently checked by the Lean kernel. The verification runner includes the comparison.
 
