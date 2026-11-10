@@ -56,6 +56,16 @@ def line(v):
     w = tuple(-x for x in v)
     return max(v, w)
 
+def intbasis(M):
+    from sympy import lcm
+    K = M.nullspace().to_Matrix()   # rows span kernel
+    rows = []
+    for i in range(K.rows):
+        row = list(K.row(i)); L = 1
+        for x in row: L = lcm(L, x.q)
+        rows.append([int(x*L) for x in row])
+    return np.array(rows, dtype=object).reshape(K.rows, K.cols).T
+
 def analyse(name, n, expect):
     Phi = subsystem(n)
     lines = sorted({line(r) for r in Phi})
@@ -101,23 +111,16 @@ def analyse(name, n, expect):
     r = ((lam - mu) + sq)//2; s = ((lam - mu) - sq)//2
     # exact: (A - rI)(A - sI) = mu J on whole space; ranks exact via sympy
     from sympy.polys.matrices import DomainMatrix
-    from sympy import ZZ, QQ, lcm
+    from sympy import ZZ, QQ
     def dm(M): return DomainMatrix([[ZZ(int(x)) for x in row] for row in M], (N, N), ZZ)
     Ar = dm(A - r*I).convert_to(QQ); As = dm(A - s*I).convert_to(QQ)
     fr = N - Ar.rank(); fs = N - As.rank()
     trace_ok = (k + r*fr + s*fs == 0) and (1 + fr + fs == N)
     print(f"{name}: lines={N} orbitals={norb} types={sorted(labels)} SRG=({N},{k},{lam},{mu}) identity={srg_ok}")
     print(f"   eigenvalues {k}^1 {r}^{fr} {s}^{fs} (exact ranks over Q; trace check {trace_ok}); expect {expect}")
-    if not (norb == 3 and (N, k, lam, mu) == EXPECT[name][0] and (fr, fs) == EXPECT[name][1:3] and trace_ok):
+    if not (srg_ok and norb == 3 and labels == {('eq',), ('perp',), ('nonperp',)}
+            and (N, k, lam, mu) == EXPECT[name][0] and (fr, fs) == EXPECT[name][1:3] and trace_ok):
         FAIL.append(name + ' SRG/orbitals/spectrum'); print('   *** CHECK FAILED')
-    def intbasis(M):
-        K = M.nullspace().to_Matrix()   # rows span kernel
-        rows = []
-        for i in range(K.rows):
-            row = list(K.row(i)); L = 1
-            for x in row: L = lcm(L, x.q)
-            rows.append([int(x*L) for x in row])
-        return np.array(rows, dtype=object).T     # N x d integer
     Kr = intbasis(Ar); Ks = intbasis(As)
     Ao = A.astype(object)
     ok_r = not np.any(Ao.dot(Kr) - r*Kr); ok_s = not np.any(Ao.dot(Ks) - s*Ks)
@@ -127,6 +130,16 @@ def analyse(name, n, expect):
     for K in (Kr, Ks):
         nontriv.append(all(np.any(K[list(g)] - K) for g in gens))
     print(f"   all simple reflections act nontrivially on both eigenspaces: {nontriv}")
+    for description, ok in [
+        ('eigenbasis identities', ok_r and ok_s),
+        ('constant-vector orthogonality', ones_ok),
+        ('complete independent eigenbases',
+         (Kr.shape[1], Ks.shape[1]) == (fr, fs)
+         and (exact_rank(Kr.T), exact_rank(Ks.T)) == (fr, fs)),
+        ('nontrivial simple-reflection actions', all(nontriv)),
+    ]:
+        if not ok:
+            FAIL.append(name + ' ' + description); print('   *** CHECK FAILED:', description)
     # perpendicular subsystem counts and ranks
     a0 = simple[0]
     perp = [x for x in Phi if ip(x, a0) == 0]
@@ -141,10 +154,16 @@ def analyse(name, n, expect):
     got = (len(perp), rk(perp), len(pp), rk(pp), len(pb), rk(pb), nb)
     if got != EXPECT[name][3]: FAIL.append(name + ' perp counts/ranks'); print('   *** CHECK FAILED', got)
 
-for name, n, e in [("E6", 6, "3^15 (-3)^20"), ("E7", 7, "3^35 (-5)^27"), ("E8", 8, "3^84 (-9)^35")]:
-    analyse(name, n, e)
-    sys.stdout.flush()
+def main():
+    FAIL.clear()
+    for name, n, e in [("E6", 6, "3^15 (-3)^20"), ("E7", 7, "3^35 (-5)^27"), ("E8", 8, "3^84 (-9)^35")]:
+        analyse(name, n, e)
+        sys.stdout.flush()
+    if FAIL:
+        print("FAILED CHECKS:", FAIL)
+        return 1
+    print("ALL CHECKS PASSED (SRG identities, orbitals, exact eigenbases, reflection actions and perpendicular subsystems)")
+    return 0
 
-if FAIL:
-    print("FAILED CHECKS:", FAIL); sys.exit(1)
-print("ALL CHECKS PASSED (perpendicular counts and exact ranks; see the printed SRG data above)")
+if __name__ == '__main__':
+    sys.exit(main())

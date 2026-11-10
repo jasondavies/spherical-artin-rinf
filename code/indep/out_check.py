@@ -26,7 +26,10 @@ def run(name):
     E, index = enumerate_group(rs.gens)
     dt = E.dtype; G = len(E)
     print(f'===== {name}: |rho(W)| = {G}, |R| = {N}', flush=True)
-    print(f'  centre of rho(W): order {len(centre(E, rs.gens))}', flush=True)
+    centre_order = len(centre(E, rs.gens))
+    print(f'  centre of rho(W): order {centre_order}', flush=True)
+    if centre_order != 1:
+        FAIL.append(name + ': nontrivial centre')
     # reflections as group elements
     refl = [np.array(rs.perm_of(rs.R[r]), dtype=dt) for r in range(N)]
     refl_idx = [index[p.tobytes()] for p in refl]

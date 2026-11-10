@@ -3,6 +3,7 @@
 import contextlib
 import io
 from pathlib import Path
+import runpy
 import subprocess
 import sys
 from types import SimpleNamespace
@@ -16,6 +17,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent / 'indep'))
 import certify
 import certify_outer
 import indep_check
+import exceptional_srg
+import permgroup
 import uniform_check
 
 
@@ -77,6 +80,53 @@ class CertificateGuards(unittest.TestCase):
                 {'results': results, 'good': good, 'clash': []}))
         self.assertTrue(uniform_check.positive_criterion_holds(
             {'results': witness, 'good': [4], 'clash': []}))
+
+    def test_srg_identity_failure_reaches_exit_status(self):
+        output = io.StringIO()
+        with patch.object(exceptional_srg, 'FAIL', []), \
+             patch.object(exceptional_srg.np, 'array_equal', return_value=False), \
+             contextlib.redirect_stdout(output):
+            self.assertEqual(exceptional_srg.main(), 1)
+            self.assertEqual(exceptional_srg.FAIL,
+                             [name + ' SRG/orbitals/spectrum' for name in ('E6', 'E7', 'E8')])
+        self.assertNotIn('ALL CHECKS PASSED', output.getvalue())
+
+    def test_srg_rejects_corrupt_eigenbases(self):
+        original = exceptional_srg.intbasis
+
+        def corrupt_basis(M):
+            K = original(M)
+            if corruption == 'constant':
+                K[:, 0] = 1
+            elif corruption == 'duplicate':
+                K[:, 0] = K[:, 1]
+            elif corruption == 'empty':
+                K = K[:, :0]
+            return K
+
+        for corruption, failures in [
+            ('constant', ['eigenbasis identities', 'constant-vector orthogonality']),
+            ('duplicate', ['complete independent eigenbases']),
+            ('empty', ['complete independent eigenbases', 'nontrivial simple-reflection actions']),
+        ]:
+            with self.subTest(corruption=corruption), \
+                 patch.object(exceptional_srg, 'FAIL', []), \
+                 patch.object(exceptional_srg, 'intbasis', side_effect=corrupt_basis):
+                exceptional_srg.analyse('E6', 6, '3^15 (-3)^20')
+                for failure in failures:
+                    self.assertIn('E6 ' + failure, exceptional_srg.FAIL)
+
+    def test_holonomy_rejects_nontrivial_centre_at_entry_point(self):
+        script = Path(__file__).resolve().parent / 'indep/out_check.py'
+        output = io.StringIO()
+        with patch.object(permgroup, 'centre', return_value=[0, 1]), \
+             patch.object(sys, 'argv', [str(script), 'H3']), \
+             contextlib.redirect_stdout(output):
+            with self.assertRaises(SystemExit) as error:
+                runpy.run_path(str(script), run_name='__main__')
+        self.assertEqual(error.exception.code, 1)
+        self.assertIn('H3: nontrivial centre', output.getvalue())
+        self.assertNotIn('ALL CHECKS PASSED', output.getvalue())
 
     def test_empty_command_lines_fail(self):
         root = Path(__file__).resolve().parent
