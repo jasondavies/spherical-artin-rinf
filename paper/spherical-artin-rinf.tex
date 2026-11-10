@@ -43,21 +43,21 @@
 \maketitle
 
 \begin{abstract}
-Let $A$ be an irreducible spherical Artin group of Coxeter rank at least two, and let $P$ be its pure subgroup.
+A group has property $\Rinf$ if every automorphism has infinitely many twisted conjugacy classes.
+Let $A$ be an irreducible spherical Artin group of Coxeter rank at least two, with pure subgroup $P$.
 We classify property $\Rinf$ for the crystallographic quotient $\Gamma=A/[P,P]$.
-If $A$ has rank at least three, then $\Gamma$ has $\Rinf$; in type $I_2(m)$, this holds exactly
-when $4\mid m$ or when $m$ is odd and $3\mid m$.
-Since $[P,P]$ is characteristic, the positive quotient results, together with the known dihedral
-Artin-group case, imply that every irreducible spherical Artin group of rank at least two has $\Rinf$.
-The quotient construction therefore does not preserve $\Rinf$ in general. In type $I_2(5)$ we give
-an automorphism of $\Gamma$ with Reidemeister number $18$.
+If $A$ has Coxeter rank at least three, then $\Gamma$ has $\Rinf$.
+In type $I_2(m)$, this holds exactly when $4\mid m$, or when $m$ is odd and $3\mid m$.
+Together with the known dihedral Artin-group cases, the positive quotient results imply that
+every irreducible spherical Artin group of rank at least two has $\Rinf$.
 
-The positive proofs use explicit absolutely irreducible rational constituents of multiplicity one
-in the reflection permutation module. Multiplicity one restricts commuting lattice automorphisms to signs; explicit witnesses on stable
-or exchanged constituents then force eigenvalue one after a holonomy twist.
-Uniform character arguments handle the classical families. The negative dihedral cases use commuting
-integral automorphisms, with compatibility checked against the crystallographic extension.
-Proposition~C is formalised in Lean; an alternative proof for seven Artin groups has a conditional formalisation.
+The positive proofs combine the rational representation theory of the holonomy action with
+integral lattice constraints and explicit fixed-vector witnesses. In the negative dihedral cases,
+we construct automorphisms compatible with the crystallographic extension. For type $I_2(5)$,
+we exhibit an automorphism with Reidemeister number $18$, showing concretely that the quotient
+construction does not preserve $\Rinf$. This example, including the identification with the
+presented Artin quotient and the exact Reidemeister count, is formalised in Lean.
+An alternative proof for seven Artin groups is formalised under explicitly stated external hypotheses.
 \end{abstract}
 
 \noindent\textbf{AI transparency statement.} The mathematical arguments, programs, Lean formalisation
