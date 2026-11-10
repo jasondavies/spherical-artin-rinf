@@ -49,6 +49,6 @@ These are the seven conditional Artin-group theorems. Their hypotheses are finit
 
 ## The D5 attribution
 
-Paris–Soroko [PS26, Theorem 1] states Aut(A[D5]) = Inn(A) ⋊ ⟨χ⟩, with χ inverting the Artin generators. This also yields R∞. Inner automorphisms have the same Reidemeister number as the identity, which is infinite since Aᵃᵇ ≅ ℤ. Inversion acts by −I on Pᵃᵇ: on the affine image it sends (v,w) to (−v,w). A reflection acting by −1 on U⁻ therefore gives eigenvalue one after an inner twist of χ. The finite-index and inner-twist argument above gives R(χ) = ∞.
+Paris–Soroko [PS26, Lemma 4] proves that the kernel of the natural epimorphism A[D5] → A[A4], obtained by identifying the two terminal generators, is fully characteristic. Every automorphism therefore descends to the braid-group quotient A[A4], which has R∞. The surjection on twisted conjugacy classes gives R∞ for A[D5]. This is a deduction from their lemma, not a theorem stated in their paper.
 
-This deduction is distinct from the formalised Franzsen–Howlett proof. [PS26] does not state the R∞ conclusion; [SV24] states its D_n theorem for n ≥ 6 and leaves D5 as a conjecture, while [Sor26] lists n ≥ 5. The paper includes D5 without claiming priority.
+This deduction is distinct from the formalised Franzsen–Howlett proof. [SV24] states its D_n theorem for n ≥ 6 and leaves D5 as a conjecture. The paper includes an independent D5 proof within its uniform quotient argument without claiming priority for that case.

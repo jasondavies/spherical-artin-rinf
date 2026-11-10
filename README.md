@@ -19,9 +19,14 @@ Theorem B implies the rank-at-least-three part of Theorem A because [P,P] is cha
 
 ## Reproduce
 
+The repository URL is <https://github.com/jasondavies/spherical-artin-rinf>. The paper pins its executable Python and Lean sources and dependency files to commit [`d83e8d4191d569b00b626701d2393f1f2f4175fa`](https://github.com/jasondavies/spherical-artin-rinf/tree/d83e8d4191d569b00b626701d2393f1f2f4175fa); subsequent manuscript and documentation edits do not change those computational sources. There is currently no release tag or archive DOI. The repository must be made publicly accessible before the paper is released.
+
 Use Python 3.12, a TeX installation with `pdflatex` and the packages imported by `paper/spherical-artin-rinf.tex`, and Elan/Lake. Python dependencies, including SymPy's mpmath dependency, and the Lean/Mathlib toolchain are pinned.
 
 ```sh
+git clone https://github.com/jasondavies/spherical-artin-rinf.git
+cd spherical-artin-rinf
+git checkout --detach d83e8d4191d569b00b626701d2393f1f2f4175fa
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 (cd lean && lake exe cache get)

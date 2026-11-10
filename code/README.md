@@ -10,7 +10,7 @@ The runner disables Python optimisation, sets numerical libraries to one thread,
 
 ## Proof inputs and exact cross-checks
 
-All paths below are relative to `code/`. The runner executes each row and first runs the fault-injection tests in `test_certificate_guards.py`. Those tests require empty or partial constituent/witness data and empty command lines to fail.
+All paths below are relative to `code/`. The runner executes each row and first runs the fault-injection tests in `test_certificate_guards.py`. Those tests require empty or partial constituent/witness data, corrupt eigenbases, failed SRG identities, a nontrivial holonomy centre and empty command lines to fail.
 
 | Script | Mathematical purpose |
 |---|---|
@@ -26,6 +26,18 @@ All paths below are relative to `code/`. The runner executes each row and first 
 | `certify_outer.py H3 F4 H4` | Exact scalar commutants, stable/swap images and sign witnesses, with required constituent multiplicities and both signs checked. |
 
 The unbounded classical and dihedral statements are proved algebraically in the manuscript. Checking finitely many ranks or parameters does not prove them.
+
+## Why the holonomy search is exhaustive
+
+Appendix B uses `indep/out_check.py` for H3, F4, H4, E6 and E7. Its inputs are the exact root-line permutations constructed by `indep/rootsys.py`. The following steps describe the completeness argument and its implementation.
+
+1. `permgroup.enumerate_group` starts at the identity and repeatedly multiplies by every simple generator until no new permutation remains. Equality is equality of the entire permutation array. The size limit raises an exception; it never returns a truncated group.
+2. Every enumerated element is tested for being a nonidentity involution. Union–find under conjugation by the simple generators partitions all these involutions into conjugacy classes. The checker requires that only reflection classes have the reflection-class sizes. Since automorphisms preserve order and conjugacy-class size, every automorphism preserves the reflection set. It also checks injectivity of the reflection images and triviality of the centre.
+3. `search(tup, H)` maintains the pointwise stabiliser `H` of the chosen reflection tuple. It lists every possible next reflection whose pair-product orders agree with those of the corresponding simple generators. These conditions are invariant under `H`, so the search takes one representative of each `H`-orbit and recurses with its stabiliser. This induction covers exactly one representative of every inner orbit of admissible tuples; it is not a random or bounded-depth sample. Reflection-image injectivity identifies point stabilisers with centralisers of the corresponding reflections.
+4. Each length-rank tuple must generate the whole holonomy group, checked by exact permutation-group order. Such a tuple satisfies the Coxeter relations and gives a surjection W → W/Z(W). Its kernel has order |Z(W)|, which is one or two in these types. A normal subgroup of order two is central, so the kernel is precisely Z(W). Thus every retained tuple induces an automorphism, and every automorphism supplies a retained tuple up to inner conjugation.
+5. The resulting orbit counts must be 2, 2, 2, 1, 1 for H3, F4, H4, E6, E7. A mismatch causes a nonzero exit. `out_check_stab.py` independently checks the reflection-preserving stage for E7 and E8; it does not establish reflection preservation by itself. The E8 full-holonomy result uses the paper's hand proof.
+
+For the other exceptional proof inputs, Proposition 4.1 (E types) is checked by `exceptional_srg.py` and `explicit_constituents.py`; Propositions 4.2, 4.3 and 4.5 (H3, F4, H4) and Lemma 4.4 (icosians) use `explicit_constituents.py`. The independent character and outer-witness programs provide additional checks. The seven conditional Lean theorems follow the separate Franzsen–Howlett route described in `lean/README.md`; their success does not by itself certify Appendix B's full-holonomy computations.
 
 ## Expected mathematical outputs
 

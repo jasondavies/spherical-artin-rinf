@@ -79,11 +79,11 @@ is Problem~8.6 of the AIM problem list on Artin groups \cite{AIMPL}. Known cases
 \item $D_n$ for $n\ge6$ \cite[Thm.~1]{SV24};
 \item many non-spherical types \cite{Juh11,SV24,Sor26}.
 \end{itemize}
-The case $D_5$ is left open (as a conjecture) in \cite[\S1]{SV24}. Paris--Soroko computed $\Aut(A[D_5])$
-\cite[Thm.~1]{PS26}, from which $\Rinf$ follows by the inversion argument in \texttt{lean/DIRECT\_PROOF.md},
-subsection ``The D5 attribution''; \cite{PS26} does not state
-it. The list in \cite[\S1]{Sor26} includes $D_5$, attributing it to \cite{SV24}. We include an independent
-proof for $D_5$ in the completion below.
+The case $D_5$ was left as a conjecture in \cite[\S1]{SV24}.
+It follows from Paris--Soroko \cite[Lemma~4]{PS26}: the kernel of the natural epimorphism
+$A[D_5]\to A[A_4]$ is fully characteristic, so the known braid-group case \cite{FG10}
+and Lemma~\ref{lem:reid}(a) imply property $\Rinf$ for $A[D_5]$.
+This is a consequence of their lemma; we give an independent proof as part of our uniform quotient argument.
 For spherical types the known proofs use an explicit description of $\Aut(A)$ or $\Aut(A/Z(A))$. For $I_2(m)$
 they use instead the virtual freeness of $A/Z(A)$ \cite{CS22}.
 
@@ -429,7 +429,8 @@ More precisely, writing irreducible $A_5$-modules by their dimensions,
 \item For $\Sigma=\varsigma\circ\sigma$, where $\sigma$ is Galois conjugation $\sqrt5\mapsto-\sqrt5$ on coordinates
 and $\varsigma$ swaps the last two coordinates, $\Sigma\Phi=\Phi$ and $\Sigma s_\alpha\Sigma^{-1}=s_{\Sigma\alpha}$. The
 induced $\pi_\Sigma$ is not inner on $\rho(W)$.
-\item For every outer $\theta$ there is $h$ such that $h\pi$ acts on the frames as a transposition. It then has
+\item For every outer $\theta\in\Aut(\rho(W))$, let $\pi$ be its induced permutation of root lines,
+identified with the involutions of $\rho(W)$. There is $h\in\rho(W)$ such that $h\pi$ acts on the frames as a transposition. It then has
 eigenvalues $+1$ (multiplicity 3) and $-1$ (multiplicity 1) on $U$.
 \end{enumerate}
 \end{proposition}
@@ -516,7 +517,8 @@ The closure of $I$ under multiplication is a finite computation, certified exact
 
 \begin{proposition}[$H_4$]\label{prop:H4}
 Let $V$ be the $4$-dimensional augmentation module of $K\cong A_5$ acting on its five Klein four-subgroups, and
-let $U\subseteq\Q^K$ be the span of the matrix coefficients $x\mapsto\operatorname{tr}(X\lambda_V(x))$, so
+let $U\subseteq\Q^K$ be the span of the matrix coefficients $x\mapsto\operatorname{tr}(X\lambda_V(x))$
+for $X\in\End_{\Q}(V)$, so
 $U\cong\End(V)$ has dimension $16$.
 \begin{enumerate}[label=(\alph*)]
 \item $U$ is good.
@@ -1012,6 +1014,14 @@ for this more detailed question.
 \appendix
 \section{Computational certificates and cross-checks}\label{app:comp}
 
+The repository for the computational sources and Lean development is
+\begin{center}
+\url{https://github.com/jasondavies/spherical-artin-rinf}.
+\end{center}
+The version used in this paper is commit
+\href{https://github.com/jasondavies/spherical-artin-rinf/tree/d83e8d4191d569b00b626701d2393f1f2f4175fa}{\texttt{d83e8d4191d5}}
+of that repository.
+This revision fixes the executable sources and dependency versions; the manuscript and explanatory documentation may be revised separately.
 The command \texttt{python3 scripts/verify.py -{}-clean} runs the certificates and builds the paper
 and Lean development. Dependencies are pinned; logs are written to \texttt{verification/}.
 Programs, commands and expected outputs are listed in \texttt{code/README.md} of the accompanying repository. We
@@ -1100,6 +1110,16 @@ it also follows from Lemma~\ref{lem:sign} below. For $E_7$ the reflection-preser
 single exact enumeration above.
 \item For $E_8$, Proposition~\ref{prop:E8} below gives a proof by hand.
 \end{itemize}
+
+The search in \texttt{code/indep/out\_check.py} enumerates the generated permutation group to closure
+and partitions all its involutions by conjugation with the simple generators. At each stage of the
+Coxeter-tuple search it considers every reflection satisfying the pair-product order constraints,
+up to the stabiliser of the preceding tuple; at a leaf it checks generation of the whole group.
+Thus no automorphism image tuple is omitted. Conversely, a generating tuple defines a surjection
+$W\to\rho(W)$ whose kernel has order $|Z(W)|\le2$. If this order is two, the kernel is central,
+so it equals $Z(W)$; the tuple therefore induces an automorphism of $\rho(W)$.
+The checked injectivity of the reflection images identifies tuple stabilisers with point stabilisers,
+so the resulting orbits are exactly the inner-automorphism orbits.
 
 The separate computation $\Out(\rho(W(D_5)))=1$ is optional corroboration.
 The main proof covers $D_5$ uniformly in Proposition~\ref{prop:classical-quotients} and does not use it.

@@ -14,9 +14,9 @@ The paper and supporting code were developed with substantial AI assistance. The
 
 ## Attribution and formal scope
 
-D5 also follows from Paris–Soroko's automorphism classification and the inversion argument in [the Lean documentation](lean/DIRECT_PROOF.md#the-d5-attribution). Soroko–Vaskou's stated theorem covers n ≥ 6; a later list includes n = 5. The paper states these facts without claiming priority for D5. The virtual-braid quotient results of Dekimpe–Gonçalves–Ocampo are acknowledged separately from these spherical quotients. The A2 quotient is already implicit in the earlier space-group classification.
+D5 also follows from Paris–Soroko, Lemma 4: the natural map to A[A4] has fully characteristic kernel, so the known braid-group result and the quotient inequality imply R∞. This is a deduction from their lemma. The paper gives an independent uniform proof without claiming priority for D5. The virtual-braid quotient results of Dekimpe–Gonçalves–Ocampo are acknowledged separately from these spherical quotients. The A2 quotient is already implicit in the earlier space-group classification.
 
-Appendix C summarises the dependencies of the direct Artin-group route formalised in Lean; its complete account is in [the accompanying documentation](lean/DIRECT_PROOF.md). Its seven main theorems assume finiteness of W, characteristicity of P, the rank of P's abelianisation and the Franzsen–Howlett decomposition. H3 and F4 also have theorems avoiding the latter assumption. The full quotient classification and R = 18 are not Lean-formalised.
+Appendix C summarises the dependencies of the direct Artin-group route formalised in Lean; its complete account is in [the accompanying documentation](lean/DIRECT_PROOF.md). Its seven main theorems assume finiteness of W, characteristicity of P, the rank of P's abelianisation and the Franzsen–Howlett decomposition. H3 and F4 also have theorems avoiding the latter assumption. Lean also proves R = 18 for the concrete infinite affine extension and its generation by the two Artin images. The identification with the presented Artin quotient and the full quotient classification remain outside Lean.
 
 ## Reproduction
 
