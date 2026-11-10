@@ -13,7 +13,7 @@ cd ..
 python3 scripts/verify.py --only lean --clean
 ```
 
-The runner cleans only `artin_rinf`, retaining dependency build outputs, then builds the project and runs `scripts/print_axioms.lean`. It validates the axiom lists and writes logs to `verification/`. Four Lean threads are used by default; change this with `--threads N`. Some certificate modules can require about 25 GB each. A clean build is substantially slower than an incremental one.
+The runner cleans only `artin_rinf`, retaining dependency build outputs, then builds the project and runs `scripts/print_axioms.lean`. It validates the axiom lists and writes logs to a separate `verification/runs/<run-id>/` directory. A later component run requires another full run before packaging. Four Lean threads are used by default; change this with `--threads N`. Some certificate modules can require about 25 GB each. A clean build is substantially slower than an incremental one.
 
 The development uses no `sorry`, custom `axiom`, or `native_decide`. Finite data are checked with `decide +kernel`. The reported axioms are only `propext`, `Classical.choice`, and `Quot.sound`.
 

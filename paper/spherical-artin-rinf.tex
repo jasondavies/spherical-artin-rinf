@@ -609,7 +609,7 @@ $\Q^\T$. Since $S_n\le W$ permutes the weights transitively, $U^-\otimes\C$ is i
 \emph{Witnesses.} For the inner class, $\pi=1$ works: the reflection
 $s_{e_n}$ ($B_n$), resp.\ $s_{e_{n-1}-e_n}$ ($D_n$), acts nontrivially on $U^-$. The diagram involution is realised
 by negating $e_n$, which acts on $u_{ij}$ by $-1$ if $n\in\{i,j\}$ and by $+1$ otherwise. So case~(i) holds with
-$h=1$.
+$g=1$.
 \end{proof}
 
 \begin{proposition}[$D_4$]\label{prop:D4}
@@ -847,8 +847,11 @@ rotation acts by multiplication by $\zeta_d$, and reflection acts by complex con
 Each $U_d$ is rationally irreducible and has dimension $\phi(d)$.
 Among odd divisors $d$, the equality $\phi(d)=2$ holds only for $d=3$.
 Thus for odd $m$ divisible by three, the unique $2$-dimensional constituent is $U_3$, whose holonomy image is $S_3$.
-Every rational normaliser preserves this constituent. The $S_3$ argument in the $D_4$ case of
-Proposition~\ref{prop:classical-quotients} gives a fixed vector after a holonomy twist, so $\Rinf$ holds.
+Every rational normaliser preserves this constituent. As in the $D_4$ case of
+Proposition~\ref{prop:classical-quotients}, its restriction is a holonomy element times a rational scalar:
+all automorphisms of $S_3$ are inner and the remaining commuting operator is scalar.
+Preservation of the constituent lattice by the operator and its inverse forces this scalar to be $\pm1$.
+The identity or a reflection then gives a fixed vector after a holonomy twist, so $\Rinf$ holds.
 
 \emph{$m$ divisible by four.} Write $m=2q$, with $q$ even. The only nontrivial rational
 $1$-dimensional constituents are the multiplicity-one lines spanned by
@@ -1024,7 +1027,13 @@ of that repository.
 That revision also fixes their dependency versions and includes
 the presented-quotient theorem in \texttt{lean/ArtinRinf/Dihedral5/Quotient.lean}.
 The command \texttt{python3 scripts/verify.py -{}-clean} runs the certificates and builds the paper
-and Lean development. Dependencies are pinned; logs are written to \texttt{verification/}.
+and Lean development. Dependencies are pinned; each run records source, PDF and log hashes in its own
+directory under \texttt{verification/runs/}.
+The complete submitted snapshot, including the manuscript and PDF, is identified separately by
+the SHA-256 checksum of the accompanying review archive. The command
+\texttt{python3 scripts/package\_review.py} creates that archive only when its inputs, PDF and logs
+match the latest successful full verification run. Its manifest records the source-and-PDF snapshot
+digest, base commit and verification run identifier.
 Programs, commands and expected outputs are listed in \texttt{code/README.md} of the accompanying repository. We
 distinguish \emph{proof certificates} from \emph{corroboration}.
 \begin{itemize}
@@ -1052,7 +1061,10 @@ together with the SRG parameters, the three orbitals and the eigenspace dimensio
 \begin{itemize}
 \item frames, and character norms $\langle\chi,\chi\rangle=\langle\chi,\chi_\T\rangle=1$;
 \item the images of $W$ on frames ($A_5$, $S_3$);
-\item the action of $\pi_\Sigma$, $\pi_L$, $\pi_\Psi$, with eigenspace dimensions $(3,1)$, $(1,1)$, $(10,6)$;
+\item the $(+1,-1)$-eigenspace dimensions of $\pi_\Sigma$ on the $H_3$ frame constituent: $(3,1)$;
+of $\pi_L^2$ and $(s\pi_L)^2$ on $U_{\mathrm{short}}$ in type $F_4$, for a long simple reflection $s$:
+$(2,0)$ and $(1,1)$, respectively; and of $h\pi_\Psi$ on the $16$-dimensional $H_4$ coefficient constituent,
+with the inner adjustment $h$ from Proposition~\ref{prop:H4}(c): $(10,6)$;
 \item the closure of $I$, the reflection formula, and $\rho(W)=\{x\mapsto ax^{\pm1}b\}$;
 \item $K\cong A_5$: $|K|=60$, $15$ involutions, $5$ Klein four-subgroups, and conjugation is an injective homomorphism
 into $A_5$; also $Z(K)=1$;

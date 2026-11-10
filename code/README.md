@@ -6,11 +6,11 @@ Install the pinned dependencies in the repository's `requirements.txt`, then run
 python3 scripts/verify.py --only python
 ```
 
-The runner disables Python optimisation, sets numerical libraries to one thread, checks dependency versions, requires a successful exit and the `ALL CHECKS PASSED` marker, and writes separate logs plus `verification/python-summary.json`. Use `python3 scripts/verify.py --clean` to include the clean PDF and Lean builds.
+The runner disables Python optimisation, sets numerical libraries to one thread, checks dependency versions, requires a successful exit and the `ALL CHECKS PASSED` marker, and writes logs in `verification/runs/<run-id>/` plus `verification/python-summary.json`. The separate `scripts/test_verification.py` job tests input and log binding, including rejection of stale or altered archives. Use `python3 scripts/verify.py --clean` to include the clean PDF and Lean builds.
 
 ## Proof inputs and exact cross-checks
 
-All paths below are relative to `code/`. The runner executes each row and first runs the fault-injection tests in `test_certificate_guards.py`. Those tests require empty or partial constituent/witness data, corrupt eigenbases, failed SRG identities, a nontrivial holonomy centre and empty command lines to fail. They also check wrapped Lean axiom reports and reject unexpected axioms or a missing presented-quotient theorem.
+All paths below are relative to `code/`. The runner executes each row and first runs the fault-injection tests in `test_certificate_guards.py`. Those tests require empty or partial constituent/witness data, corrupt eigenbases, failed SRG identities, a nontrivial holonomy centre, noninjective reflection images and empty command lines to fail. They also check wrapped Lean axiom reports and reject unexpected axioms or a missing presented-quotient theorem.
 
 | Script | Mathematical purpose |
 |---|---|
@@ -32,7 +32,7 @@ The unbounded classical and dihedral statements are proved algebraically in the 
 Appendix B uses `indep/out_check.py` for H3, F4, H4, E6 and E7. Its inputs are the exact root-line permutations constructed by `indep/rootsys.py`. The following steps describe the completeness argument and its implementation.
 
 1. `permgroup.enumerate_group` starts at the identity and repeatedly multiplies by every simple generator until no new permutation remains. Equality is equality of the entire permutation array. The size limit raises an exception; it never returns a truncated group.
-2. Every enumerated element is tested for being a nonidentity involution. Union–find under conjugation by the simple generators partitions all these involutions into conjugacy classes. The checker requires that only reflection classes have the reflection-class sizes. Since automorphisms preserve order and conjugacy-class size, every automorphism preserves the reflection set. It also checks injectivity of the reflection images and triviality of the centre.
+2. Every enumerated element is tested for being a nonidentity involution. Union–find under conjugation by the simple generators partitions all these involutions into conjugacy classes. The checker requires that only reflection classes have the reflection-class sizes. Since automorphisms preserve order and conjugacy-class size, every automorphism preserves the reflection set. It also checks injectivity of the reflection images and triviality of the centre. The stabiliser checker separately requires injective reflection images before its search.
 3. `search(tup, H)` maintains the pointwise stabiliser `H` of the chosen reflection tuple. It lists every possible next reflection whose pair-product orders agree with those of the corresponding simple generators. These conditions are invariant under `H`, so the search takes one representative of each `H`-orbit and recurses with its stabiliser. This induction covers exactly one representative of every inner orbit of admissible tuples; it is not a random or bounded-depth sample. Reflection-image injectivity identifies point stabilisers with centralisers of the corresponding reflections.
 4. Each length-rank tuple must generate the whole holonomy group, checked by exact permutation-group order. Such a tuple satisfies the Coxeter relations and gives a surjection W → W/Z(W). Its kernel has order |Z(W)|, which is one or two in these types. A normal subgroup of order two is central, so the kernel is precisely Z(W). Thus every retained tuple induces an automorphism, and every automorphism supplies a retained tuple up to inner conjugation.
 5. The resulting orbit counts must be 2, 2, 2, 1, 1 for H3, F4, H4, E6, E7. A mismatch causes a nonzero exit. `out_check_stab.py` independently checks the reflection-preserving stage for E7 and E8; it does not establish reflection preservation by itself. The E8 full-holonomy result uses the paper's hand proof.
@@ -42,7 +42,7 @@ For the other exceptional proof inputs, Proposition 4.1 (E types) is checked by 
 ## Expected mathematical outputs
 
 - E6, E7, E8 have graph parameters (36,15,6,6), (63,30,13,15), (120,63,30,36), and nontrivial constituent dimensions (15,20), (27,35), (35,84).
-- H3's frame constituent has dimension 4 with outer eigenvalue multiplicities (3,1). F4 has exchanged dimension-two constituents and witnesses for both signs of the squared operator. H4's matrix-coefficient constituent has dimension 16 with outer multiplicities (10,6).
+- H3's frame constituent has dimension 4; π_Σ has (+1,−1) eigenspace dimensions (3,1). F4 has exchanged dimension-two constituents: π_L² and (sπ_L)² have dimensions (2,0) and (1,1) on U_short, for a long simple reflection s. H4's matrix-coefficient constituent has dimension 16; the inner-adjusted involution hπ_Ψ has dimensions (10,6). These are not the eigenspace dimensions of the unadjusted π_Ψ.
 - Full holonomy outer automorphism orders are 2,2,2,1,1 for H3,F4,H4,E6,E7. The optional D5 check gives order 1. E8's reflection-preserving automorphisms are inner.
 - I₂(5): adjusted determinants are 2 at the identity, 22 at the four nonidentity rotations, and −10 at the five reflections. Centraliser counts are 1+6+6+5=18. The full enumeration gives 13 orbits of size ten and five of size two. The determinant average is 14 and is not R.
 

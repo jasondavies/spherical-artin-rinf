@@ -11,11 +11,18 @@ import shutil
 import subprocess
 import sys
 import time
+import uuid
+
+from verification_snapshot import (
+    PDF, SCHEMA_VERSION, check_inputs, hashes, sha256, source_files,
+    verification_lock, write_json,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 LOGS = ROOT / "verification"
 PYTHON_CHECKS = [
     ("certificate_guards", "code", ["test_certificate_guards.py"]),
+    ("verification_provenance", "scripts", ["test_verification.py"]),
     ("explicit_constituents", "code/indep", ["explicit_constituents.py"]),
     ("exceptional_srg", "code/indep", ["exceptional_srg.py"]),
     ("holonomy", "code/indep", ["out_check.py", "H3", "F4", "H4", "E6", "E7"]),
@@ -56,8 +63,24 @@ def main():
     args = parser.parse_args()
     if args.threads < 1:
         parser.error("--threads must be positive")
-    LOGS.mkdir(exist_ok=True)
-    report = {"python": sys.version, "clean": args.clean, "checks": []}
+    try:
+        with verification_lock(ROOT):
+            return verify(args)
+    except (OSError, RuntimeError) as error:
+        print(error, file=sys.stderr)
+        return 1
+
+
+def verify(args):
+    scope = args.only or "all"
+    run_id = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()) + "-" + uuid.uuid4().hex
+    run_dir = LOGS / "runs" / run_id
+    run_dir.mkdir(parents=True)
+    report = {"schema_version": SCHEMA_VERSION, "run_id": run_id, "scope": scope,
+              "status": "running", "python": sys.version, "clean": args.clean,
+              "started_at": time.time(), "checks": []}
+    # Invalidate packaging immediately, including if the run is interrupted.
+    write_json(LOGS / "latest-summary.json", report)
     env = dict(os.environ, OMP_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1",
                LEAN_NUM_THREADS=str(args.threads), PYTHONDONTWRITEBYTECODE="1")
     # The certificate scripts use assertions: never inherit Python's -O setting.
@@ -66,20 +89,22 @@ def main():
     def run(name, command, cwd=ROOT, marker=None):
         print(f"Running {name} ...", flush=True)
         start = time.monotonic()
-        log = LOGS / f"{name}.log"
+        log = run_dir / f"{name}.log"
         with log.open("w") as out:
             result = subprocess.run(command, cwd=cwd, env=env, stdout=out, stderr=subprocess.STDOUT)
         content = log.read_text(errors="replace")
         ok = result.returncode == 0 and (marker is None or marker in content)
         report["checks"].append({"name": name, "command": command, "cwd": str(cwd.relative_to(ROOT)),
                                  "seconds": round(time.monotonic() - start, 2), "passed": ok,
-                                 "exit_code": result.returncode})
+                                 "exit_code": result.returncode,
+                                 "log_sha256": sha256(log.read_bytes())})
         if not ok:
             raise RuntimeError(f"{name} failed; see {log}\n{content[-3000:]}")
         print(f"  PASS ({report['checks'][-1]['seconds']}s)", flush=True)
         return content
 
     try:
+        report["inputs"] = hashes(source_files(ROOT))
         if args.only in (None, "python"):
             report["dependencies"] = {}
             for line in (ROOT / "requirements.txt").read_text().splitlines():
@@ -107,15 +132,28 @@ def main():
             run("lean_build", [lake, "build"], ROOT / "lean", "Build completed successfully")
             axioms = run("lean_axioms", [lake, "env", "lean", "scripts/print_axioms.lean"], ROOT / "lean")
             validate_axiom_report(axioms)
+        if args.only in (None, "paper"):
+            report["artifacts"] = {PDF: sha256((ROOT / PDF).read_bytes())}
     except (OSError, RuntimeError, importlib.metadata.PackageNotFoundError) as error:
         report["error"] = str(error)
         print(error, file=sys.stderr)
     finally:
-        report_path = LOGS / f"{args.only or 'all'}-summary.json"
-        report_path.write_text(json.dumps(report, indent=2) + "\n")
+        if "inputs" in report:
+            try:
+                check_inputs(ROOT, report["inputs"])
+            except (OSError, RuntimeError) as error:
+                report["error"] = str(error)
+                print(error, file=sys.stderr)
+        # A run is successful only after every required operation finishes.
+        # KeyboardInterrupt and other uncaught exceptions must not publish success.
+        report["status"] = "success" if "error" not in report and sys.exc_info()[0] is None else "failed"
+        report["finished_at"] = time.time()
+        write_json(run_dir / "summary.json", report)
+        write_json(LOGS / f"{scope}-summary.json", report)
+        write_json(LOGS / "latest-summary.json", report)
     if "error" in report:
         return 1
-    print(f"ALL CHECKS PASSED; logs and summary: {LOGS}")
+    print(f"ALL CHECKS PASSED; logs and summary: {run_dir}")
     return 0
 
 

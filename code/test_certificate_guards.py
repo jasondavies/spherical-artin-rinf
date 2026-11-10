@@ -20,6 +20,7 @@ import indep_check
 import exceptional_srg
 import permgroup
 import uniform_check
+import out_check_stab
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 import verify
@@ -139,6 +140,13 @@ class CertificateGuards(unittest.TestCase):
                 result = subprocess.run([sys.executable, str(root / script)], capture_output=True, text=True)
                 self.assertNotEqual(result.returncode, 0)
                 self.assertNotIn('ALL CHECKS PASSED', result.stdout)
+
+    def test_stabiliser_check_rejects_noninjective_reflections(self):
+        fake = SimpleNamespace(N=2, n=1, gens=[np.array([0, 1])], R=[0, 1],
+                               perm_of=lambda _: [0, 1])
+        with patch.object(out_check_stab, 'RootSystem', return_value=fake):
+            with self.assertRaisesRegex(ValueError, 'reflection images are not injective'):
+                out_check_stab.run('fixture')
 
     def test_axiom_report_handles_wrapped_lists(self):
         names = verify.REQUIRED_AXIOM_REPORTS | {f"Other.theorem{i}'" for i in range(20)}

@@ -19,7 +19,7 @@ Theorem B implies the rank-at-least-three part of Theorem A because [P,P] is cha
 
 ## Reproduce
 
-The repository URL is <https://github.com/jasondavies/spherical-artin-rinf>. The paper pins its Python and Lean sources and dependency files to commit [`3edce8ab5c74ab58d9990249524e2bbc5ea28754`](https://github.com/jasondavies/spherical-artin-rinf/tree/3edce8ab5c74ab58d9990249524e2bbc5ea28754). This revision includes the unconditional formalisation of Proposition C. There is currently no release tag or archive DOI. The repository must be made publicly accessible before the paper is released.
+The public repository is <https://github.com/jasondavies/spherical-artin-rinf>. The paper pins its Python and Lean sources and dependency files to commit [`3edce8ab5c74ab58d9990249524e2bbc5ea28754`](https://github.com/jasondavies/spherical-artin-rinf/tree/3edce8ab5c74ab58d9990249524e2bbc5ea28754). This revision includes the unconditional formalisation of Proposition C. There is currently no release tag or archive DOI.
 
 Use Python 3.12, a TeX installation with `pdflatex` and the packages imported by `paper/spherical-artin-rinf.tex`, and Elan/Lake. Python dependencies, including SymPy's mpmath dependency, and the Lean/Mathlib toolchain are pinned.
 
@@ -33,11 +33,13 @@ python3 -m venv .venv
 .venv/bin/python scripts/verify.py --clean
 ```
 
-The command runs all required Python certificates and selected exact cross-checks, builds the PDF from clean auxiliary files, cleans and rebuilds this Lean package while retaining the Mathlib cache, and checks the axiom report. Logs and machine-readable summaries are written to `verification/`. It exits nonzero on a failed check, an unresolved LaTeX reference or an overfull box.
+The command runs all required Python certificates and selected exact cross-checks, builds the PDF from clean auxiliary files, cleans and rebuilds this Lean package while retaining the Mathlib cache, and checks the axiom report. Each run writes its logs and summary to a separate `verification/runs/<run-id>/` directory. The summaries in `verification/` point to the latest runs. It exits nonzero on a failed check, an unresolved LaTeX reference or an overfull box.
 
 For individual components, use `--only python`, `--only paper` or `--only lean`. The Lean build defaults to four threads; `--threads N` changes this. The largest Lean certificate modules can require about 25 GB each, so allow substantial memory or reduce concurrency. Python checks take roughly a minute on the tested machine; the clean Lean build takes considerably longer.
 
-After a successful full verification run, `python3 scripts/package_review.py` creates `verification/review-package.zip`. It contains the current manuscript source and PDF, Python and Lean sources, pinned dependency files, documentation, and the logs from that run. `REVIEW_PACKAGE.json` records a SHA-256 checksum for every included file and identifies whether the snapshot contains uncommitted changes. The archive excludes dependency caches and Git history.
+After a successful full verification run, `python3 scripts/package_review.py` creates `verification/review-package.zip` and `verification/review-package.zip.sha256`. Verification hashes all repository inputs (including documentation, scripts and dependency pins), checks that they are unchanged at the end of the run, and records the generated PDF and log hashes. Packaging rejects changed, added or removed inputs, a changed PDF or log, and any later verification run. Run the full workflow again after edits or a component run. A clean Git status alone does not establish verification.
+
+The computational commit pin identifies the code revision; checking it out also selects the manuscript stored at that revision. The complete submitted snapshot is the review ZIP, identified by its companion SHA-256 checksum. It contains the exact verified manuscript, PDF, sources, dependencies and logs. `REVIEW_PACKAGE.json` records the verification run, a digest of the complete source-and-PDF snapshot, each file's checksum, the base commit and whether there were uncommitted changes. The archive excludes dependency caches and Git history. Retain the ZIP and checksum together when submitting it; a public release tag or archive DOI can additionally identify that complete snapshot.
 
 ## Verification scope
 

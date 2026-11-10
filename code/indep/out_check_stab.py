@@ -19,7 +19,10 @@ def run(name):
     oG = G.order()
     print(f'===== {name}: |rho(W)| = {oG} (Schreier-Sims), |R| = {N}', flush=True)
     refl = [np.array(rs.perm_of(rs.R[r])) for r in range(N)]
-    print(f'  r -> rho(r) injective on R: {len({p.tobytes() for p in refl}) == N}', flush=True)
+    injective = len({p.tobytes() for p in refl}) == N
+    print(f'  r -> rho(r) injective on R: {injective}', flush=True)
+    if not injective:
+        raise ValueError(f'{name}: reflection images are not injective')
     ordtab = np.ones((N, N), int)
     for a in range(N):
         for b in range(N):

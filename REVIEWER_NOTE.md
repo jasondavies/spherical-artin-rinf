@@ -20,8 +20,8 @@ Appendix C summarises the dependencies of the direct Artin-group route formalise
 
 ## Reproduction
 
-After the setup in [README.md](README.md), run `python3 scripts/verify.py --clean`. The [code guide](code/README.md) maps scripts to proof obligations; the [Lean guide](lean/README.md) specifies hypotheses. Fresh logs are generated in `verification/`.
+After the setup in [README.md](README.md), run `python3 scripts/verify.py --clean`. The [code guide](code/README.md) maps scripts to proof obligations; the [Lean guide](lean/README.md) specifies hypotheses. Logs for each run are generated in `verification/runs/<run-id>/`.
 
-The matching source-and-code archive is produced by `python3 scripts/package_review.py` after a successful full verification run. It includes the PDF, supplementary proof account, checkers, dependency pins, current logs and a checksum manifest, so the implementation and the manuscript can be reviewed together.
+The matching source-and-code archive is produced by `python3 scripts/package_review.py` after a successful full verification run. It includes the PDF, supplementary proof account, checkers, dependency pins, logs from that run and a checksum manifest. The runner records input, PDF and log hashes; the packager verifies those hashes and rejects any later run. The accompanying ZIP checksum identifies the complete submitted snapshot independently of the manuscript’s computational commit pin.
 
 Independent human mathematical review remains outstanding. Bibliographic metadata and links were checked on 10 November 2026. The paper names Jason Davies as author and includes an AI transparency statement and disclosure.
