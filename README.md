@@ -19,13 +19,14 @@ Theorem B implies the rank-at-least-three part of Theorem A because [P,P] is cha
 
 ## Reproduce
 
-The repository URL is <https://github.com/jasondavies/spherical-artin-rinf>. The paper currently cites computational sources at commit [`d83e8d4191d569b00b626701d2393f1f2f4175fa`](https://github.com/jasondavies/spherical-artin-rinf/tree/d83e8d4191d569b00b626701d2393f1f2f4175fa). The new Proposition C formalisation must be included in the pinned revision before publication. There is currently no release tag or archive DOI. The repository must be made publicly accessible before the paper is released.
+The repository URL is <https://github.com/jasondavies/spherical-artin-rinf>. The paper pins its Python and Lean sources and dependency files to commit [`1a5384a867e9a2d7b934a760a3d067f67db80cb5`](https://github.com/jasondavies/spherical-artin-rinf/tree/1a5384a867e9a2d7b934a760a3d067f67db80cb5). This revision includes the unconditional formalisation of Proposition C. There is currently no release tag or archive DOI. The repository must be made publicly accessible before the paper is released.
 
 Use Python 3.12, a TeX installation with `pdflatex` and the packages imported by `paper/spherical-artin-rinf.tex`, and Elan/Lake. Python dependencies, including SymPy's mpmath dependency, and the Lean/Mathlib toolchain are pinned.
 
 ```sh
 git clone https://github.com/jasondavies/spherical-artin-rinf.git
 cd spherical-artin-rinf
+git checkout --detach 1a5384a867e9a2d7b934a760a3d067f67db80cb5
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 (cd lean && lake exe cache get)
