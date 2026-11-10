@@ -1,6 +1,6 @@
 # Lean formalisation
 
-Lean verifies the [direct Artin-group argument](DIRECT_PROOF.md) for D5, E6, E7, E8, F4, H3 and H4. Appendix C of the paper summarises this route and its dependencies. The general lattice fixed-vector argument is independent of the Artin presentation. Lean also proves the I₂(5) affine automorphism and its exact Reidemeister number 18 for the concrete extension described below. The full quotient classification, its uniform family proofs, and the identification of that extension with the presented Artin quotient are **not formalised**.
+Lean verifies the [direct Artin-group argument](DIRECT_PROOF.md) for D5, E6, E7, E8, F4, H3 and H4. Appendix C of the paper summarises this route and its dependencies. The general lattice fixed-vector argument is independent of the Artin presentation. Lean also proves Proposition C for the actual presented quotient A(I₂(5))/[P,P], including its identification with the concrete affine extension and the exact Reidemeister number 18. The full quotient classification and its uniform family proofs are **not formalised**.
 
 ## Build and check
 
@@ -43,6 +43,7 @@ The theorems `H3.artin_H3_R_infty'` and `F4.artin_F4_R_infty'` require only `hW`
 | Artin-specific reduction and induced finite action | `Criterion.lean`, `PermMatrix.lean` |
 | Complete finite classifications of twisted classes | `FiniteTwistedClasses.lean` |
 | I₂(5) extension, affine automorphism and exact count | `Dihedral5/*.lean` |
+| Schreier generators and identification of the presented I₂(5) quotient | `SchreierKernel.lean`, `Dihedral5/Presentation.lean`, `Dihedral5/Quotient.lean` |
 | Presented Artin group, affine map, equivariant pure abelianisation | `ArtinGroup.lean`, `Aff.lean`, `Pure.lean` |
 | Orbital certificates and multiplicity-one constituents | `Certificate.lean`, `Types/X.lean` |
 | Full holonomy automorphisms for H3 and F4 | `OutCert.lean`, `Types/H3Out.lean`, `Types/F4Out.lean` |
@@ -52,7 +53,7 @@ The formal constituent certificates use integer bases found computationally, not
 
 The finite reflection tables are linked to the Coxeter group by generator relations and equivariance. A complete abstract identification of their index set with the reflection set is not formalised; the number of reflections appears in `hBr`.
 
-## The I₂(5) result and its boundary
+## Proposition C for the presented I₂(5) quotient
 
 `Dihedral5.Gamma` is the infinite subgroup of ℤ⁵ ⋊ D₁₀ with the ten parity cosets specified in `Data.lean`. Its translation kernel is 2ℤ⁵. The development proves:
 
@@ -63,7 +64,17 @@ The finite reflection tables are linked to the Coxeter group by generator relati
 - `classification` proves invariance, completeness and representatives for 18 labels. `reidemeister_phi` therefore counts twisted classes of the infinite group, not merely orbits of an auxiliary finite set.
 - `exists_reidemeister_eighteen` transfers the result along an explicitly supplied group isomorphism.
 
-There are no external mathematical hypotheses in the concrete affine result. **The isomorphism from A(I₂(5))/[P,P] to this model is not constructed in Lean.** Checking the braid relation and generation supplies a surjection from the presented Artin group; identifying its kernel is a separate step. Thus this is a formalisation of the affine calculation in Proposition C, not yet an unconditional theorem about the presented Artin quotient.
+`Dihedral5.Presentation` identifies this model with the presented Artin quotient:
+
+- `M := CoxeterMatrix.I 3` has off-diagonal entries 5 (Mathlib's parameter is shifted by two), and `A := ArtinGroup M` is the two-generator group with the five-term braid relation.
+- `toGamma` is the surjection taking the two Artin generators to the displayed affine elements.
+- `SchreierKernel.closure_edges` proves the general kernel-generation lemma for a chosen section. `Presentation.lean` supplies all ten dihedral coset representatives and reduces their twenty Schreier edges to five meridians using the braid relation.
+- `kernel_eq_pure` proves that this ten-coset kernel equals the standard pure subgroup `ArtinGroup.pure M` defined by the Coxeter projection.
+- `meridian_image` identifies the five affine images with the standard basis translations. Their generation and these images prove `abelianHalf_bijective`, without an arrangement-homology or rank hypothesis.
+- `toGamma_kernel` proves ker(toGamma) = [P,P]. `quotientEquiv` then constructs the isomorphism A(I₂(5))/[P,P] ≃ Gamma.
+- `artinQuotient_exists_reidemeister_eighteen` proves that an automorphism of that presented quotient has Reidemeister number 18. `artinQuotient_not_R_infty` states the resulting failure of R∞.
+
+These final theorems have no external mathematical hypotheses and require no supplied group isomorphism. Their axiom reports contain only Lean's standard `propext`, `Classical.choice` and `Quot.sound`. This formalises Proposition C, including the presentation-to-affine-model step; it does not formalise the full quotient classification.
 
 `LatticeCriterion.lean` similarly separates the common linear mechanism from the Artin-specific reduction. It proves the rational scalar restriction to ±1 and the stable/swap fixed-vector argument, with scalar-action and witness hypotheses stated explicitly. It does not automatically establish these hypotheses for every quotient in Theorem B. Existing Artin theorem signatures and their external assumptions are preserved.
 

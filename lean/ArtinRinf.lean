@@ -33,5 +33,5 @@ import ArtinRinf.CoxD5
 import ArtinRinf.Types.D5
 import ArtinRinf.Types.D5FH
 
--- The concrete I₂(5) affine extension and its exact Reidemeister count.
-import ArtinRinf.Dihedral5.Generators
+-- Proposition C for the presented I₂(5) quotient, including the affine identification.
+import ArtinRinf.Dihedral5.Quotient

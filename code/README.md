@@ -10,7 +10,7 @@ The runner disables Python optimisation, sets numerical libraries to one thread,
 
 ## Proof inputs and exact cross-checks
 
-All paths below are relative to `code/`. The runner executes each row and first runs the fault-injection tests in `test_certificate_guards.py`. Those tests require empty or partial constituent/witness data, corrupt eigenbases, failed SRG identities, a nontrivial holonomy centre and empty command lines to fail.
+All paths below are relative to `code/`. The runner executes each row and first runs the fault-injection tests in `test_certificate_guards.py`. Those tests require empty or partial constituent/witness data, corrupt eigenbases, failed SRG identities, a nontrivial holonomy centre and empty command lines to fail. They also check wrapped Lean axiom reports and reject unexpected axioms or a missing presented-quotient theorem.
 
 | Script | Mathematical purpose |
 |---|---|

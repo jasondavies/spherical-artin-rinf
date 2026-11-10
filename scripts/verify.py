@@ -29,6 +29,24 @@ PYTHON_CHECKS = [
     ("outer_witnesses", "code", ["certify_outer.py", "H3", "F4", "H4"]),
 ]
 
+REQUIRED_AXIOM_REPORTS = {
+    *(f"ArtinRinf.{name}.artin_{name}_R_infty_FH" for name in
+      ["D5", "E6", "E7", "E8", "F4", "H3", "H4"]),
+    "ArtinRinf.Dihedral5.Presentation.toGamma_kernel",
+    "ArtinRinf.Dihedral5.Presentation.artinQuotient_exists_reidemeister_eighteen",
+    "ArtinRinf.Dihedral5.Presentation.artinQuotient_not_R_infty",
+}
+
+
+def validate_axiom_report(output):
+    """Check named theorem coverage and axioms, including Lean's wrapped lists."""
+    reports = dict(re.findall(r"'([^\n]+)' depends on axioms: \[([^\]]*)\]", output))
+    allowed = {"propext", "Classical.choice", "Quot.sound"}
+    if (len(reports) < 20 or not REQUIRED_AXIOM_REPORTS <= reports.keys()
+            or any({name.strip() for name in axioms.split(",") if name.strip()} - allowed
+                   for axioms in reports.values())):
+        raise RuntimeError("Unexpected or missing axiom report")
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -88,10 +106,7 @@ def main():
                 run("lean_clean", [lake, "clean", "artin_rinf"], ROOT / "lean")
             run("lean_build", [lake, "build"], ROOT / "lean", "Build completed successfully")
             axioms = run("lean_axioms", [lake, "env", "lean", "scripts/print_axioms.lean"], ROOT / "lean")
-            lists = re.findall(r"depends on axioms: \[([^\]]*)\]", axioms)
-            allowed = {"propext", "Classical.choice", "Quot.sound"}
-            if len(lists) < 20 or any(set(a.split(", ")) - allowed for a in lists):
-                raise RuntimeError("Unexpected or missing axiom report")
+            validate_axiom_report(axioms)
     except (OSError, RuntimeError, importlib.metadata.PackageNotFoundError) as error:
         report["error"] = str(error)
         print(error, file=sys.stderr)

@@ -57,7 +57,7 @@ in the reflection permutation module. Multiplicity one restricts commuting latti
 or exchanged constituents then force eigenvalue one after a holonomy twist.
 Uniform character arguments handle the classical families. The negative dihedral cases use commuting
 integral automorphisms, with compatibility checked against the crystallographic extension.
-An alternative proof for seven Artin groups has a conditional Lean formalisation.
+Proposition~C is formalised in Lean; an alternative proof for seven Artin groups has a conditional formalisation.
 \end{abstract}
 
 \noindent\textbf{AI transparency statement.} The mathematical arguments, programs, Lean formalisation
@@ -169,9 +169,9 @@ specifies the scope and dependencies of the formalisation.
 Exact computational certificates accompany the exceptional proofs. A conditional Lean~4/Mathlib
 formalisation proves seven direct Artin cases through Franzsen--Howlett, using the same fixed-vector mechanism
 and finite certificates; Appendix~\ref{app:artin} specifies its four external hypotheses.
-Lean also verifies the affine calculation $R(\varphi)=18$ in Proposition~C; the identification
-of that affine model with the presented Artin quotient and the full quotient classification
-remain outside the formalisation.
+Lean also proves Proposition~C for the presented Artin quotient, including its identification
+with the affine model and the exact count $R(\varphi)=18$, without external mathematical hypotheses.
+The full quotient classification remains outside the formalisation.
 
 \section{The characteristic reflection lattice}\label{sec:lattice}
 
@@ -1018,10 +1018,11 @@ The repository for the computational sources and Lean development is
 \begin{center}
 \url{https://github.com/jasondavies/spherical-artin-rinf}.
 \end{center}
-The version used in this paper is commit
+The mathematical Python certificates used in this paper are fixed by commit
 \href{https://github.com/jasondavies/spherical-artin-rinf/tree/d83e8d4191d569b00b626701d2393f1f2f4175fa}{\texttt{d83e8d4191d5}}
 of that repository.
-This revision fixes the executable sources and dependency versions; the manuscript and explanatory documentation may be revised separately.
+That revision also fixes their dependency versions. The accompanying Lean development includes
+the presented-quotient theorem in \texttt{lean/ArtinRinf/Dihedral5/Quotient.lean}.
 The command \texttt{python3 scripts/verify.py -{}-clean} runs the certificates and builds the paper
 and Lean development. Dependencies are pinned; logs are written to \texttt{verification/}.
 Programs, commands and expected outputs are listed in \texttt{code/README.md} of the accompanying repository. We
@@ -1187,8 +1188,12 @@ or \texttt{native\_decide}; finite certificates are checked by the Lean kernel.
 The scalar and stable/swap arguments are separated into a general integral-lattice criterion.
 For Proposition~C, the kernel checks the parity extension, its generation by the two affine
 Artin images, the automorphism and its inverse, and the reduction of all twisted classes to
-$140$ finite states with exactly $18$ orbits. The isomorphism from the presented Artin quotient
-to this affine model is an explicit input to the transfer theorem, not a formalised result.
+$140$ finite states with exactly $18$ orbits. A Schreier calculation using ten coset representatives
+proves that five explicit meridians generate the pure subgroup. Their affine images are the
+five standard basis translations, so the pure abelianisation maps isomorphically to $\Z^5$.
+This proves that the affine map has kernel $[P,P]$ and identifies the presented quotient with
+the affine model. The transferred Reidemeister-number theorem therefore has no external
+mathematical hypotheses; in particular, it does not assume the arrangement-homology rank statement.
 The full quotient classification remains outside the formalisation.
 
 \section*{Declaration of AI-generated research and authorship}
@@ -1197,9 +1202,9 @@ Anthropic's Claude and OpenAI's Codex contributed to the mathematical arguments,
 verification, Lean formalisation, and preparation and revision of the manuscript.
 
 The Lean kernel checks the seven direct Artin-group results under the external hypotheses stated in
-Appendix~\ref{app:artin}, as well as the concrete affine calculation in Proposition~C.
-The full quotient classification and the identification of the affine model with the presented
-Artin quotient remain outside the formalisation. Their written proofs are accompanied by
+Appendix~\ref{app:artin}, as well as Proposition~C for the presented Artin quotient without external
+mathematical hypotheses. The full quotient classification remains outside the formalisation.
+Its written proof is accompanied by
 the exact computational checks described in Appendix~\ref{app:comp}. These checks do not replace mathematical review of the written arguments.
 The author takes responsibility for the content of the paper and the accuracy of this disclosure.
 

@@ -21,6 +21,9 @@ import exceptional_srg
 import permgroup
 import uniform_check
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
+import verify
+
 
 class CertificateGuards(unittest.TestCase):
     def setUp(self):
@@ -136,6 +139,22 @@ class CertificateGuards(unittest.TestCase):
                 result = subprocess.run([sys.executable, str(root / script)], capture_output=True, text=True)
                 self.assertNotEqual(result.returncode, 0)
                 self.assertNotIn('ALL CHECKS PASSED', result.stdout)
+
+    def test_axiom_report_handles_wrapped_lists(self):
+        names = verify.REQUIRED_AXIOM_REPORTS | {f"Other.theorem{i}'" for i in range(20)}
+        output = '\n'.join(f"'{name}' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]"
+                           for name in names)
+        verify.validate_axiom_report(output)
+        with self.assertRaises(RuntimeError):
+            verify.validate_axiom_report(output.replace('Quot.sound', 'sorryAx', 1))
+
+    def test_axiom_report_requires_the_presented_quotient_theorem(self):
+        names = verify.REQUIRED_AXIOM_REPORTS | {f'Other.theorem{i}' for i in range(20)}
+        names.remove('ArtinRinf.Dihedral5.Presentation.artinQuotient_exists_reidemeister_eighteen')
+        output = '\n'.join(f"'{name}' depends on axioms: [propext, Classical.choice, Quot.sound]"
+                           for name in names)
+        with self.assertRaises(RuntimeError):
+            verify.validate_axiom_report(output)
 
 
 if __name__ == '__main__':

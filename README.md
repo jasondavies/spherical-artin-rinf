@@ -19,14 +19,13 @@ Theorem B implies the rank-at-least-three part of Theorem A because [P,P] is cha
 
 ## Reproduce
 
-The repository URL is <https://github.com/jasondavies/spherical-artin-rinf>. The paper pins its executable Python and Lean sources and dependency files to commit [`d83e8d4191d569b00b626701d2393f1f2f4175fa`](https://github.com/jasondavies/spherical-artin-rinf/tree/d83e8d4191d569b00b626701d2393f1f2f4175fa); subsequent manuscript and documentation edits do not change those computational sources. There is currently no release tag or archive DOI. The repository must be made publicly accessible before the paper is released.
+The repository URL is <https://github.com/jasondavies/spherical-artin-rinf>. The paper currently cites computational sources at commit [`d83e8d4191d569b00b626701d2393f1f2f4175fa`](https://github.com/jasondavies/spherical-artin-rinf/tree/d83e8d4191d569b00b626701d2393f1f2f4175fa). The new Proposition C formalisation must be included in the pinned revision before publication. There is currently no release tag or archive DOI. The repository must be made publicly accessible before the paper is released.
 
 Use Python 3.12, a TeX installation with `pdflatex` and the packages imported by `paper/spherical-artin-rinf.tex`, and Elan/Lake. Python dependencies, including SymPy's mpmath dependency, and the Lean/Mathlib toolchain are pinned.
 
 ```sh
 git clone https://github.com/jasondavies/spherical-artin-rinf.git
 cd spherical-artin-rinf
-git checkout --detach d83e8d4191d569b00b626701d2393f1f2f4175fa
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 (cd lean && lake exe cache get)
@@ -43,6 +42,6 @@ After a successful full verification run, `python3 scripts/package_review.py` cr
 
 The exact Python calculations are proof inputs for the exceptional constituents and holonomy automorphisms. The unbounded classical and dihedral classification is proved in the text; finite checks corroborate it. The I₂(5) count is checked both by centraliser orbits and by enumeration of all 140 translation-twisted classes.
 
-Lean verifies the direct Artin-group argument for D5, E6, E7, E8, F4, H3 and H4, conditional on explicitly stated cited results. It also proves the exact Reidemeister number 18 for the concrete I₂(5) affine extension, including its generation by the two affine Artin images. The identification of that model with the presented Artin quotient and the full quotient classification remain outside Lean. See the Lean guide for the precise hypotheses.
+Lean verifies the direct Artin-group argument for D5, E6, E7, E8, F4, H3 and H4, conditional on explicitly stated cited results. It also proves Proposition C for the presented quotient A(I₂(5))/[P,P]: the affine map has kernel exactly [P,P], and the transferred automorphism has Reidemeister number 18. This result has no external mathematical hypotheses. The full quotient classification remains outside Lean. See the Lean guide for the precise hypotheses.
 
 Jason Davies is the author. The mathematical arguments, programs, Lean development and manuscript were developed by AI systems under his direction; the paper includes an AI transparency statement and a fuller disclosure. No independent human expert review has been recorded.

@@ -42,3 +42,14 @@ import ArtinRinf
 #print axioms ArtinRinf.Dihedral5.braid_relation
 #print axioms ArtinRinf.Dihedral5.exists_reidemeister_eighteen
 #print axioms ArtinRinf.Dihedral5.affineMap_injective
+#print axioms ArtinRinf.SchreierKernel.closure_edges
+#print axioms ArtinRinf.Dihedral5.Presentation.meridians_generate
+#print axioms ArtinRinf.Dihedral5.Presentation.kernel_eq_pure
+#print axioms ArtinRinf.Dihedral5.Presentation.abelianHalf_bijective
+#print axioms ArtinRinf.Dihedral5.Presentation.toGamma_kernel
+#print axioms ArtinRinf.Dihedral5.Presentation.quotientEquiv
+#print axioms ArtinRinf.Dihedral5.Presentation.artinQuotient_exists_reidemeister_eighteen
+#print axioms ArtinRinf.Dihedral5.Presentation.artinQuotient_not_R_infty
+#check @ArtinRinf.Dihedral5.Presentation.artinQuotient_exists_reidemeister_eighteen
+#print ArtinRinf.Dihedral5.Presentation.ArtinQuotient
+#print ArtinRinf.Dihedral5.Presentation.M
